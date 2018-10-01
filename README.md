@@ -1,2 +1,10 @@
-# it2810-webutvikling-h18-prosjekt-3-32
-it2810-webutvikling-h18-prosjekt-3-32 created by GitHub Classroom
+# IT2810 - Prosjekt 3 - Gruppe 32
+[Her kommer dokumentasjon]
+
+## Om siden
+
+## Teknologi
+
+### Komponentarkitektur
+
+## Testing
