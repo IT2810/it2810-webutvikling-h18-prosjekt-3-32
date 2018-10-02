@@ -6,12 +6,13 @@ export default StyleSheet.create({
     },
     header: {
         height: "10%",
-        backgroundColor: "#68a2ff",
+        backgroundColor: "#4fcfff",
         justifyContent: "center",
         alignItems: "center",
     },
     headerText: {
         fontSize: 20,
+        fontStyle: "italic",
     },
     container: {
         height: "77%",

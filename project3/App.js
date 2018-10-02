@@ -10,7 +10,7 @@ export default class App extends React.Component {
         <React.Fragment>
           <View style={styles.topBar}/>
           <View style={styles.header}>
-            <Text style={styles.headerText}>[insert tittel]</Text>
+            <Text style={styles.headerText}>Motivasjon as gutta</Text>
           </View>
           <View style={styles.container}>
             <TodoList/>
