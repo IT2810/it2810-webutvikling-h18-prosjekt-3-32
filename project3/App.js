@@ -1,21 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import TodoList from "./components/TodoList.js";
+import styles from "./stylesheets/App.style.js";
+import MenuBar from "./components/MenuBar";
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+        <React.Fragment>
+          <View style={styles.topBar}/>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>[insert tittel]</Text>
+          </View>
+          <View style={styles.container}>
+            <TodoList/>
+          </View>
+          <MenuBar/>
+        </React.Fragment>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
