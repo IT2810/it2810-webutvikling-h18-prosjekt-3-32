@@ -11,7 +11,7 @@ export default class MenuBar extends React.Component {
             <View style={styles.menuBar}>
                 <MenuItem source={require('../assets/home.png')}/>
                 <MenuItem source={require('../assets/list.png')}/>
-                <MenuItem source={require('../assets/home.png')}/>
+                <MenuItem source={require('../assets/footstep.png')}/>
                 <MenuItem source={require('../assets/home.png')}/>
                 <MenuItem source={require('../assets/home.png')}/>
             </View>
