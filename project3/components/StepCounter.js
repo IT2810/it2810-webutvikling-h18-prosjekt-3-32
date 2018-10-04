@@ -1,4 +1,15 @@
-// boiler code from Expo docs: https://docs.expo.io/versions/latest/sdk/pedometer
+/*
+Solutions is based on Pedometer API from Expo
+
+Apple iPhone:
+Data is fetched from Apple APIs and should be available instantly
+
+Android:
+Data is fetched from Google Fit APIs and requires the Google Fit app
+and a successful OAuth verification to your Google account.
+
+Boiler code from Expo docs: https://docs.expo.io/versions/latest/sdk/pedometer
+*/
 
 import Expo from 'expo';
 import React from 'react';
@@ -11,7 +22,8 @@ export default class StepCounter extends React.Component {
         super(props);
         this.state = {
             isPedometerAvailable: "?",
-            steps_last24hours: 0,
+            steps_last24hours: -1,
+            currentStepCount: -1
         }
     }
 
@@ -25,8 +37,9 @@ export default class StepCounter extends React.Component {
 
     _subscribe = () => {
         this._subscription = Pedometer.watchStepCount(result => {
+            initialSteps = this.state.steps_last24hours;
             this.setState({
-                currentStepCount: result.steps
+                currentStepCount: initialSteps + result.steps
             });
         });
 
@@ -49,7 +62,10 @@ export default class StepCounter extends React.Component {
 
         Pedometer.getStepCountAsync(start, end).then(
             result => {
-                this.setState({ steps_last24hours: result.steps });
+                this.setState({
+                    steps_last24hours: result.steps,
+                    currentStepCount: result.steps
+                });
             },
             error => {
                 this.setState({
@@ -60,7 +76,7 @@ export default class StepCounter extends React.Component {
     };
 
     _unsubscribe = () => {
-        this._subscription && this._subscription.remove();
+        this._subscription.remove();
         this._subscription = null;
     };
 
@@ -69,11 +85,11 @@ export default class StepCounter extends React.Component {
         return (
             <View>
                 <Text>
-                    Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
+                    Funker Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
                 </Text>
 
                 <Text>
-                    Du har gått {this.state.steps_last24hours} steg de siste 24 timer.
+                    Du har gått {this.state.currentStepCount} steg de siste 24 timer.
                 </Text>
             </View>
     );
