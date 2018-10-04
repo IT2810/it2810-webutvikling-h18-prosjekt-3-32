@@ -38,13 +38,13 @@ export default class StepCounter extends React.Component {
             },
             error => {
                 this.setState({
-                    isPedometerAvailable: "Could not get isPedometerAvailable: " + error
+                    isPedometerAvailable: "Pedometer seems unavaiable, error: " + error
                 });
             }
         );
 
         const end = new Date();
-        const start = end;
+        const start = new Date();
         start.setDate(end.getDate() - 1);
 
         Pedometer.getStepCountAsync(start, end).then(
@@ -73,7 +73,7 @@ export default class StepCounter extends React.Component {
                 </Text>
 
                 <Text>
-                    You have walked {this.state.steps_last24hours} steps in the last 24 hours.
+                    Du har gått {this.state.steps_last24hours} steg de siste 24 timer.
                 </Text>
             </View>
     );
