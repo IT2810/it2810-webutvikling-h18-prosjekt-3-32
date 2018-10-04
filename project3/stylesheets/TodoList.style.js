@@ -37,6 +37,4 @@ export default StyleSheet.create({
         color: "#a0a0a0",
         fontSize: 18,
     }
-
-
 });
