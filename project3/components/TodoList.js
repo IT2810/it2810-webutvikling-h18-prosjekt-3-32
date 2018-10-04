@@ -62,7 +62,6 @@ export default class TodoList extends React.Component {
                     {/*Textinput that automatically gets focused when the user enters the todopage.*/}
                     {/*When text is written, the todoTextstate gets changed*/}
                     <TextInput
-                        autoFocus={true}
                         ref={this.myTextInput}
                         style={styles.textInput}
                         onChangeText={(text) => this.setState({todoText : text})}
@@ -77,7 +76,7 @@ export default class TodoList extends React.Component {
                     {/*Scrollview so the user could scroll if the amount of todos become large*/}
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     <ScrollView>
-                    {this.props.todoList.map((element) =>
+                        {this.props.todoList.map((element) =>
                         <ListItem deleteTodo = {this.deleteTodo} name = {element.name} key = {element.key} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>
