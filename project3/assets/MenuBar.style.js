@@ -2,11 +2,12 @@ import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
     menuBar: {
-        height: "5%",
+        height: "10%",
         width: "100%",
+        borderTopWidth: 2,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#4fcfff",
+        backgroundColor: "darkgray",
         display: 'flex',
         flexDirection: 'row',
     },
