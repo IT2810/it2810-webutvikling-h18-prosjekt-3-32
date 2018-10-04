@@ -11,6 +11,8 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.expo/**/packager-info.json
+.expo/**/settings.json
 .expo
 
 # Generated files
