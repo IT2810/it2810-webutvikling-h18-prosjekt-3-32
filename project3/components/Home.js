@@ -45,7 +45,7 @@ export default class Home extends React.Component {
             </View>
 
             <View style={styles.showSteps}>
-              <Text>{"Number of steps today: " + this.state.dailySteps}</Text>
+              <Text>{"Number of steps last 24 hours: " + this.state.dailySteps}</Text>
             </View>
           </View>
 

@@ -15,6 +15,7 @@ import Expo from 'expo';
 import React from 'react';
 import { Pedometer } from 'expo';
 import { Text, View } from 'react-native';
+import styles from "../stylesheets/StepCounter.style.js";
 
 
 export default class StepCounter extends React.Component {
@@ -83,14 +84,16 @@ export default class StepCounter extends React.Component {
 
     render() {
         return (
-            <View>
-                <Text>
-                    Funker Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
-                </Text>
+            <View style={styles.pedometerContainer}>
+                <View style={styles.yellowBubble}>
+                    <Text style={styles.pedometerText}>
+                        Number of steps last 24 hours:
+                    </Text>
 
-                <Text>
-                    Du har gått {this.state.currentStepCount} steg de siste 24 timer.
-                </Text>
+                    <Text style={styles.pedometerNumber}>
+                        {this.state.currentStepCount}
+                    </Text>
+                </View>
             </View>
     );
   }

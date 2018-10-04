@@ -3,6 +3,7 @@ import {Image, View} from 'react-native';
 import { createMaterialTopTabNavigator } from "react-navigation";
 import Home from "./Home.js";
 import TodoList from "./TodoList";
+import StepCounter from "./StepCounter";
 
 class todoTab extends React.Component {
     updateTodoList(list){
@@ -37,6 +38,14 @@ export default createMaterialTopTabNavigator ({
       navigationOptions: {
         tabBarLabel: 'To do'
       }
+    },
+
+
+    Pedometer: {
+        screen: StepCounter,
+        navigationOptions: {
+            tabBarLabel: 'Pedometer'
+        }
     },
 }, {
   tabBarOptions: {
