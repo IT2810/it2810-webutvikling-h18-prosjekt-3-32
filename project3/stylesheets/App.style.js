@@ -5,8 +5,8 @@ export default StyleSheet.create({
         height: "3%",
     },
     header: {
-        height: "10%",
-        backgroundColor: "#68a2ff",
+        height: "8%",
+        backgroundColor: "#4fcfff",
         justifyContent: "center",
         alignItems: "center",
     },
