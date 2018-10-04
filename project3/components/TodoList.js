@@ -29,14 +29,16 @@ export default class TodoList extends React.Component {
             addList.push({
                 key: id,
                 todoNr: id,
-                name: this.state.todoText,
+                todoText: this.state.todoText,
             });
             this.setState({
                 currTodoNr: this.state.currTodoNr + 1,
                 todoText : "",
             });
             this.props.updateParentTodoList(addList);
-            // this.props.storeTodo("todo"+id, addList.get(2));
+            addList.map((item) => {
+                this.props.storeTodo(item.todoNr.toString(), item.todoText.toString());
+            });
         }
         else{alert("Todoen må ha en beskrivelse!");}
     };
@@ -77,7 +79,7 @@ export default class TodoList extends React.Component {
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     <ScrollView>
                         {this.props.todoList.map((element) =>
-                        <ListItem deleteTodo = {this.deleteTodo} name = {element.name} key = {element.key} todoNr = {element.todoNr}/>
+                        <ListItem deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>
                 </View>
