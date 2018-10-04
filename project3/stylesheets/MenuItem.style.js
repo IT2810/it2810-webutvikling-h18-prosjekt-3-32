@@ -2,20 +2,22 @@ import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
     menuItem: {
-        backgroundColor: "lightblue",
+        backgroundColor: "#4fcfff",
         height: "100%",
-        width: "20%",
-        borderStyle: "dotted",
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        borderLeftWidth: 0.5,
-        borderColor: "black",
-        borderWidth: 2,
+        flexGrow: 1,
     },
-    menuItemButton: {
-        width: "50%",
-        height: "50%",
-        marginLeft: "25%",
-        marginTop: "25%",
+    menuItemPressed: {
+        backgroundColor: "#4fcfff",
+        height: "100%",
+        flexGrow: 1,
+        borderStyle: "solid",
+        borderBottomWidth: 1.5,
+        borderColor: "black",
+    },
+    menuItemText: {
+        color: "black",
+        textAlign: "center",
+        fontSize: 15,
+        lineHeight: 25,
     },
 });
