@@ -20,6 +20,11 @@ export default class TodoList extends React.Component {
         this.myTextInput = React.createRef();
     };
 
+    componentDidMount(){
+        console.log("Todolist current todonr: [" + this.props.currentTodoNr + "]");
+        this.setState({currTodoNr:this.props.currentTodoNr});
+    }
+
     //addTodo adds a new to-do, add it to a list, and passes the list to app.js, since the to-do-list is needed at the home screen.
     //Each element in addTodo gets a key, todoNr and a name.
     addTodo = (id) => {

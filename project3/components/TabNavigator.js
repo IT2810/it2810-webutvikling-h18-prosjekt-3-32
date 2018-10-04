@@ -10,11 +10,14 @@ class todoTab extends React.Component {
         super(props);
         this.state = {
             todoList: [],
+            test: "hei",
+            currentTodoNr: 0,
         };
         this.updateTodoList = this.updateTodoList.bind(this);
     }
 
     componentDidMount(){
+        let updateList = [];
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
@@ -23,8 +26,17 @@ class todoTab extends React.Component {
                     let value = store[i][1];
                     console.log("Key: " + key);
                     console.log("Value: " + value);
-
-                    
+                    updateList.push({
+                        key: key,
+                        todoNr: key,
+                        todoText: value,
+                    });
+                    let newKey = parseInt(key)+1;
+                    console.log("Newkeynumber: " + newKey);
+                    this.setState({
+                        todoList:updateList,
+                        currentTodoNr:newKey,
+                    }, function(){console.log(this.state.currentTodoNr);});
                 });
             });
         });
@@ -55,7 +67,7 @@ class todoTab extends React.Component {
 
     render() {
         return (
-            <TodoList todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
+            <TodoList currentTodoNr = {this.state.currentTodoNr} todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
         );
     }
 }
@@ -64,6 +76,7 @@ class homeTab extends React.Component {
     updateTodoList(list){
         this.setState({todoList:list});
     }
+
     constructor(props){
         super(props);
         this.state = {
