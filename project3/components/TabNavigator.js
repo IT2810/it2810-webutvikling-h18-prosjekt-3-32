@@ -10,7 +10,6 @@ class todoTab extends React.Component {
         super(props);
         this.state = {
             todoList: [],
-            test: "hei",
             currentTodoNr: 0,
         };
         this.updateTodoList = this.updateTodoList.bind(this);
@@ -24,19 +23,14 @@ class todoTab extends React.Component {
                     // get at each store's key/value so you can work with it
                     let key = store[i][0];
                     let value = store[i][1];
-                    console.log("Key: " + key);
-                    console.log("Value: " + value);
-                    updateList.push({
-                        key: key,
-                        todoNr: key,
-                        todoText: value,
-                    });
-                    let newKey = parseInt(key)+1;
-                    console.log("Newkeynumber: " + newKey);
-                    this.setState({
-                        todoList:updateList,
-                        currentTodoNr:newKey,
-                    }, function(){console.log(this.state.currentTodoNr);});
+                    if(key !== "CurrentTodoNr"){
+                        updateList.push({
+                            key: key,
+                            todoNr: key,
+                            todoText: value,
+                        });
+                        this.setState({todoList:updateList});
+                    }
                 });
             });
         });
@@ -54,7 +48,7 @@ class todoTab extends React.Component {
         }
     };
 
-    fetchTodo = async (id) => {
+    /*fetchTodo = async (id) => {
         try {
             const value = await AsyncStorage.getItem(id);
             if (value !== null) {
@@ -63,11 +57,11 @@ class todoTab extends React.Component {
         } catch (error) {
             throw error;
         }
-    };
+    };*/
 
     render() {
         return (
-            <TodoList currentTodoNr = {this.state.currentTodoNr} todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
+            <TodoList todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
         );
     }
 }

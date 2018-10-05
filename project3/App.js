@@ -9,7 +9,7 @@ export default class App extends React.Component {
         return (
             <React.Fragment>
               <View style={styles.topBar}/>
-              <TabNavigator storeData = {() => this.storeData()} fetchData = {this.fetchData} style={styles.tabNavigator}/>
+              <TabNavigator/>
             </React.Fragment>
         );
     }
