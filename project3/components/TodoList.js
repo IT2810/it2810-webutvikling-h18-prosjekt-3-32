@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TextInput, TouchableOpacity, Text, View } from 'react-native';
+import { AsyncStorage, ScrollView, TextInput, TouchableOpacity, Text, View } from 'react-native';
 import ListItem from "./ListItem.js";
 import styles from "../stylesheets/TodoList.style.js";
 
@@ -20,6 +20,33 @@ export default class TodoList extends React.Component {
         this.myTextInput = React.createRef();
     };
 
+    componentDidMount(){
+        this.getCurrentTodo();
+    }
+
+    sortByDate(todoList){
+        todoList.sort(function compare(a, b) {
+            let dateA = new Date(a.date);
+            let dateB = new Date(b.date);
+            return dateA - dateB;
+        });
+    }
+
+    getCurrentTodo(){
+        AsyncStorage.getAllKeys((err, keys) => {
+            AsyncStorage.multiGet(keys, (err, stores) => {
+                stores.map((result, i, store) => {
+                    // get at each store's key/value so you can work with it
+                    let key = store[i][0];
+                    let value = store[i][1];
+                    if(key === "CurrentTodoNr"){
+                        this.setState({currTodoNr:parseInt(value)+1});
+                    }
+                });
+            });
+        });
+    }
+
     //addTodo adds a new to-do, add it to a list, and passes the list to app.js, since the to-do-list is needed at the home screen.
     //Each element in addTodo gets a key, todoNr and a name.
     addTodo = (id) => {
@@ -29,14 +56,17 @@ export default class TodoList extends React.Component {
             addList.push({
                 key: id,
                 todoNr: id,
-                name: this.state.todoText,
+                todoText: this.state.todoText,
             });
             this.setState({
                 currTodoNr: this.state.currTodoNr + 1,
                 todoText : "",
             });
             this.props.updateParentTodoList(addList);
-            // this.props.storeTodo("todo"+id, addList.get(2));
+            addList.map((item) => {
+                this.props.storeTodo(item.todoNr.toString(), item.todoText.toString());
+                this.props.storeTodo("CurrentTodoNr", item.todoNr.toString());
+            });
         }
         else{alert("Todoen må ha en beskrivelse!");}
     };
@@ -53,6 +83,7 @@ export default class TodoList extends React.Component {
             }
         }
         this.props.updateParentTodoList(deleteList);
+        AsyncStorage.removeItem(id.toString());
     };
 
     render() {
@@ -75,11 +106,11 @@ export default class TodoList extends React.Component {
                 <View style={{flex:1}}>
                     {/*Scrollview so the user could scroll if the amount of todos become large*/}
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
-                    <ScrollView>
+                    {<ScrollView>
                         {this.props.todoList.map((element) =>
-                        <ListItem deleteTodo = {this.deleteTodo} name = {element.name} key = {element.key} todoNr = {element.todoNr}/>
+                        <ListItem deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} todoNr = {element.todoNr}/>
                     )}
-                    </ScrollView>
+                    </ScrollView>}
                 </View>
             </View>
         );
