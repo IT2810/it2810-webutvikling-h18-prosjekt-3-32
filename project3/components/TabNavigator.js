@@ -1,5 +1,5 @@
 import React from 'react';
-import {AsyncStorage, Image, View} from 'react-native';
+import {Text, AsyncStorage, Image, View} from 'react-native';
 import { createMaterialTopTabNavigator } from "react-navigation";
 import Home from "./Home.js";
 import TodoList from "./TodoList";
@@ -21,14 +21,16 @@ class todoTab extends React.Component {
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
-                    // get at each store's key/value so you can work with it
                     let key = store[i][0];
                     let value = store[i][1];
                     if(key !== "CurrentTodoNr"){
+                        //Retrieves the List with name and date (which is stringyfied), and parses it so it becomes an Array.
+                        const valueList = JSON.parse(value);
                         updateList.push({
                             key: key,
                             todoNr: key,
-                            todoText: value,
+                            todoText: valueList[0],
+                            todoDate: valueList[1],
                         });
                         this.setState({todoList:updateList});
                     }
@@ -37,10 +39,12 @@ class todoTab extends React.Component {
         });
     }
 
+    //Updates the todolist, so the user get immediate update.
     updateTodoList(list){
         this.setState({todoList:list});
     }
 
+    //Function to store values in the AsyncStorage
     storeTodo = async (id, data) => {
         try {
             await AsyncStorage.setItem(id, data);
@@ -48,17 +52,6 @@ class todoTab extends React.Component {
             throw error;
         }
     };
-
-    /*fetchTodo = async (id) => {
-        try {
-            const value = await AsyncStorage.getItem(id);
-            if (value !== null) {
-                return value;
-            }
-        } catch (error) {
-            throw error;
-        }
-    };*/
 
     render() {
         return (
@@ -68,20 +61,14 @@ class todoTab extends React.Component {
 }
 
 class homeTab extends React.Component {
-    updateTodoList(list){
-        this.setState({todoList:list});
-    }
 
     constructor(props){
         super(props);
-        this.state = {
-            todoList: [],
-        };
-        this.updateTodoList = this.updateTodoList.bind(this);
+
     }
     render() {
         return (
-            <TodoList todoList = {this.state.todoList} storeTodo = {this.props.storeTodo} updateParentTodoList = {this.updateTodoList}/>
+            <Text>Her kommer en kul homescreen</Text>
         );
     }
 }
