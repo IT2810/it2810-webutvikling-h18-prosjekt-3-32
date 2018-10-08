@@ -14,8 +14,9 @@ Boiler code from Expo docs: https://docs.expo.io/versions/latest/sdk/pedometer
 import Expo from 'expo';
 import React from 'react';
 import { Pedometer } from 'expo';
-import { Text, View } from 'react-native';
-import styles from "../stylesheets/StepCounter.style.js";
+import { Text, View, AsyncStorage } from 'react-native';
+import { Slider } from 'react-native-elements';
+import styles from '../stylesheets/StepCounter.style.js';
 
 
 export default class StepCounter extends React.Component {
@@ -24,16 +25,31 @@ export default class StepCounter extends React.Component {
         this.state = {
             isPedometerAvailable: "?",
             steps_last24hours: -1,
-            currentStepCount: -1
+            currentStepCount: -1,
+            // State below should be fetched from AsyncStorage
+            goalSteps: 10000,
+            motivationalMessage: "Please install Google Fit ;)",
+            averageStepsLastWeek: -1,
         }
     }
 
     componentDidMount() {
-        this._subscribe();
+        try {
+            this._subscribe();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     componentWillUnmount() {
-        this._unsubscribe();
+        try {
+            this._unsubscribe();
+        }
+        catch (error) {
+            console.log(error);
+        }
+
     }
 
     _subscribe = () => {
@@ -57,11 +73,17 @@ export default class StepCounter extends React.Component {
             }
         );
 
-        const start = new Date();
-        const end = new Date();
+        // Set start hours to midnight
+        let start = new Date();
         start.setHours(0);
         start.setMinutes(0);
         start.setSeconds(0);
+
+        // Set end hours to midnight
+        let end = new Date();
+        end.setHours(23);
+        end.setMinutes(59);
+        end.setSeconds(59);
 
         Pedometer.getStepCountAsync(start, end).then(
             result => {
@@ -76,7 +98,34 @@ export default class StepCounter extends React.Component {
                 });
             }
         );
-    };
+
+        start.setDate(start.getDate()-8);
+        end.setDate(end.getDate()-1);
+
+        Pedometer.getStepCountAsync(start, end).then(
+            result => {
+                this.setState({
+                    averageStepsLastWeek: Math.round(result.steps/7),
+                });
+            },
+            error => {
+                this.setState({
+                    averageStepsLastWeek: "Could not get stepCount for last week: " + error
+                });
+            }
+        );
+
+        // The code below should be chained in a then promise after new goal is set
+        if (this.state.averageStepsLastWeek > this.state.goalSteps) {
+            this.setState({
+                motivationalMessage: "Great work fam!"
+            })
+        } else {
+            this.setState({
+                motivationalMessage: "Maybe walk some more?"
+            })
+        }
+    }
 
     _unsubscribe = () => {
         this._subscription.remove();
@@ -99,11 +148,29 @@ export default class StepCounter extends React.Component {
 
                 <View style={styles.yellowBubble}>
                     <Text style={styles.pedometerText}>
-                        Please select your 24 hour goal for steps:
+                        Your goal for steps per 24 hours:
                     </Text>
 
+                    <Text style={styles.pedometerNumber}>
+                        {this.state.goalSteps}
+                    </Text>
+
+                    <Slider
+                        value={this.state.goalSteps} maximumValue={20000} step={500} thumbTintColor={"#4fcfff"}
+                        onValueChange={(goalSteps) => this.setState({goalSteps: goalSteps})} />
+                </View>
+
+                <View style={styles.yellowBubble}>
                     <Text style={styles.pedometerText}>
-                        You have selected
+                        Average daily steps last week:
+                    </Text>
+
+                    <Text style={styles.pedometerNumber}>
+                        {this.state.averageStepsLastWeek}
+                    </Text>
+
+                    <Text style={styles.pedometerNumber}>
+                        {this.state.motivationalMessage}
                     </Text>
                 </View>
             </View>
