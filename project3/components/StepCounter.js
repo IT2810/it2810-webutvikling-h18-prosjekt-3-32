@@ -57,9 +57,11 @@ export default class StepCounter extends React.Component {
             }
         );
 
-        const end = new Date();
         const start = new Date();
-        start.setDate(end.getDate() - 1);
+        const end = new Date();
+        start.setHours(0);
+        start.setMinutes(0);
+        start.setSeconds(0);
 
         Pedometer.getStepCountAsync(start, end).then(
             result => {
@@ -92,6 +94,16 @@ export default class StepCounter extends React.Component {
 
                     <Text style={styles.pedometerNumber}>
                         {this.state.currentStepCount}
+                    </Text>
+                </View>
+
+                <View style={styles.yellowBubble}>
+                    <Text style={styles.pedometerText}>
+                        Please select your 24 hour goal for steps:
+                    </Text>
+
+                    <Text style={styles.pedometerText}>
+                        You have selected
                     </Text>
                 </View>
             </View>
