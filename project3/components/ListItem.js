@@ -43,6 +43,11 @@ export default class ListItem extends React.Component {
         } catch (error) {
             throw error;
         }
+
+        //Creates a list to update the list immediately when the user have changed the date or name
+        const updateList = [this.props.todoNr, this.state.name, this.state.date];
+        this.props.updateSortedList(updateList);
+
     };
 
     render() {
