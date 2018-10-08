@@ -3,7 +3,6 @@ import { AsyncStorage, ScrollView, TextInput, TouchableOpacity, Text, View } fro
 import ListItem from "./ListItem.js";
 import styles from "../stylesheets/TodoList.style.js";
 
-
 export default class TodoList extends React.Component {
     constructor(props){
         super(props);
@@ -21,18 +20,7 @@ export default class TodoList extends React.Component {
     };
 
     componentDidMount(){
-        this.getCurrentTodo();
-    }
-
-    sortByDate(todoList){
-        todoList.sort(function compare(a, b) {
-            let dateA = new Date(a.date);
-            let dateB = new Date(b.date);
-            return dateA - dateB;
-        });
-    }
-
-    getCurrentTodo(){
+        //Gets the highest todoNr and updates the state to no todos have the same todoNr and key.
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
@@ -48,25 +36,30 @@ export default class TodoList extends React.Component {
     }
 
     //addTodo adds a new to-do, add it to a list, and passes the list to app.js, since the to-do-list is needed at the home screen.
-    //Each element in addTodo gets a key, todoNr and a name.
+    //Each element in addTodo gets a key, todoNr, a name and a date(which is empty until the users sets a due date)
     addTodo = (id) => {
         this.myTextInput.current.clear();
         if(this.state.todoText !== ""){
+            //Creates a list, sliced from the current todolist
+            //Adds the new to-do to the list.
             const addList = this.props.todoList.slice();
             addList.push({
                 key: id,
                 todoNr: id,
                 todoText: this.state.todoText,
+                date: "",
             });
             this.setState({
                 currTodoNr: this.state.currTodoNr + 1,
                 todoText : "",
             });
+            //The list is sent to the parent (app.js), for immediate change on the screen
             this.props.updateParentTodoList(addList);
-            addList.map((item) => {
-                this.props.storeTodo(item.todoNr.toString(), item.todoText.toString());
-                this.props.storeTodo("CurrentTodoNr", item.todoNr.toString());
-            });
+
+            //The new to-do is also added in the AsyncStorage, aswell as the latest todoNr.
+            const AsyncList = [this.state.todoText, ""];
+            this.props.storeTodo(id.toString(), JSON.stringify(AsyncList));
+            this.props.storeTodo("CurrentTodoNr", id.toString());
         }
         else{alert("Todoen må ha en beskrivelse!");}
     };
@@ -74,7 +67,6 @@ export default class TodoList extends React.Component {
     //deleteTodo deletes an to-do from the todolist.
     //The function gets an id as parameter and, creates a new temporarily list, and adds each element from the todolist except
     //the element with the given id
-    //At the end, it passes the list to the parent component, the same way addTodo does it.
     deleteTodo = (id) => {
         const deleteList = [];
         for(let i = 0; i < this.props.todoList.length; i++){
@@ -82,7 +74,10 @@ export default class TodoList extends React.Component {
                 deleteList.push(this.props.todoList[i]);
             }
         }
+        //Passes the list to the parent component, the same way addTodo does it.
         this.props.updateParentTodoList(deleteList);
+
+        //The item is also removed from the AsyncStorage
         AsyncStorage.removeItem(id.toString());
     };
 
@@ -108,7 +103,7 @@ export default class TodoList extends React.Component {
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     {<ScrollView>
                         {this.props.todoList.map((element) =>
-                        <ListItem deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} todoNr = {element.todoNr}/>
+                        <ListItem deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} date = {element.todoDate} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>}
                 </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Modal, TouchableOpacity, Text, View } from 'react-native';
+import {AsyncStorage, Image, Modal, TouchableOpacity, Text, View, TextInput} from 'react-native';
 import styles from "../stylesheets/ListItem.style.js";
 import DatePicker from 'react-native-datepicker';
 
@@ -8,7 +8,17 @@ export default class ListItem extends React.Component {
         super(props);
         this.state = ({
             date:"",
+            name:"",
             modalVisible: false,
+        });
+    }
+
+    //Since both date and name may be changed, the state is set by the props which comes from TodoList.js
+    //When the name or date is changed, the state is changed and the user get immediate update!
+    componentDidMount(){
+        this.setState({
+            date:this.props.date,
+            name:this.props.name
         });
     }
 
@@ -23,11 +33,23 @@ export default class ListItem extends React.Component {
         this.props.deleteTodo(id);
     };
 
+    //saveChanges is an async function which saves the changes to an to-do done by the user.
+    //the new changes are stored in the Asyncstorage by the given todonr
+    saveChanges = async () => {
+        this.setModalVisible(!this.state.modalVisible);
+        const list = [this.state.name, this.state.date];
+        try {
+            await AsyncStorage.setItem(this.props.todoNr.toString(), JSON.stringify(list));
+        } catch (error) {
+            throw error;
+        }
+    };
+
     render() {
         return (
             <React.Fragment>
                 <View style={styles.todoItemTop}>
-                    <Text style={styles.itemText}>{this.props.name}</Text>
+                    <Text style={styles.itemText}>{this.state.name}</Text>
                     {/*Button to open the modal, where the user may enter date, save and delete the todo*/}
                     <TouchableOpacity
                         onPress={() => {
@@ -52,7 +74,10 @@ export default class ListItem extends React.Component {
                                 style={styles.modalClose}>
                                 <Image style={styles.backBtn} source={require('../assets/back.png')}/>
                             </TouchableOpacity>
-                            <Text style={styles.modalText}>{this.props.name}</Text>
+                            {/*The user may change the todoText*/}
+                            <TextInput style={styles.modalText}
+                                       onChangeText={(text) => this.setState({name:text})}
+                                       value={this.state.name}/>
                             <View style={styles.modalItem}>
                                 {/*Date picker so the user could choose an due date to the todo.*/}
                                 <DatePicker
@@ -63,13 +88,13 @@ export default class ListItem extends React.Component {
                                     format="YYYY-MM-DD"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
-                                    onDateChange={(date) => {this.setState({date: date})}}
+                                    onDateChange={(date) => {this.setState({date:date})}}
                                 />
                             </View>
                             <View style={styles.modalItem}>
                                 {/*Button to save the changes done in the modal*/}
                                 <TouchableOpacity style={styles.saveTodo}
-                                                  onPress={() => {this.setModalVisible(!this.state.modalVisible);}}>
+                                                  onPress={() => {this.saveChanges()}}>
                                     <Text style={styles.saveText}>Save</Text>
                                 </TouchableOpacity>
                             </View>
