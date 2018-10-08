@@ -15,6 +15,7 @@ export default class TodoList extends React.Component {
 
         //Binding functions
         this.addTodo = this.addTodo.bind(this);
+        this.updateSortedList = this.updateSortedList.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
         this.myTextInput = React.createRef();
     };
@@ -47,7 +48,7 @@ export default class TodoList extends React.Component {
                 key: id,
                 todoNr: id,
                 todoText: this.state.todoText,
-                date: "",
+                todoDate: "",
             });
             this.setState({
                 currTodoNr: this.state.currTodoNr + 1,
@@ -63,6 +64,22 @@ export default class TodoList extends React.Component {
         }
         else{alert("Todoen må ha en beskrivelse!");}
     };
+
+    //updateSortedList immediately updates the list when the date is changed.
+    //if a to-do with an older date than another to-do is changed, the to-do will move above
+    updateSortedList(list){
+        const updateList = this.props.todoList.slice();
+        updateList.map((item) => {
+            //checks if the to-do which is changed matches an todonr in the todolist
+            if(item.todoNr === list[0]){
+                //update the todoDate to the new one
+                item.todoDate = list[2];
+            }
+        });
+
+        //The list is sent to the parent (app.js), for immediate change on the screen
+        this.props.updateParentTodoList(updateList);
+    }
 
     //deleteTodo deletes an to-do from the todolist.
     //The function gets an id as parameter and, creates a new temporarily list, and adds each element from the todolist except
@@ -103,7 +120,7 @@ export default class TodoList extends React.Component {
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     {<ScrollView>
                         {this.props.todoList.map((element) =>
-                        <ListItem deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} date = {element.todoDate} todoNr = {element.todoNr}/>
+                        <ListItem updateSortedList = {this.updateSortedList} deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} date = {element.todoDate} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>}
                 </View>

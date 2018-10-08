@@ -32,16 +32,41 @@ class todoTab extends React.Component {
                             todoText: valueList[0],
                             todoDate: valueList[1],
                         });
-                        this.setState({todoList:updateList});
                     }
                 });
+                const sortedByDate = this.sortByDate(updateList);
+                this.setState({todoList:sortedByDate});
             });
         });
     }
 
+    sortByDate(todoList){
+        const todosWithDate = [];
+        const todosWithoutDate = [];
+
+        todoList.map((item) => {
+            if(item.todoDate !== ""){
+                todosWithDate.push(item);
+            }
+            else{
+                todosWithoutDate.push(item);
+            }
+        });
+
+        todosWithDate.sort(function(a,b){
+            if(a.todoDate !== "" && b.todoDate !== ""){
+                let c = new Date(a.todoDate);
+                let d = new Date(b.todoDate);
+                return c-d;
+            }
+        });
+        return todosWithDate.concat(todosWithoutDate);
+    }
+
     //Updates the todolist, so the user get immediate update.
     updateTodoList(list){
-        this.setState({todoList:list});
+        const sortedByDate = this.sortByDate(list);
+        this.setState({todoList:sortedByDate});
     }
 
     //Function to store values in the AsyncStorage
