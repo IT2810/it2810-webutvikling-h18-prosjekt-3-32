@@ -23,17 +23,23 @@ export default class StepCounter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            // Indicating whether pedometer is available
             isPedometerAvailable: "?",
-            steps_last24hours: -1,
-            currentStepCount: -1,
-            // State below should be fetched from AsyncStorage
-            goalSteps: 10000,
-            motivationalMessage: "Please install Google Fit ;)",
-            averageStepsLastWeek: -1,
+            stepsToday: 0,
+            // Steps since opening the app
+            currentStepCount: 0,
+            // State below should be updated from AsyncStorage
+            goalSteps: 0,
+            // Will be updated from API
+            averageStepsLastWeek: 500,
+            // Will be updated based on whether goal is reached or not
+            motivationalMessage: "Just a little more walking and you should reach your goal!",
         }
     }
 
+
     componentDidMount() {
+        // Starts the API calls and state updating.
         try {
             this._subscribe();
         }
@@ -42,6 +48,7 @@ export default class StepCounter extends React.Component {
         }
     }
 
+    // Closes connection to APIs when shutting down the app
     componentWillUnmount() {
         try {
             this._unsubscribe();
@@ -52,14 +59,75 @@ export default class StepCounter extends React.Component {
 
     }
 
+
+    // Boiler code from React Native docs to save the goal set by user to AsyncStorage
+    _storeGoal = async (goal) => {
+        // Sets state to ensure the view is updated
+        this.setState({
+            goalSteps: goal
+        })
+
+        // Tries to save goal to persistent storage
+        try {
+            await AsyncStorage.setItem('goalSteps', goal.toString());
+
+        } catch (error) {
+            // Error saving data
+            console.log("_storeGoal caused: " + error);
+        }
+
+        // Code below updates the motivational message if goal is achieved
+        if (goal < this.state.averageStepsLastWeek) {
+            this.setState({
+                motivationalMessage: "Maybe increase your goal, you sporty athlete?"
+            })
+        }
+        // Sets the motivational message if goal isnt achieved
+        else {
+            this.setState({
+                motivationalMessage: "Just a bit of walking and you will reach your goal!"
+            })
+        }
+    }
+
+    // Boiler code from React Native docs, fetches goal from persistent storage
+    _retrieveGoal = async () => {
+        try {
+            const goal = await AsyncStorage.getItem('goalSteps');
+            // checks if user has saved goal before
+            if (goal !== null) {
+                this.setState({
+                    goalSteps: goal
+                })
+            }
+            else {
+                this.setState({
+                    goalsteps: 12000
+                })
+            }
+        } catch (error) {
+            // Error retrieving data, could be first use of app?
+            console.log("_retrieveGoal caused: " + error)
+            this.setState({
+                goalSteps: 12000
+            })
+        }
+    }
+
+
     _subscribe = () => {
+        // Sets initial state to the value the user has saved in persistent storage
+        this._retrieveGoal();
+
+        // Sets up connection Google Fit API or Apple Core API
         this._subscription = Pedometer.watchStepCount(result => {
-            initialSteps = this.state.steps_last24hours;
+            initialSteps = this.state.stepsToday;
             this.setState({
                 currentStepCount: initialSteps + result.steps
             });
         });
 
+        // Checks if pedometer is available and saves status to state
         Pedometer.isAvailableAsync().then(
             result => {
                 this.setState({
@@ -85,23 +153,26 @@ export default class StepCounter extends React.Component {
         end.setMinutes(59);
         end.setSeconds(59);
 
+        // Fetches steps for today
         Pedometer.getStepCountAsync(start, end).then(
             result => {
                 this.setState({
-                    steps_last24hours: result.steps,
+                    stepsToday: result.steps,
                     currentStepCount: result.steps
                 });
             },
             error => {
                 this.setState({
-                    steps_last24hours: "Could not get stepCount: " + error
+                    stepsToday: "Could not get stepCount: " + error
                 });
             }
         );
 
+        // The code below defines the timespan between start and end to a week
         start.setDate(start.getDate()-8);
         end.setDate(end.getDate()-1);
 
+        // Fetches steps for the last week
         Pedometer.getStepCountAsync(start, end).then(
             result => {
                 this.setState({
@@ -109,24 +180,15 @@ export default class StepCounter extends React.Component {
                 });
             },
             error => {
+                console.log(error);
                 this.setState({
-                    averageStepsLastWeek: "Could not get stepCount for last week: " + error
+                    averageStepsLastWeek: "0"
                 });
             }
         );
-
-        // The code below should be chained in a then promise after new goal is set
-        if (this.state.averageStepsLastWeek > this.state.goalSteps) {
-            this.setState({
-                motivationalMessage: "Great work fam!"
-            })
-        } else {
-            this.setState({
-                motivationalMessage: "Maybe walk some more?"
-            })
-        }
     }
 
+    // Disconnects the connection to the APIs
     _unsubscribe = () => {
         this._subscription.remove();
         this._subscription = null;
@@ -138,7 +200,7 @@ export default class StepCounter extends React.Component {
             <View style={styles.pedometerContainer}>
                 <View style={styles.yellowBubble}>
                     <Text style={styles.pedometerText}>
-                        Number of steps last 24 hours:
+                        Steps today:
                     </Text>
 
                     <Text style={styles.pedometerNumber}>
@@ -148,7 +210,7 @@ export default class StepCounter extends React.Component {
 
                 <View style={styles.yellowBubble}>
                     <Text style={styles.pedometerText}>
-                        Your goal for steps per 24 hours:
+                        Your daily step goal:
                     </Text>
 
                     <Text style={styles.pedometerNumber}>
@@ -156,8 +218,8 @@ export default class StepCounter extends React.Component {
                     </Text>
 
                     <Slider
-                        value={this.state.goalSteps} maximumValue={20000} step={500} thumbTintColor={"#4fcfff"}
-                        onValueChange={(goalSteps) => this.setState({goalSteps: goalSteps})} />
+                        value={parseInt(this.state.goalSteps)} maximumValue={20000} step={500} thumbTintColor={"#4fcfff"}
+                        onValueChange={(goalSteps) => this._storeGoal(goalSteps)} />
                 </View>
 
                 <View style={styles.yellowBubble}>
