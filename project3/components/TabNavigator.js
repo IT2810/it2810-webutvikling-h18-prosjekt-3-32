@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "react-navigation";
 import Home from "./Home.js";
 import TodoList from "./TodoList";
 import StepCounter from "./StepCounter";
+import CalendarDisplayer from "./CalendarDisplayer";
 
 class todoTab extends React.Component {
 
@@ -109,6 +110,13 @@ export default createMaterialTopTabNavigator ({
         navigationOptions: {
             tabBarLabel: 'Pedometer'
         }
+    },
+
+    Calendar: {
+      screen: CalendarDisplayer,
+      navigationOptions: {
+        tabBarLabel: 'Calendar'
+      }
     },
 }, {
   tabBarOptions: {
