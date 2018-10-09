@@ -18,6 +18,7 @@ export default StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         borderRadius: 10,
+        marginBottom: 20,
     },
 
     pedometerText: {
