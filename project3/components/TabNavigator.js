@@ -11,9 +11,11 @@ class todoTab extends React.Component {
         super(props);
         this.state = {
             todoList: [],
+            finishedTodoList:[],
             currentTodoNr: 0,
         };
         this.updateTodoList = this.updateTodoList.bind(this);
+        this.updateFinishedTodoList = this.updateFinishedTodoList.bind(this);
     }
 
     componentDidMount(){
@@ -23,7 +25,7 @@ class todoTab extends React.Component {
                 stores.map((result, i, store) => {
                     let key = store[i][0];
                     let value = store[i][1];
-                    if(key !== "CurrentTodoNr"){
+                    if(key !== "CurrentTodoNr" && key.substring(0,4) !== "done"){
                         //Retrieves the List with name and date (which is stringyfied), and parses it so it becomes an Array.
                         const valueList = JSON.parse(value);
                         updateList.push({
@@ -63,6 +65,10 @@ class todoTab extends React.Component {
         return todosWithDate.concat(todosWithoutDate);
     }
 
+    updateFinishedTodoList(list){
+        this.setState({finishedTodoList:list});
+    }
+
     //Updates the todolist, so the user get immediate update.
     updateTodoList(list){
         const sortedByDate = this.sortByDate(list);
@@ -80,7 +86,7 @@ class todoTab extends React.Component {
 
     render() {
         return (
-            <TodoList todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
+            <TodoList finishedTodoList = {this.state.finishedTodoList} todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateFinishedTodoList = {this.updateFinishedTodoList} updateParentTodoList = {this.updateTodoList}/>
         );
     }
 }

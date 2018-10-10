@@ -1,7 +1,9 @@
 import React from 'react';
-import {AsyncStorage, Image, Modal, TouchableOpacity, Text, View, TextInput} from 'react-native';
+import {AppState, AsyncStorage, Image, Modal, TouchableOpacity, Text, View, TextInput} from 'react-native';
 import styles from "../stylesheets/ListItem.style.js";
 import DatePicker from 'react-native-datepicker';
+import { CheckBox } from 'react-native-elements'
+import App from "../App";
 
 export default class ListItem extends React.Component {
     constructor(props){
@@ -10,16 +12,54 @@ export default class ListItem extends React.Component {
             date:"",
             name:"",
             modalVisible: false,
+            dueDate: false,
+            done:false,
+            appState: AppState.currentState,
         });
     }
 
     //Since both date and name may be changed, the state is set by the props which comes from TodoList.js
     //When the name or date is changed, the state is changed and the user get immediate update!
     componentDidMount(){
+        AppState.addEventListener('change', this.handleAppStateChange);
         this.setState({
-            date:this.props.date,
-            name:this.props.name
+            date: this.props.date,
+            name: this.props.name
         });
+        this.checkDueDate();
+    }
+
+    componentWillUnmount(){
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+
+    handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+
+        }
+        else{this.handleFinishedTodo()}
+        this.setState({appState: nextAppState});
+    };
+
+
+    handleFinishedTodo(){
+        if(this.state.done){
+            const finishedList = [this.props.todoNr, this.state.name, this.state.date];
+            this.props.handleFinishedTodo(finishedList);
+        }
+    }
+
+    //This Function checks whether a given due date to an to-do is today or have been
+    //The text will be red, as an reminder for the user 
+    checkDueDate(){
+        const today = new Date();
+        const dueDate = new Date(this.props.date);
+        if(dueDate <= today){
+            this.setState({dueDate:true});
+        }
+        else{
+            this.setState({dueDate:false})
+        }
     }
 
     //Set the modal visible
@@ -44,17 +84,28 @@ export default class ListItem extends React.Component {
             throw error;
         }
 
+
         //Creates a list to update the list immediately when the user have changed the date or name
         const updateList = [this.props.todoNr, this.state.name, this.state.date];
         this.props.updateSortedList(updateList);
+
+
+        this.checkDueDate();
 
     };
 
     render() {
         return (
             <React.Fragment>
-                <View style={styles.todoItemTop}>
-                    <Text style={styles.itemText}>{this.state.name}</Text>
+                <TouchableOpacity onPress={() => {this.setModalVisible(true);}} style={styles.todoItemTop}>
+                    <CheckBox
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        containerStyle={styles.checkBtn}
+                        checked={this.state.done}
+                        onIconPress={() => this.setState({done:!this.state.done})}
+                    />
+                    <Text style={this.state.dueDate ? styles.itemRed : styles.itemText}>{this.state.name}</Text>
                     {/*Button to open the modal, where the user may enter date, save and delete the todo*/}
                     <TouchableOpacity
                         onPress={() => {
@@ -62,7 +113,7 @@ export default class ListItem extends React.Component {
                         }}>
                         <Image style={styles.todoInfo} source={require('../assets/information.png')}/>
                     </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.todoItemBottom}>
                     <Text style={styles.dateText}>{this.state.date}</Text>
                 </View>
@@ -86,6 +137,7 @@ export default class ListItem extends React.Component {
                             <View style={styles.modalItem}>
                                 {/*Date picker so the user could choose an due date to the todo.*/}
                                 <DatePicker
+                                    style={styles.datePicker}
                                     date={this.state.date}
                                     mode="date"
                                     placeholder="select date"

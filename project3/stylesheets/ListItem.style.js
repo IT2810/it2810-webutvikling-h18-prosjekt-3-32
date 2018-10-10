@@ -7,7 +7,6 @@ export default StyleSheet.create({
         width: "100%",
         backgroundColor: "#ededed",
         alignItems: "center",
-        justifyContent: "space-between",
         flexDirection: "row",
     },
 
@@ -22,11 +21,32 @@ export default StyleSheet.create({
     },
 
     itemText: {
-        maxWidth: "80%",
-        marginLeft: 10,
+        maxWidth: "78%",
+        width: "78%",
+        marginLeft: -30,
         fontSize: 16,
         color: "#7f7f7f",
     },
+
+    itemRed: {
+        width: "78%",
+        maxWidth: "78%",
+        marginLeft: -30,
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#ff5e5e",
+    },
+
+    checkBtn:{
+        backgroundColor: "transparent",
+        marginLeft: -3,
+    },
+
+    todoInfo:{
+        height: 30,
+        width: 30,
+    },
+
 
     dateText: {
         fontSize: 12,
@@ -61,11 +81,6 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
 
-    todoInfo:{
-        height: 30,
-        width: 30,
-        marginRight: 20,
-    },
 
     modalClose: {
         alignSelf: "flex-start",
@@ -84,8 +99,9 @@ export default StyleSheet.create({
         fontSize: 25,
         textAlign: "center",
         backgroundColor: "#dddddd",
-        padding: 10,
+        padding: 20,
     },
+
 
     modal: {
         alignItems: "center",
@@ -94,7 +110,7 @@ export default StyleSheet.create({
 
     modalItem: {
         width: "100%",
-        height: "15%",
+        height: "18%",
         backgroundColor: "#ededed",
         borderBottomWidth: 0.2,
         justifyContent: "center",
