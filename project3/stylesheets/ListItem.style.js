@@ -10,11 +10,30 @@ export default StyleSheet.create({
         flexDirection: "row",
     },
 
+    topDone:{
+        flex: 1,
+        height: 70,
+        width: "100%",
+        backgroundColor: "#939393",
+        alignItems: "center",
+        flexDirection: "row",
+    },
+
     todoItemBottom:{
         flex: 1,
         height: 18,
         width: "100%",
         backgroundColor: "#ededed",
+        alignItems: "center",
+        justifyContent: "center",
+        borderBottomWidth: 0.25,
+    },
+
+    bottomDone: {
+        flex: 1,
+        height: 18,
+        width: "100%",
+        backgroundColor: "#939393",
         alignItems: "center",
         justifyContent: "center",
         borderBottomWidth: 0.25,
@@ -40,6 +59,7 @@ export default StyleSheet.create({
     checkBtn:{
         backgroundColor: "transparent",
         marginLeft: -3,
+        borderColor: "transparent",
     },
 
     todoInfo:{

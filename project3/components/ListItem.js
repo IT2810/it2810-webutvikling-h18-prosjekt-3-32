@@ -102,10 +102,8 @@ export default class ListItem extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <TouchableOpacity onPress={() => {this.setModalVisible(true);}} style={styles.todoItemTop}>
+                <TouchableOpacity onPress={() => {this.setModalVisible(true);}} style={this.state.done ? styles.topDone : styles.todoItemTop}>
                     <CheckBox
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
                         containerStyle={styles.checkBtn}
                         checked={this.state.done}
                         onIconPress={() => this.setState({done:!this.state.done})}
@@ -119,7 +117,7 @@ export default class ListItem extends React.Component {
                         <Image style={styles.todoInfo} source={require('../assets/information.png')}/>
                     </TouchableOpacity>
                 </TouchableOpacity>
-                <View style={styles.todoItemBottom}>
+                <View style={this.state.done ? styles.bottomDone : styles.todoItemBottom}>
                     <Text style={styles.dateText}>{this.state.date}</Text>
                 </View>
                 <View>
