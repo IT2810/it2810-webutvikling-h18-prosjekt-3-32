@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, List, TouchableOpacity, Modal, Image, TextInput } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, List, TouchableOpacity, Modal, Image, TextInput } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import styles from "../stylesheets/Calendar.style.js";
 import DatePicker from 'react-native-datepicker';
@@ -9,13 +9,14 @@ export default class CalendarDisplayer extends React.Component {
       super(props);
       this.state = {
         date: "",
-        time: "",
+        startTime: "",
+        endTime: "",
+        eventText: "",
+        currEventNr: 1,
         modalVisible: false,
-        items: {'2018-10-09': [{name: 'Finish calendar page on this app', time: '16:00-18:00'}],
-                 '2018-10-11': [{name: 'Finish assignment 2 in IR', time: '10:00-16:00'}],
-                 '2018-10-12': [{name: 'Forelesning', time: '12:15-14:00'},{name: 'Fylla', time: '18:00-23:59'}],
-                },
+        items: {},
       };
+
     }
 
 
@@ -53,6 +54,7 @@ export default class CalendarDisplayer extends React.Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.modalVisible}
+                    //If the back button on the users phone is pressed, close the Modal
                     onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
                     <View style={styles.modal}>
                         {/*Simple backbutton if the user choose to not do any changes*/}
@@ -66,12 +68,12 @@ export default class CalendarDisplayer extends React.Component {
                         </View>
                         <TextInput
                             style={styles.textInput}
-                            onChangeText={(text) => this.setState({newEventText : text})}
+                            onChangeText={(text) => this.setState({eventText : text})}
                             placeholder={"Event description"}
                         />
 
                         <View style={styles.modalItem}>
-                            {/*Date picker so the user could choose an due date to the todo.*/}
+                            {/*Date picker so the user can choose an event date.*/}
                             <DatePicker
                                 date={this.state.date}
                                 mode="date"
@@ -84,21 +86,41 @@ export default class CalendarDisplayer extends React.Component {
                             />
                         </View>
                         <View style={styles.modalItem}>
-                            {/*Date picker so the user could choose an due date to the todo.*/}
+                            {/*Time picker so the user can choose event start time.*/}
                             <DatePicker
-                                date={this.state.date}
+                                date={this.state.startTime}
                                 mode="time"
-                                placeholder="select time"
-                                format="HH:MM"
+                                placeholder="start time"
+                                is24Hour={true}
+                                format="LT"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
-                                onTimeChange={(time) => {this.setState({time: time})}}
+                                onDateChange={(time) => {
+                                  this.setState({startTime: time},
+                                  () => console.log(this.state.startTime));
+                                  }
+                                }
+                            />
+                            {/*Time picker so the user can choose event end time.*/}
+                            <DatePicker
+                                date={this.state.endTime}
+                                mode="time"
+                                placeholder="end time"
+                                is24Hour={true}
+                                format="LT"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                onDateChange={(time) => {
+                                  this.setState({endTime: time},
+                                  () => console.log(this.state.sendTime));
+                                  }
+                                }
                             />
                         </View>
                         <View style={styles.modalItem}>
                             {/*Button to save the changes done in the modal*/}
                             <TouchableOpacity style={styles.saveTodo}
-                                              onPress={() => {this.setModalVisible(!this.state.modalVisible);}}>
+                                              onPress={() => { this.addEvent(this.state.currEventNr);}}>
                                 <Text style={styles.saveText}>Save</Text>
                             </TouchableOpacity>
                         </View>
@@ -121,13 +143,67 @@ export default class CalendarDisplayer extends React.Component {
       this.setState({modalVisible: visible});
     }
 
-    addEvent(){
-      alert("Add new event");
+    addEvent = (id) => {
+        //Should maybe clear input field here
+
+        if(this.state.eventText !== "" && this.state.date !== "" && this.state.startTime !== "" && this.state.startTime !== ""){
+          //Get current date
+          const currDate = this.state.date;
+          //If there is no object for current date
+          if(!this.state.items[currDate]){
+            //Then make object with current date as key
+            this.state.items[currDate] = [];
+          }
+          //Add event to object
+          this.state.items[currDate].push({
+            name: this.state.eventText,
+            startTime: this.state.startTime,
+            endTime: this.state.endTime,
+          });
+          // Making new empty object to add the newItems in
+          const newItems = {};
+          //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
+          Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+          //Set item state to be newItems, and reset all other states
+          this.setState({
+            currEventNr: this.state.currEventNr+1,
+            eventText: "",
+            date: "",
+            startTime: "",
+            endTime: "",
+            items: newItems,
+          });
+          //console.log("NEW LIST: " + newList);
+          //Add to AsyncStorage
+          const AsyncList = [this.state.eventText, this.state.date, this.state.startTime, this.state.endTime];
+          this.storeEvent("event"+id.toString(), JSON.stringify(AsyncList));
+          //alert("Trying to store: " + id.toString() + " as " + JSON.stringify(AsyncList));
+
+          //this.storeEvent("CurrentEventNr", id.toString());
+          //Close modal
+          this.setModalVisible(!this.state.modalVisible);
+        }
+        else{alert("No fields can be empty!")};
+
     }
+
+    //Store event in AsyncStorage. This is always called from addEvent
+    storeEvent = async (id, data) => {
+      //console.log("Made it to store event. Id is: " + id +" and Data is: " + data);
+        try {
+            await AsyncStorage.setItem(id, data);
+            alert("Stored in async: " + data);
+        } catch (error) {
+          console.log(error);
+            throw error;
+        }
+    };
+
 
     loadItems(day) {
       setTimeout(() => {
         //Run this loop 99 times
+        
         for (let i = -15; i < 85; i++) {
           //Getting "today's" date. By today I mean the relevant date,
           //i.e the one we're looping through. When i=0, that is the current date
@@ -145,6 +221,7 @@ export default class CalendarDisplayer extends React.Component {
           }
         }
         //console.log(this.state.items);
+
         //Making a new, empty object to add the newItems in
         const newItems = {};
         //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
@@ -159,14 +236,23 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     renderItem(item) {
-      const timeString = item.time;
+      if(item.startTime && item.endTime){
+        return (
+          <TouchableOpacity style={styles.item} onPress={this.showItemInfo.bind(item.name)}>
+            <Text style={styles.itemTime}>{item.startTime + " - " + item.endTime}</Text>
+            <Text style={styles.itemText} >{item.name}</Text>
+          </TouchableOpacity>
+        );
+      }
+      else{
+        return (
+          <TouchableOpacity style={styles.item} onPress={this.showItemInfo.bind(item.name)}>
+            <Text style={styles.itemText} >{item.name}</Text>
+          </TouchableOpacity>
+        );
+      }
 
-      return (
-        <TouchableOpacity style={styles.item} onPress={this.showItemInfo.bind(item.name)}>
-          <Text style={styles.itemTime}>{item.time}</Text>
-          <Text style={styles.itemText} >{item.name}</Text>
-        </TouchableOpacity>
-      );
+
     }
 
     showItemInfo(itemName){
