@@ -33,6 +33,8 @@ export default class ListItem extends React.Component {
         AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
+    //This function checks the current state of the device (active, background, inactive)
+    //If the app is closed, this.handleFinishedTodo will be triggered
     handleAppStateChange = (nextAppState) => {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 
@@ -42,6 +44,9 @@ export default class ListItem extends React.Component {
     };
 
 
+    //This function only run when the application is closed.
+    //It checks whether a to-do is marked as done or not, if it is (when the application is closed), the to-do is removed from the list
+    //The to-do is also renamed in the AsyncStorage (see line 69 in TodoList.js for more!)
     handleFinishedTodo(){
         if(this.state.done){
             const finishedList = [this.props.todoNr, this.state.name, this.state.date];

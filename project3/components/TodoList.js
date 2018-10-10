@@ -66,6 +66,7 @@ export default class TodoList extends React.Component {
         else{alert("Todoen må ha en beskrivelse!");}
     };
 
+    //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
     handleFinishedTodo(list){
         const id = list[0]; const text = list[1]; const date = list[2];
         const AsyncList = [text,date];

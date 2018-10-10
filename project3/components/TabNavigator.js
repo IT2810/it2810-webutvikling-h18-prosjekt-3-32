@@ -65,6 +65,7 @@ class todoTab extends React.Component {
         return todosWithDate.concat(todosWithoutDate);
     }
 
+    //Updates the finished todolist
     updateFinishedTodoList(list){
         this.setState({finishedTodoList:list});
     }
