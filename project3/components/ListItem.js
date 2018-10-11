@@ -3,7 +3,6 @@ import {AppState, AsyncStorage, Image, Modal, TouchableOpacity, Text, View, Text
 import styles from "../stylesheets/ListItem.style.js";
 import DatePicker from 'react-native-datepicker';
 import { CheckBox } from 'react-native-elements'
-import App from "../App";
 
 export default class ListItem extends React.Component {
     constructor(props){
@@ -24,7 +23,8 @@ export default class ListItem extends React.Component {
         AppState.addEventListener('change', this.handleAppStateChange);
         this.setState({
             date: this.props.date,
-            name: this.props.name
+            name: this.props.name,
+            done: this.props.done,
         });
         this.checkDueDate();
     }
@@ -43,13 +43,12 @@ export default class ListItem extends React.Component {
         this.setState({appState: nextAppState});
     };
 
-
     //This function only run when the application is closed.
     //It checks whether a to-do is marked as done or not, if it is (when the application is closed), the to-do is removed from the list
     //The to-do is also renamed in the AsyncStorage (see line 69 in TodoList.js for more!)
     handleFinishedTodo(){
         if(this.state.done){
-            const finishedList = [this.props.todoNr, this.state.name, this.state.date];
+            const finishedList = [this.props.todoNr, this.state.name, this.state.date, this.state.done];
             this.props.handleFinishedTodo(finishedList);
         }
     }
@@ -67,9 +66,24 @@ export default class ListItem extends React.Component {
         }
     }
 
-    //Set the modal visible
+    //Checks if the to-do is done or not, when the user press the checkbutton
+    handlePressedCheckbox(){
+        if(this.props.done){
+            alert("This todo is already finished");
+        }
+        else{
+            this.setState({done:!this.state.done});
+        }
+    }
+
+    //Set the modal visible, if the to-do isn't finished.
     setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+        if(this.props.done){
+            alert("This todo is already finished");
+        }
+        else{
+            this.setState({modalVisible: visible});
+        }
     }
 
     //deleteTodo delete an item with the given id.
@@ -89,14 +103,10 @@ export default class ListItem extends React.Component {
             throw error;
         }
 
-
         //Creates a list to update the list immediately when the user have changed the date or name
         const updateList = [this.props.todoNr, this.state.name, this.state.date];
         this.props.updateSortedList(updateList);
-
-
         this.checkDueDate();
-
     };
 
     render() {
@@ -106,7 +116,7 @@ export default class ListItem extends React.Component {
                     <CheckBox
                         containerStyle={styles.checkBtn}
                         checked={this.state.done}
-                        onIconPress={() => this.setState({done:!this.state.done})}
+                        onIconPress={() => this.handlePressedCheckbox()}
                     />
                     <Text style={this.state.dueDate ? styles.itemRed : styles.itemText}>{this.state.name}</Text>
                     {/*Button to open the modal, where the user may enter date, save and delete the todo*/}

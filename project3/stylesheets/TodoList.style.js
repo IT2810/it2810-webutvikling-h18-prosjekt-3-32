@@ -36,5 +36,15 @@ export default StyleSheet.create({
         height: "80%",
         color: "#a0a0a0",
         fontSize: 18,
+    },
+
+    finishedTodosBtn: {
+        width: "100%",
+        height: "7%",
+        justifyContent: "center",
+        alignItems: "center",
+        borderTopWidth: 0.5,
+        borderBottomWidth: 0.5,
+
     }
 });

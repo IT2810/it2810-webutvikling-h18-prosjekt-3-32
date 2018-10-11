@@ -122,7 +122,6 @@ export default StyleSheet.create({
         padding: 20,
     },
 
-
     modal: {
         alignItems: "center",
         justifyContent: "center",
