@@ -48,8 +48,6 @@ Som nevnt tidligere er dette prosjektet utviklet i React Native. Som det ble opp
 
 Som det står i oppgaveteksten, så har vi tatt i bruk AsyncStorage. [https://facebook.github.io/react-native/docs/asyncstorage] Her lagres alt av data mellom hver gang applikasjonen kjøres, slik at neste gang brukeren går inn på applikasjonen, er det ingen data som har gått tapt. Ulik data har ulike nøkler, slik at det lett å skille mellom hva som skal hentes ut, når det hentes ut.
 
-### Komponentarkitektur
-
 ## Testing
 
 #### Jest 
