@@ -1,6 +1,7 @@
 import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
+    //---------Calendar elements--------
     calendarContainer: {
       width: "100%",
       height: "100%",
@@ -52,6 +53,8 @@ export default StyleSheet.create({
       width: "100%",
       height: "80%",
     },
+
+    //-------Modal elements----------
     deleteTodo: {
         width: "100%",
         height: "100%",
@@ -118,12 +121,14 @@ export default StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
     },
+
     textInput: {
         width: "80%",
         height: "12%",
         color: "#a0a0a0",
         fontSize: 18,
     },
+
     newEventTitle: {
         //width: "80%",
         height: "100%",
@@ -133,11 +138,13 @@ export default StyleSheet.create({
         flex: 8,
         lineHeight: 50,
     },
+
     backBtn: {
         height: "100%",
         flex: 2,
         marginTop: 10,
     },
+
     newEventTitleBar: {
       display: "flex",
       flexDirection: "row",
