@@ -11,35 +11,61 @@ class todoTab extends React.Component {
         super(props);
         this.state = {
             todoList: [],
+            finishedTodoList:[],
+            showList:[],
             currentTodoNr: 0,
         };
         this.updateTodoList = this.updateTodoList.bind(this);
+        this.updateFinishedTodoList = this.updateFinishedTodoList.bind(this);
+        this.updateShowList = this.updateShowList.bind(this);
     }
 
     componentDidMount(){
-        let updateList = [];
+        let todoList = [];
+        let finishedTodoList = [];
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
                     let key = store[i][0];
                     let value = store[i][1];
-                    if(key !== "CurrentTodoNr"){
-                        //Retrieves the List with name and date (which is stringyfied), and parses it so it becomes an Array.
+
+                    //Checks if the item is a to-do
+                    if(key.substring(0,4) === "todo"){
                         const valueList = JSON.parse(value);
-                        updateList.push({
+                        todoList.push({
                             key: key,
                             todoNr: key,
                             todoText: valueList[0],
                             todoDate: valueList[1],
+                            done: valueList[2],
+                        });
+                    }
+
+                    //Checks if the item is a finished to-do
+                    else if (key.substring(0,4) === "done"){
+                        const valueList = JSON.parse(value);
+                        finishedTodoList.push({
+                            key: key,
+                            todoNr: key,
+                            todoText: valueList[0],
+                            done: valueList[2],
                         });
                     }
                 });
-                const sortedByDate = this.sortByDate(updateList);
-                this.setState({todoList:sortedByDate});
+
+                //Sorts the imported list from AsyncStorage and updates the state to all three lists
+                const sortedByDateTodos = this.sortByDate(todoList);
+                const sortedByDateFinishedTodos = this.sortByDate(finishedTodoList);
+                this.setState({
+                    showList:sortedByDateTodos,
+                    todoList:sortedByDateTodos,
+                    finishedTodoList:sortedByDateFinishedTodos,
+                });
             });
         });
     }
 
+    //This function sorts the current list by date
     sortByDate(todoList){
         const todosWithDate = [];
         const todosWithoutDate = [];
@@ -63,6 +89,17 @@ class todoTab extends React.Component {
         return todosWithDate.concat(todosWithoutDate);
     }
 
+    //This is the list being shown to the user, and this function updates the list.
+    updateShowList(list){
+        const sortedByDate = this.sortByDate(list);
+        this.setState({showList:sortedByDate});
+    }
+
+    //Updates the finished todolist
+    updateFinishedTodoList(list){
+        this.setState({finishedTodoList:list});
+    }
+
     //Updates the todolist, so the user get immediate update.
     updateTodoList(list){
         const sortedByDate = this.sortByDate(list);
@@ -80,7 +117,7 @@ class todoTab extends React.Component {
 
     render() {
         return (
-            <TodoList todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateParentTodoList = {this.updateTodoList}/>
+            <TodoList showList = {this.state.showList} finishedTodoList = {this.state.finishedTodoList} todoList = {this.state.todoList} storeTodo = {this.storeTodo} updateShowList = {this.updateShowList} updateFinishedTodoList = {this.updateFinishedTodoList} updateParentTodoList = {this.updateTodoList}/>
         );
     }
 }
@@ -106,15 +143,12 @@ export default createMaterialTopTabNavigator ({
       },
     },
 
-
-
     TodoList: {
       screen: todoTab,
       navigationOptions: {
         tabBarLabel: 'To do'
       }
     },
-
 
     Pedometer: {
         screen: StepCounter,

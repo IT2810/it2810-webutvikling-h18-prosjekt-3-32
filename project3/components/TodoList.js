@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, ScrollView, TextInput, TouchableOpacity, Text, View } from 'react-native';
+import { Button, AsyncStorage, ScrollView, TextInput, TouchableOpacity, Text, View } from 'react-native';
 import ListItem from "./ListItem.js";
 import styles from "../stylesheets/TodoList.style.js";
 
@@ -11,11 +11,13 @@ export default class TodoList extends React.Component {
         this.state = {
             currTodoNr: 1,
             todoText: "",
+            showFinishedTodos: true,
         };
 
         //Binding functions
         this.addTodo = this.addTodo.bind(this);
         this.updateSortedList = this.updateSortedList.bind(this);
+        this.handleFinishedTodo = this.handleFinishedTodo.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
         this.myTextInput = React.createRef();
     };
@@ -46,9 +48,10 @@ export default class TodoList extends React.Component {
             const addList = this.props.todoList.slice();
             addList.push({
                 key: id,
-                todoNr: id,
+                todoNr: "todo"+id,
                 todoText: this.state.todoText,
                 todoDate: "",
+                done: false,
             });
             this.setState({
                 currTodoNr: this.state.currTodoNr + 1,
@@ -56,14 +59,38 @@ export default class TodoList extends React.Component {
             });
             //The list is sent to the parent (app.js), for immediate change on the screen
             this.props.updateParentTodoList(addList);
+            this.props.updateShowList(addList);
 
             //The new to-do is also added in the AsyncStorage, aswell as the latest todoNr.
-            const AsyncList = [this.state.todoText, ""];
-            this.props.storeTodo(id.toString(), JSON.stringify(AsyncList));
+            const AsyncList = [this.state.todoText, "", false];
+            this.props.storeTodo("todo"+id.toString(), JSON.stringify(AsyncList));
             this.props.storeTodo("CurrentTodoNr", id.toString());
         }
-        else{alert("Todoen må ha en beskrivelse!");}
+        else{alert("The todo needs a description!!");}
     };
+
+    //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
+    handleFinishedTodo(list){
+        const id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
+        const AsyncList = [text,date,done];
+
+        AsyncStorage.removeItem(id.toString());
+
+        this.props.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
+        this.props.updateFinishedTodoList(list);
+    }
+
+    //This function is triggered when the user press the button "Show finished todos"
+    //It updates the list being to shown to the user with the preferred list (todos or finished todos)
+    handleShowFinishedTodos(){
+        this.setState({showFinishedTodos:!this.state.showFinishedTodos})
+        if(this.state.showFinishedTodos){
+            this.props.updateShowList(this.props.finishedTodoList)
+        }
+        else{
+            this.props.updateShowList(this.props.todoList)
+        }
+    }
 
     //updateSortedList immediately updates the list when the date is changed.
     //if a to-do with an older date than another to-do is changed, the to-do will move above
@@ -79,6 +106,7 @@ export default class TodoList extends React.Component {
 
         //The list is sent to the parent (app.js), for immediate change on the screen
         this.props.updateParentTodoList(updateList);
+        this.props.updateShowList(updateList);
     }
 
     //deleteTodo deletes an to-do from the todolist.
@@ -93,10 +121,12 @@ export default class TodoList extends React.Component {
         }
         //Passes the list to the parent component, the same way addTodo does it.
         this.props.updateParentTodoList(deleteList);
+        this.props.updateShowList(deleteList);
 
         //The item is also removed from the AsyncStorage
         AsyncStorage.removeItem(id.toString());
     };
+
 
     render() {
         return (
@@ -105,6 +135,7 @@ export default class TodoList extends React.Component {
                     {/*Textinput that automatically gets focused when the user enters the todopage.*/}
                     {/*When text is written, the todoTextstate gets changed*/}
                     <TextInput
+                        placeholder="write something here"
                         ref={this.myTextInput}
                         style={styles.textInput}
                         onChangeText={(text) => this.setState({todoText : text})}
@@ -115,12 +146,18 @@ export default class TodoList extends React.Component {
                         <Text style={styles.toolbarAddBtnText}>Add</Text>
                     </TouchableOpacity>
                 </View>
+                <View  style={styles.finishedTodosBtn}>
+                    <Button
+                        onPress={() => this.handleShowFinishedTodos()}
+                        title={this.state.showFinishedTodos ? "Show finished todos" : "Show todos"}
+                    />
+                </View>
                 <View style={{flex:1}}>
                     {/*Scrollview so the user could scroll if the amount of todos become large*/}
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     {<ScrollView>
-                        {this.props.todoList.map((element) =>
-                        <ListItem updateSortedList = {this.updateSortedList} deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} date = {element.todoDate} todoNr = {element.todoNr}/>
+                        {this.props.showList.map((element) =>
+                        <ListItem handleFinishedTodo = {this.handleFinishedTodo} updateSortedList = {this.updateSortedList} deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} done = {element.done} date = {element.todoDate} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>}
                 </View>
