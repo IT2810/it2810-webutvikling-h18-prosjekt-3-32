@@ -12,9 +12,14 @@ export default class TodoList extends React.Component {
             currTodoNr: 1,
             todoText: "",
             showFinishedTodos: true,
+            todoList: [],
+            finishedTodoList:[],
+            showList:[],
         };
 
         //Binding functions
+        this.updateTodoList = this.updateTodoList.bind(this);
+        this.updateShowList = this.updateShowList.bind(this);
         this.addTodo = this.addTodo.bind(this);
         this.updateSortedList = this.updateSortedList.bind(this);
         this.handleFinishedTodo = this.handleFinishedTodo.bind(this);
@@ -23,6 +28,8 @@ export default class TodoList extends React.Component {
     };
 
     componentDidMount(){
+        let todoList = [];
+        let finishedTodoList = [];
         //Gets the highest todoNr and updates the state to no todos have the same todoNr and key.
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
@@ -33,6 +40,38 @@ export default class TodoList extends React.Component {
                     if(key === "CurrentTodoNr"){
                         this.setState({currTodoNr:parseInt(value)+1});
                     }
+
+                    //Checks if the item is a to-do
+                    if(key.substring(0,4) === "todo"){
+                        const valueList = JSON.parse(value);
+                        todoList.push({
+                            key: key,
+                            todoNr: key,
+                            todoText: valueList[0],
+                            todoDate: valueList[1],
+                            done: valueList[2],
+                        });
+                    }
+
+                    //Checks if the item is a finished to-do
+                    else if (key.substring(0,4) === "done"){
+                        const valueList = JSON.parse(value);
+                        finishedTodoList.push({
+                            key: key,
+                            todoNr: key,
+                            todoText: valueList[0],
+                            done: valueList[2],
+                        });
+                    }
+                });
+
+                //Sorts the imported list from AsyncStorage and updates the state to all three lists
+                const sortedByDateTodos = this.sortByDate(todoList);
+                const sortedByDateFinishedTodos = this.sortByDate(finishedTodoList);
+                this.setState({
+                    showList:sortedByDateTodos,
+                    todoList:sortedByDateTodos,
+                    finishedTodoList:sortedByDateFinishedTodos,
                 });
             });
         });
@@ -45,7 +84,7 @@ export default class TodoList extends React.Component {
         if(this.state.todoText !== ""){
             //Creates a list, sliced from the current todolist
             //Adds the new to-do to the list.
-            const addList = this.props.todoList.slice();
+            const addList = this.state.todoList.slice();
             addList.push({
                 key: id,
                 todoNr: "todo"+id,
@@ -57,14 +96,15 @@ export default class TodoList extends React.Component {
                 currTodoNr: this.state.currTodoNr + 1,
                 todoText : "",
             });
-            //The list is sent to the parent (app.js), for immediate change on the screen
-            this.props.updateParentTodoList(addList);
-            this.props.updateShowList(addList);
+
+            //The list is being sat to both to-do- and showlist for immediate change on the screen.
+            this.updateTodoList(addList);
+            this.updateShowList(addList);
 
             //The new to-do is also added in the AsyncStorage, aswell as the latest todoNr.
             const AsyncList = [this.state.todoText, "", false];
-            this.props.storeTodo("todo"+id.toString(), JSON.stringify(AsyncList));
-            this.props.storeTodo("CurrentTodoNr", id.toString());
+            this.storeTodo("todo"+id.toString(), JSON.stringify(AsyncList));
+            this.storeTodo("CurrentTodoNr", id.toString());
         }
         else{alert("The todo needs a description!!");}
     };
@@ -76,26 +116,26 @@ export default class TodoList extends React.Component {
 
         AsyncStorage.removeItem(id.toString());
 
-        this.props.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
-        this.props.updateFinishedTodoList(list);
+        this.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
+        this.setState({finishedTodoList:list});
     }
 
     //This function is triggered when the user press the button "Show finished todos"
     //It updates the list being to shown to the user with the preferred list (todos or finished todos)
     handleShowFinishedTodos(){
-        this.setState({showFinishedTodos:!this.state.showFinishedTodos})
+        this.setState({showFinishedTodos:!this.state.showFinishedTodos});
         if(this.state.showFinishedTodos){
-            this.props.updateShowList(this.props.finishedTodoList)
+            this.updateShowList(this.state.finishedTodoList)
         }
         else{
-            this.props.updateShowList(this.props.todoList)
+            this.updateShowList(this.state.todoList)
         }
     }
 
     //updateSortedList immediately updates the list when the date is changed.
     //if a to-do with an older date than another to-do is changed, the to-do will move above
     updateSortedList(list){
-        const updateList = this.props.todoList.slice();
+        const updateList = this.state.todoList.slice();
         updateList.map((item) => {
             //checks if the to-do which is changed matches an todonr in the todolist
             if(item.todoNr === list[0]){
@@ -104,9 +144,9 @@ export default class TodoList extends React.Component {
             }
         });
 
-        //The list is sent to the parent (app.js), for immediate change on the screen
-        this.props.updateParentTodoList(updateList);
-        this.props.updateShowList(updateList);
+        //The list is being sat to both to-do- and showlist for immediate change on the screen.
+        this.updateTodoList(updateList);
+        this.updateShowList(updateList);
     }
 
     //deleteTodo deletes an to-do from the todolist.
@@ -114,19 +154,63 @@ export default class TodoList extends React.Component {
     //the element with the given id
     deleteTodo = (id) => {
         const deleteList = [];
-        for(let i = 0; i < this.props.todoList.length; i++){
-            if(this.props.todoList[i].todoNr !== id){
-                deleteList.push(this.props.todoList[i]);
+        for(let i = 0; i < this.state.todoList.length; i++){
+            if(this.state.todoList[i].todoNr !== id){
+                deleteList.push(this.state.todoList[i]);
             }
         }
-        //Passes the list to the parent component, the same way addTodo does it.
-        this.props.updateParentTodoList(deleteList);
-        this.props.updateShowList(deleteList);
+        //The list is being sat to both to-do- and showlist for immediate change on the screen.
+        this.updateTodoList(deleteList);
+        this.updateShowList(deleteList);
 
         //The item is also removed from the AsyncStorage
         AsyncStorage.removeItem(id.toString());
     };
 
+    //This function sorts the current list by date
+    sortByDate(todoList){
+        const todosWithDate = [];
+        const todosWithoutDate = [];
+
+        todoList.map((item) => {
+            if(item.todoDate !== ""){
+                todosWithDate.push(item);
+            }
+            else{
+                todosWithoutDate.push(item);
+            }
+        });
+
+        todosWithDate.sort(function(a,b){
+            if(a.todoDate !== "" && b.todoDate !== ""){
+                let c = new Date(a.todoDate);
+                let d = new Date(b.todoDate);
+                return c-d;
+            }
+        });
+        return todosWithDate.concat(todosWithoutDate);
+    };
+
+    //This is the list being shown to the user, and this function updates the list.
+    updateShowList(list){
+        const sortedByDate = this.sortByDate(list);
+        this.setState({showList:sortedByDate});
+    }
+
+    //Updates the todolist, so the user get immediate update.
+    updateTodoList(list){
+        const sortedByDate = this.sortByDate(list);
+        this.setState({todoList:sortedByDate});
+    }
+
+    //Function to store values in the AsyncStorage
+    storeTodo = async (id, data) => {
+        try {
+            await AsyncStorage.setItem(id, data);
+        } catch (error) {
+            throw error;
+        }
+    };
 
     render() {
         return (
@@ -156,7 +240,7 @@ export default class TodoList extends React.Component {
                     {/*Scrollview so the user could scroll if the amount of todos become large*/}
                     {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
                     {<ScrollView>
-                        {this.props.showList.map((element) =>
+                        {this.state.showList.map((element) =>
                         <ListItem handleFinishedTodo = {this.handleFinishedTodo} updateSortedList = {this.updateSortedList} deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} done = {element.done} date = {element.todoDate} todoNr = {element.todoNr}/>
                     )}
                     </ScrollView>}
