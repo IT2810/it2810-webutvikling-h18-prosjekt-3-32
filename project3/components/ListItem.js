@@ -96,7 +96,7 @@ export default class ListItem extends React.Component {
     //the new changes are stored in the Asyncstorage by the given todonr
     saveChanges = async () => {
         this.setModalVisible(!this.state.modalVisible);
-        const list = [this.state.name, this.state.date];
+        let list = [this.state.name, this.state.date];
         try {
             await AsyncStorage.setItem(this.props.todoNr.toString(), JSON.stringify(list));
         } catch (error) {

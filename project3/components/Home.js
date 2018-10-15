@@ -17,8 +17,8 @@ export default class Home extends React.Component {
 
     //This function runs when the user loads the application and press the refreshbutton
     refresh(){
-        const todoList = [];
-        const newItems = {};
+        let todoList = [];
+        let newItems = {};
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
@@ -77,8 +77,8 @@ export default class Home extends React.Component {
 
     //This function sorts the current list by date
     sortByDate(todoList){
-        const todosWithDate = [];
-        const todosWithoutDate = [];
+        let todosWithDate = [];
+        let todosWithoutDate = [];
 
         todoList.map((item) => {
             if(item.todoDate !== ""){

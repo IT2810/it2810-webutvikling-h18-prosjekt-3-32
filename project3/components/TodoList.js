@@ -84,7 +84,7 @@ export default class TodoList extends React.Component {
         if(this.state.todoText !== ""){
             //Creates a list, sliced from the current todolist
             //Adds the new to-do to the list.
-            const addList = this.state.todoList.slice();
+            let addList = this.state.todoList.slice();
             addList.push({
                 key: id,
                 todoNr: "todo"+id,
@@ -111,8 +111,8 @@ export default class TodoList extends React.Component {
 
     //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
     handleFinishedTodo(list){
-        const id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
-        const AsyncList = [text,date,done];
+        let id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
+        let AsyncList = [text,date,done];
 
         AsyncStorage.removeItem(id.toString());
 
@@ -135,7 +135,7 @@ export default class TodoList extends React.Component {
     //updateSortedList immediately updates the list when the date is changed.
     //if a to-do with an older date than another to-do is changed, the to-do will move above
     updateSortedList(list){
-        const updateList = this.state.todoList.slice();
+        let updateList = this.state.todoList.slice();
         updateList.map((item) => {
             //checks if the to-do which is changed matches an todonr in the todolist
             if(item.todoNr === list[0]){
@@ -153,7 +153,7 @@ export default class TodoList extends React.Component {
     //The function gets an id as parameter and, creates a new temporarily list, and adds each element from the todolist except
     //the element with the given id
     deleteTodo = (id) => {
-        const deleteList = [];
+        let deleteList = [];
         for(let i = 0; i < this.state.todoList.length; i++){
             if(this.state.todoList[i].todoNr !== id){
                 deleteList.push(this.state.todoList[i]);
@@ -169,8 +169,8 @@ export default class TodoList extends React.Component {
 
     //This function sorts the current list by date
     sortByDate(todoList){
-        const todosWithDate = [];
-        const todosWithoutDate = [];
+        let todosWithDate = [];
+        let todosWithoutDate = [];
 
         todoList.map((item) => {
             if(item.todoDate !== ""){
