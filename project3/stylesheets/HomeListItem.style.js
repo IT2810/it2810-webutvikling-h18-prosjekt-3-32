@@ -1,24 +1,18 @@
 import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
-    todoItem: {
-        height: 60,
+    itemContainer: {
+        height: 70,
         width: "100%",
         backgroundColor: "#ededed",
-        display: "flex",
+        justifyContent: "center",
         alignItems: "center",
-        borderBottomWidth: 0.2,
-        flexDirection: "row",
-        justifyContent: "space-between",
+        borderTopWidth: 0.5,
     },
-    todoItemText: {
-        marginLeft: "1.5%",
+
+    itemText: {
         fontSize: 16,
-        maxWidth: "70%",
+        color: "#7f7f7f",
+        marginBottom: 10,
     },
-    todoItemDate: {
-        marginRight: "1.5%",
-        fontSize: 13,
-        color: "gray",
-    }
 });

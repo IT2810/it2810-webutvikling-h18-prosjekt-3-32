@@ -77,7 +77,7 @@ export default class TodoList extends React.Component {
         });
     }
 
-    //addTodo adds a new to-do, add it to a list, and passes the list to app.js, since the to-do-list is needed at the home screen.
+    //addTodo adds a new to-do, add it to todolist
     //Each element in addTodo gets a key, todoNr, a name and a date(which is empty until the users sets a due date)
     addTodo = (id) => {
         this.myTextInput.current.clear();
@@ -238,7 +238,7 @@ export default class TodoList extends React.Component {
                 </View>
                 <View style={{flex:1}}>
                     {/*Scrollview so the user could scroll if the amount of todos become large*/}
-                    {/*Maps through the todolist (which is a prop from app.js), and creates a listitem for each to-do*/}
+                    {/*Maps through the todolist, and creates a listitem for each to-do*/}
                     {<ScrollView>
                         {this.state.showList.map((element) =>
                         <ListItem handleFinishedTodo = {this.handleFinishedTodo} updateSortedList = {this.updateSortedList} deleteTodo = {this.deleteTodo} name = {element.todoText} key = {element.key} done = {element.done} date = {element.todoDate} todoNr = {element.todoNr}/>
