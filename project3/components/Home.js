@@ -1,54 +1,137 @@
 import React from 'react';
-import { StyleSheet, Text, View, List } from 'react-native';
+import {StyleSheet, Text, View, List, AsyncStorage, ScrollView, Button} from 'react-native';
 import styles from "../stylesheets/Home.style.js";
-import HomeListItem from "./HomeListItem.js";
+import HomeListItemTodo from "./HomeListItemTodo";
+import HomeListItemCalendar from "./HomeListItemCalendar";
+import Moment from "moment";
 
 export default class Home extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        eventsList: [
-          {
-            text: 'HMS-kurs',
-            date: '2018-10-02'
-          },
-          {
-            text: 'Bedpress med gutta as. Det blir fette najs. Kjørrr',
-            date: '2018-10-04'
-          }
-        ],
-        todoList: ['Bake pepperkaker', 'Fikse prosjekt3', 'Flæææ'],
-        dailySteps: 100,
-      };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            todoList: [],
+            calendar: {},
+        };
+    }
+
+    //This function runs when the user loads the application and press the refreshbutton
+    refresh(){
+        let todoList = [];
+        const newItems = {};
+        AsyncStorage.getAllKeys((err, keys) => {
+            AsyncStorage.multiGet(keys, (err, stores) => {
+                stores.map((result, i, store) => {
+                    // get at each store's key/value so you can work with it
+                    let key = store[i][0];
+                    let value = store[i][1];
+
+                    //Checks if the item is a to-do
+                    if(key.substring(0,4) === "todo"){
+                        const valueList = JSON.parse(value);
+                        todoList.push({
+                            key: key,
+                            todoNr: key,
+                            todoText: valueList[0],
+                            todoDate: valueList[1],
+                            done: valueList[2],
+                        });
+                    }
+
+                    //check if key includes event
+                    else if(key.substring(0,5) === "event"){
+                        //Parse the JSON back to a js object
+                        let parsedValue = JSON.parse(value);
+                        //Get key of the js object, which will be the date
+                        let listKeys = Object.keys(parsedValue);
+
+                        //Get all events on this date and show them to the user
+                        let today = Moment().format("YYYY-MM-DD");
+                        if(listKeys.toString().match(today)){
+                            //Use this date as a key when storing the event in state.
+                            //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
+                            this.state.calendar[listKeys[0]] = parsedValue[listKeys[0]];
+                            //Making a new, empty object to add the new item in
+                            //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
+                            Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
+                            //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
+                            this.setState({
+                                calendar: newItems,
+                            });
+                        }
+
+
+                    }
+                });
+                const sortedByDateTodos = this.sortByDate(todoList);
+                this.setState({
+                    todoList:sortedByDateTodos,
+                });
+            });
+        });
+    }
+
+    //This function sorts the current list by date
+    sortByDate(todoList){
+        const todosWithDate = [];
+        const todosWithoutDate = [];
+
+        todoList.map((item) => {
+            if(item.todoDate !== ""){
+                todosWithDate.push(item);
+            }
+            else{
+                todosWithoutDate.push(item);
+            }
+        });
+
+        todosWithDate.sort(function(a,b){
+            if(a.todoDate !== "" && b.todoDate !== ""){
+                let c = new Date(a.todoDate);
+                let d = new Date(b.todoDate);
+                return c-d;
+            }
+        });
+        return todosWithDate.concat(todosWithoutDate);
+    };
+
+    componentDidMount(){
+        this.refresh();
     }
 
     render() {
         return (
-          <View style={styles.homeContainer}>
-            <View style={styles.calendarTodoContainer}>
-                <View style={styles.nextEventsInfoBox}>
-                  <Text style={styles.nextEventsInfoText}>{"Upcoming events"}</Text>
-                </View>
-                {
-                  this.state.eventsList.map((item) => (
-                    <HomeListItem text={item.text} date={item.date} key={item.text}/>
-                  ))
-                }
-                <View style={styles.nextEventsInfoBox}>
-                  <Text style={styles.nextEventsInfoText}>{"To do"}</Text>
-                </View>
-                {
-                  this.state.todoList.map((item) => (
-                    <HomeListItem text={item} key={item}/>
-                  ))
-                }
-            </View>
+            <React.Fragment>
+                <View style={styles.container}>
+                    <View style={{padding: 10, borderBottomWidth: 0.5}}>
+                        {/*Refreshbutton so the user can update the homepage*/}
+                        <Button
+                            onPress={() => this.refresh()}
+                            title={"Refresh homepage"}
+                        />
+                    </View>
+                    <View style={styles.homeItem}>
+                        <Text style={styles.homeItemText}>Today's Events</Text>
+                    </View>
+                    {/*Shows today's events to the user*/}
+                    {<View style={styles.list}>
+                        {Object.keys(this.state.calendar).map((element, i) => (
+                            <HomeListItemCalendar key = {i} name = {this.state.calendar[element][i].name} start = {this.state.calendar[element][i].startTime} end = {this.state.calendar[element][i].endTime} />
+                        ))}
+                    </View>}
 
-            <View style={styles.showSteps}>
-              <Text>{"Number of steps last 24 hours: " + this.state.dailySteps}</Text>
-            </View>
-          </View>
 
+                    <View style={styles.homeItem}>
+                        <Text style={styles.homeItemText}>Upcoming Todos</Text>
+                    </View>
+                    {/*Shows the three first todos to the user*/}
+                    {<View style={styles.list}>
+                        {this.state.todoList.slice(0,3).map((element) =>
+                            <HomeListItemTodo name = {element.todoText} key = {element.key} done = {element.done} date = {element.todoDate} todoNr = {element.todoNr}/>
+                        )}
+                    </View>}
+                </View>
+            </React.Fragment>
         );
     }
 };

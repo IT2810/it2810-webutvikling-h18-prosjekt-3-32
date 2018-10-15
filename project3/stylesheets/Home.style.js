@@ -1,31 +1,34 @@
 import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
-    nextEventsInfoBox: {
-      backgroundColor: "white",
-      height: "10%",
-      width: "100%",
+    container: {
+        height: "100%",
+        width: "100%",
+        borderRadius: 4,
     },
-    homeContainer: {
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      justifyContent: "space-between",
+
+    homeItem: {
+        height: "10%",
+        width: "100%",
+        backgroundColor: "#d1d1d1",
+        alignItems: "center",
+        justifyContent: "center",
     },
-    calendarTodoContainer:{
-        display: "flex",
-        justifyContent: "flex-start",
+
+    homeItemText: {
+        fontSize: 16,
+        color: "#7f7f7f",
     },
-    nextEventsInfoText: {
-      fontSize: 18,
-      color: "black",
-      textAlign: "center",
-      lineHeight: 50,
+
+    list:{
+        width:"100%",
+        borderBottomWidth: 0.5,
     },
-    showSteps: {
-      backgroundColor: "yellow",
-      height: "5%",
-      alignItems: "center",
-      justifyContent: "center",
+
+    listItem:{
+        width:"100%",
+        height: 140,
+        backgroundColor: "red",
+
     },
 });
