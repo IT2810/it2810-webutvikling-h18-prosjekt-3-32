@@ -17,7 +17,7 @@ export default class Home extends React.Component {
 
     //This function runs when the user loads the application and press the refreshbutton
     refresh(){
-        let todoList = [];
+        const todoList = [];
         const newItems = {};
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
@@ -44,13 +44,15 @@ export default class Home extends React.Component {
                         let parsedValue = JSON.parse(value);
                         //Get key of the js object, which will be the date
                         let listKeys = Object.keys(parsedValue);
-
                         //Get all events on this date and show them to the user
                         let today = Moment().format("YYYY-MM-DD");
                         if(listKeys.toString().match(today)){
+                            if(!this.state.calendar[listKeys[0]]){
+                                this.state.calendar[listKeys[0]] = [];
+                            }
                             //Use this date as a key when storing the event in state.
                             //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
-                            this.state.calendar[listKeys[0]] = parsedValue[listKeys[0]];
+                            this.state.calendar[listKeys[0]].push(parsedValue[listKeys[0]][0]);
                             //Making a new, empty object to add the new item in
                             //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
                             Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
@@ -59,16 +61,18 @@ export default class Home extends React.Component {
                                 calendar: newItems,
                             });
                         }
-
-
                     }
                 });
+
+                //Create a sorted list for the homepage
                 const sortedByDateTodos = this.sortByDate(todoList);
                 this.setState({
                     todoList:sortedByDateTodos,
                 });
             });
         });
+
+
     }
 
     //This function sorts the current list by date
