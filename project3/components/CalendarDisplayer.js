@@ -11,6 +11,7 @@ export default class CalendarDisplayer extends React.Component {
         date: "",
         startTime: "",
         endTime: "",
+        eventDate: "",
         eventText: "",
         prevEventNr: 0,
         currEventNr: 1,
@@ -167,14 +168,13 @@ export default class CalendarDisplayer extends React.Component {
                         </View>
                         <View style={styles.modalItem}>
                             {/*Button to save the changes done in the modal*/}
-                            <TouchableOpacity style={styles.saveTodo}
-                                              onPress={() => { this.addEvent(this.state.currEventNr);}}>
+                            <TouchableOpacity style={styles.saveTodo} onPress={() => { this.addEvent(this.state.currEventNr);}}>
                                 <Text style={styles.saveText}>Save</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.modalItem}>
                             {/*Button to delete the todo*/}
-                            <TouchableOpacity style={styles.deleteTodo} >
+                            <TouchableOpacity style={styles.deleteTodo} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
                                 <Text style={styles.deleteText}>Delete</Text>
                             </TouchableOpacity>
                         </View>
@@ -198,19 +198,56 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     deleteEvent = (id) => {
+        console.log("In deleteEvent. ID is: " + id);
+        let deleteIndex = null;
+        const evtDate = this.state.eventDate;
+        //Go through each element in today's list
+        Object.keys(this.state.items[evtDate]).forEach( index =>
+          //If events eventNr is equal to current event nr, then we know what to delete.
+          {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
+            //Saving the index
+            deleteIndex = index;
+          }}
+        );
+        //If we found something to delete
+        if(deleteIndex!=null){
+          //Delete it
+          this.state.items[evtDate].splice(deleteIndex, 1);
+        }
+        //Also deletes event from Async
+        AsyncStorage.removeItem("event"+id.toString());
 
+        //Making new empty object to add the newItems in
+        const newItems = {};
+        //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
+        Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+
+        //Set item state to be newItems, and reset all other states
+        this.setState({
+          items: newItems,
+          currEventNr: this.state.currEventNr+1,
+          eventText: "",
+          eventDate: "",
+          startTime: "",
+          endTime: "",
+          modalVisible: false,
+        });
+
+        this.loadItems.bind(this);
     }
 
     addEvent = (id) => {
+        console.log("In addEvent. ID is: " + id);
         //Get current date
-        const currDate = this.state.date;
+        const newDate = this.state.date;
+        const evtDate = this.state.eventDate;
         //Check whether the event already exists, or if it's a new one
         if(this.state.currEventNr < this.state.prevEventNr){
           let deleteIndex = null;
           //Go through each element in today's list
-          Object.keys(this.state.items[currDate]).forEach( index =>
+          Object.keys(this.state.items[evtDate]).forEach( index =>
             //If events eventNr is equal to current event nr, then we know what to delete.
-            {if(this.state.items[currDate][index].eventNr == this.state.currEventNr){
+            {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
               //Saving the index
               deleteIndex = index;
             }}
@@ -218,7 +255,7 @@ export default class CalendarDisplayer extends React.Component {
           //If we found something to delete
           if(deleteIndex!=null){
             //Delete it
-            this.state.items[currDate].splice(deleteIndex, 1);
+            this.state.items[evtDate].splice(deleteIndex, 1);
           }
         }
 
@@ -227,31 +264,30 @@ export default class CalendarDisplayer extends React.Component {
         //Check if all inputs fields are filled in
         if(this.state.eventText !== "" && this.state.date !== "" && this.state.startTime !== "" && this.state.startTime !== ""){
           //If there is no object for current date
-          if(!this.state.items[currDate]){
+          if(!this.state.items[newDate]){
             //Then make object with current date as key
-            this.state.items[currDate] = [];
+            this.state.items[newDate] = [];
           }
           //If date contains at least one element
-          if(this.state.items[currDate].length>0){
+          if(this.state.items[newDate].length>0){
             //Check if date has an object where name value is "No upcoming events."
             //If so, this must be deleted in order for it not to show in calendar
-            if(this.state.items[currDate][0]["name"]=="No upcoming events."){
+            if(this.state.items[newDate][0]["name"]=="No upcoming events."){
               //Delete event that says "no upcoming event"
-              delete this.state.items[currDate];
+              delete this.state.items[newDate];
               //Create new, empty date key in object
-              this.state.items[currDate] = [];
+              this.state.items[newDate] = [];
             }
           }
 
           //Push event Object to today's list
-          this.state.items[currDate].push({
+          this.state.items[newDate].push({
             name: this.state.eventText,
             startTime: this.state.startTime,
-            date: currDate,
+            eventDate: newDate,
             endTime: this.state.endTime,
             eventNr: this.state.currEventNr,
           });
-
 
           // Making new empty object to add the newItems in
           const newItems = {};
@@ -261,10 +297,10 @@ export default class CalendarDisplayer extends React.Component {
           //console.log(newItems);
           //Make object to store in AsyncStorage
           const AsyncObject = {};
-          AsyncObject[currDate] = [];
-          AsyncObject[currDate].push({
+          AsyncObject[newDate] = [];
+          AsyncObject[newDate].push({
             name: this.state.eventText,
-            date: currDate,
+            eventDate: newDate,
             startTime: this.state.startTime,
             endTime: this.state.endTime,
             eventNr: this.state.currEventNr,
@@ -275,7 +311,7 @@ export default class CalendarDisplayer extends React.Component {
             items: newItems,
             currEventNr: this.state.currEventNr+1,
             eventText: "",
-            date: "",
+            eventDate: "",
             startTime: "",
             endTime: "",
           }); //console.log(this.state.items));
@@ -311,16 +347,25 @@ export default class CalendarDisplayer extends React.Component {
 
     loadItems(day) {
       setTimeout(() => {
-        //If there are no events in state
+        //Get today's date
+        const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+        //If there are no events in state at all
         if(Object.keys(this.state.items).length === 0){
-          //Get today's date
-          const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
-          const strTime = this.timeToString(time);
           this.state.items[strTime] = [];
           //Add description to object. Notice how no start or end time is added
           //in order for this item to be returned in a different way
           this.state.items[strTime].push({
             name: 'No upcoming events.',
+          });
+        }
+        //Check if today's list is empty, if yes, add "No events today"
+        if(!this.state.items[strTime]){
+          this.state.items[strTime] = [];
+          //Add description to object. Notice how no start or end time is added
+          //in order for this item to be returned in a different way
+          this.state.items[strTime].push({
+            name: 'No events to show.',
           });
         }
         //Making a new, empty object to add the newItems in
@@ -336,7 +381,6 @@ export default class CalendarDisplayer extends React.Component {
 
     renderItem(item) {
       //If item has starTime and endTime, then return this code.
-      //console.log(item);
       if(item.startTime && item.endTime){
         return (
           <TouchableOpacity style={styles.item} onPress={() => this.showItemInfo(item)}>
@@ -345,11 +389,11 @@ export default class CalendarDisplayer extends React.Component {
           </TouchableOpacity>
         );
       }
-      //If it doesn't have start or end time, then return nothing.
+      //If it doesn't have start or end time, then tell the user they have no upcoming events.
       else{
           return (
             <TouchableOpacity style={styles.item}>
-              <Text style={styles.itemText}> {"No upcoming events."} </Text>
+              <Text style={styles.itemText}> {item.name} </Text>
             </TouchableOpacity>
           );
       }
@@ -364,7 +408,7 @@ export default class CalendarDisplayer extends React.Component {
          eventText: item.name,
          startTime: item.startTime,
          endTime: item.endTime,
-         date: item.date,
+         eventDate: item.eventDate,
          prevEventNr: this.state.currEventNr,
          currEventNr: item.eventNr,
        }, () => this.setModalVisible(true));
