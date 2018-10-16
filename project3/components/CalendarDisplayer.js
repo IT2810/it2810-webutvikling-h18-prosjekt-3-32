@@ -21,7 +21,6 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     componentDidMount(){
-        //AsyncStorage.clear();
         //Gets the highest eventNr and updates the state so that no events have the same eventNr and key.
         AsyncStorage.getAllKeys((err, keys) => {
             AsyncStorage.multiGet(keys, (err, stores) => {
@@ -33,7 +32,6 @@ export default class CalendarDisplayer extends React.Component {
                     if(key === "CurrentEventNr"){
                         this.setState({currEventNr:parseInt(value)+1});
                     }
-                    //console.log("Key is: "+ key);
                     //check if key includes event
                     if(key.includes("event")){
                         //Parse the JSON back to a js object
@@ -188,9 +186,6 @@ export default class CalendarDisplayer extends React.Component {
 
     //Set the modal visible
     setModalVisible(visible) {
-      console.log("In setModalVisible.");
-      console.log("currEventNr after changing: " + this.state.currEventNr);
-      console.log("prevEventNr after changing: " + this.state.prevEventNr);
       this.setState({
 
         modalVisible: visible
@@ -198,7 +193,6 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     deleteEvent = (id) => {
-        console.log("In deleteEvent. ID is: " + id);
         let deleteIndex = null;
         const evtDate = this.state.eventDate;
         //Go through each element in today's list
@@ -237,7 +231,6 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     addEvent = (id) => {
-        console.log("In addEvent. ID is: " + id);
         //Get current date
         const newDate = this.state.date;
         const evtDate = this.state.eventDate;
@@ -293,8 +286,6 @@ export default class CalendarDisplayer extends React.Component {
           const newItems = {};
           //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
           Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
-          //console.log("New items: ");
-          //console.log(newItems);
           //Make object to store in AsyncStorage
           const AsyncObject = {};
           AsyncObject[newDate] = [];
@@ -306,7 +297,6 @@ export default class CalendarDisplayer extends React.Component {
             eventNr: this.state.currEventNr,
           });
           //Set item state to be newItems, and reset all other states
-          //console.log("state items: ");
           this.setState({
             items: newItems,
             currEventNr: this.state.currEventNr+1,
@@ -314,9 +304,8 @@ export default class CalendarDisplayer extends React.Component {
             eventDate: "",
             startTime: "",
             endTime: "",
-          }); //console.log(this.state.items));
+          });
           //Store event in async
-          console.log("Storing in async");
           this.storeEvent("event"+id.toString(), JSON.stringify(AsyncObject));
           //Store currEventNr in async
           this.storeEvent("CurrentEventNr", id.toString());
@@ -338,7 +327,6 @@ export default class CalendarDisplayer extends React.Component {
     //Store event in AsyncStorage. This is always called from addEvent
     storeEvent = async (id, data) => {
         try {
-            console.log("Storing: " + id + " Data: " + data);
             await AsyncStorage.setItem(id, data);
         } catch (error) {
             throw error;
@@ -400,10 +388,6 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     showItemInfo(item){
-       console.log("In showItemInfo function.");
-       console.log("currEventNr before changing: " + this.state.currEventNr);
-       console.log("prevEventNr before changing: " + this.state.prevEventNr);
-       console.log("item eventNr: " + item.eventNr);
        this.setState({
          eventText: item.name,
          startTime: item.startTime,
