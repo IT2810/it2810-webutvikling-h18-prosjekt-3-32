@@ -19,13 +19,19 @@ Applikasjonen er ment å være en personlig informasjon og motivasjons manager. 
 
 #### "To do"
 
-På to do fanen kan du holde styr på todos og viktige gjøremål. Følgende funksjonalitet finner du på denne fanen:
+På to do fanen kan du holde styr på todos og viktige gjøremål. Har kan man sette opp diverse man må huske å gjøre, og eventuellt sette en frist på det. Følgende funksjonalitet finner du på denne fanen:
 
 * Legge til todo
-* Legge til dato på en todo (listen vil oppdatere seg basert på dato)
+* Legge til dato på en todo (listen vil oppdatere seg basert på dato). Dersom en dato er nåværende dato eller har vært vil teksten bli markert som rød, som en påminnelse om at tiden har gått ut på denne todoen. 
 * Slette en todo
 * Markerere en todo som ferdig (ved å trykke på sjekkboksen)
-* Når applikasjonen lukkes vil todos som er ferdig havne i en egen liste over ferdige todos. Trykker man på knappen "Show finished todos" får man opp en liste over todos man allerede har gjort. 
+* Når applikasjonen lukkes vil todos som er ferdig havne i en egen liste over ferdige todos. Trykker man på knappen "Show finished todos" får man opp en liste over todos man allerede har gjort.
+
+Her er noen skjermbilder fra der todolisten er i bruk. På bilde 1 er det lagt til todos med dato, på bilde 2 er øverste todo huket av for ferdig, og neste gang applikasjonen åpnes er denne havnet på listen over ferdige todos.
+
+![Todobilde1](http://i65.tinypic.com/mmep6t.jpg)
+![Todobilde2](http://i66.tinypic.com/2qisp5g.jpg)
+![Todobilde3](http://i63.tinypic.com/1zz2la9.jpg)
 
 #### "Pedometer"
 
@@ -68,5 +74,31 @@ Som det står i oppgaveteksten, så har vi tatt i bruk AsyncStorage. [https://fa
 ## Testing
 
 #### Jest 
+
+I dette prosjektet har vi brukt Jest [https://jestjs.io/] for å teste applikasjonens funksjonalitet. Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi har testet på er følgende: 
+
+* Iphone 6s
+* 
+*
+
+## Enhetstesting
+
+Vi har testet de ulike kompenentene og det som finnes av funksjonalitet. 
+
+* TodoList.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| snapshot | En enkel snapshot test av siden. Sjekker om siden er den samme som forrige snapshot. |
+| addTodo | Denne testen sjekker om det blir lagt til en todo. Testen setter *todoText* i state til å være "test", og kjører funksjonen *addTodo(1)*, for å opprette en todo med todonr: *todo1*. Deretter sammenligner den *state.todoList* til å være lik som en testListe, som er ment til å være helt lik listen som opprettes i *addtodo*   |
+| handleFinishedTodo | blabla |
+| handleShowFinishedTodos | blabla |
+| updateSortedList | blabla |
+| deleteTodo | blabla |
+| sortByDate | blabla |
+| updateShowList | blabla |
+| updateTodoList | blabla |
+
+
 
 ## Versjonskontroll
