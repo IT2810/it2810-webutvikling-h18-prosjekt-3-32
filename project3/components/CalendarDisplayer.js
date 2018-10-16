@@ -106,11 +106,11 @@ export default class CalendarDisplayer extends React.Component {
                         {/*Simple backbutton if the user choose to not do any changes*/}
                         <View style={styles.newEventTitleBar}>
                           <TouchableOpacity
-                              onPress={() => {this.setModalVisible(!this.state.modalVisible);}}
+                              onPress={() =>{this.closeModal();}}
                               style={styles.modalClose}>
                               <Image style={styles.backBtn} source={require('../assets/back.png')}/>
                           </TouchableOpacity>
-                          <Text style={styles.newEventTitle}>{"Add a new event"}</Text>
+                          <Text style={styles.newEventTitle}>{"Event info"}</Text>
                         </View>
                         <TextInput
                             style={styles.textInput}
@@ -182,6 +182,22 @@ export default class CalendarDisplayer extends React.Component {
           </View>
 
         );
+    }
+
+    closeModal(){
+      console.log("trying to close modal");
+      let newEventNr = this.state.currEventNr;
+      if(this.state.currEventNr < this.state.prevEventNr){
+        newEventNr = this.state.prevEventNr;
+      }
+      this.setState({
+        eventText: "",
+        startTime: "",
+        endTime: "",
+        prevEventNr: this.state.currEventNr,
+        currEventNr: newEventNr,
+        modalVisible: false,
+      });
     }
 
     //Set the modal visible
@@ -393,6 +409,7 @@ export default class CalendarDisplayer extends React.Component {
          startTime: item.startTime,
          endTime: item.endTime,
          eventDate: item.eventDate,
+         date: item.eventDate,
          prevEventNr: this.state.currEventNr,
          currEventNr: item.eventNr,
        }, () => this.setModalVisible(true));
