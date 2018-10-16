@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
 
     homeItem: {
-        height: "10%",
+        height: "8%",
         width: "100%",
         backgroundColor: "#d1d1d1",
         alignItems: "center",
@@ -16,8 +16,9 @@ export default StyleSheet.create({
     },
 
     homeItemText: {
-        fontSize: 16,
+        fontSize: 18,
         color: "#7f7f7f",
+        fontWeight: "bold",
     },
 
     list:{

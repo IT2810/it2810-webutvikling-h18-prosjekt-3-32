@@ -9,9 +9,11 @@ export default class Home extends React.Component {
 
     constructor(props){
         super(props);
+        let date = Moment().format("YYYY-MM-DD");
         this.state = {
             todoList: [],
             calendar: {},
+            date: date,
         };
     }
 
@@ -40,6 +42,7 @@ export default class Home extends React.Component {
 
                     //check if key includes event
                     else if(key.substring(0,5) === "event"){
+                        console.log("Key includes event. Key is: " + key);
                         //Parse the JSON back to a js object
                         let parsedValue = JSON.parse(value);
                         //Get key of the js object, which will be the date
@@ -47,23 +50,29 @@ export default class Home extends React.Component {
                         //Get all events on this date and show them to the user
                         let today = Moment().format("YYYY-MM-DD");
                         if(listKeys.toString().match(today)){
+                            console.log("listKeys matches today's date.");
                             if(!this.state.calendar[listKeys[0]]){
                                 this.state.calendar[listKeys[0]] = [];
                             }
                             //Use this date as a key when storing the event in state.
                             //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
+                            console.log("Adding event to calendar: " + key + " With value: ");
+                            console.log(parsedValue[listKeys[0]][0]);
                             this.state.calendar[listKeys[0]].push(parsedValue[listKeys[0]][0]);
+                            console.log("this.state.calendar[date] is now");
+                            console.log(this.state.calendar[this.state.date]);
                             //Making a new, empty object to add the new item in
-                            //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
-                            Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
-                            //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
-                            this.setState({
-                                calendar: newItems,
-                            });
+
                         }
                     }
                 });
 
+                //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
+                Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
+                //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
+                this.setState({
+                    calendar: newItems,
+                });
                 //Create a sorted list for the homepage
                 const sortedByDateTodos = this.sortByDate(todoList);
                 this.setState({
@@ -104,6 +113,7 @@ export default class Home extends React.Component {
     }
 
     render() {
+        if(!this.state.calendar[this.state.date]){this.state.calendar[this.state.date]=[];}
         return (
             <React.Fragment>
                 <View style={styles.container}>
@@ -115,13 +125,14 @@ export default class Home extends React.Component {
                         />
                     </View>
                     <View style={styles.homeItem}>
-                        <Text style={styles.homeItemText}>Today's Events</Text>
+                        <Text style={styles.homeItemText}>Todays Events</Text>
                     </View>
                     {/*Shows today's events to the user*/}
                     {<View style={styles.list}>
-                        {Object.keys(this.state.calendar).map((element, i) => (
-                            <HomeListItemCalendar key = {i} name = {this.state.calendar[element][i].name} start = {this.state.calendar[element][i].startTime} end = {this.state.calendar[element][i].endTime} />
+                        {this.state.calendar[this.state.date].slice(0,3).map((element) => (
+                            <HomeListItemCalendar key = {element.eventNr} name = {element.name} start = {element.startTime} end = {element.endTime} />
                         ))}
+
                     </View>}
 
 
