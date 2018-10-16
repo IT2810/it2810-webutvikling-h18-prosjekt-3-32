@@ -9,9 +9,11 @@ export default class Home extends React.Component {
 
     constructor(props){
         super(props);
+        let date = Moment().format("YYYY-MM-DD");
         this.state = {
             todoList: [],
             calendar: {},
+            date: date,
         };
     }
 
@@ -54,16 +56,17 @@ export default class Home extends React.Component {
                             //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
                             this.state.calendar[listKeys[0]].push(parsedValue[listKeys[0]][0]);
                             //Making a new, empty object to add the new item in
-                            //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
-                            Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
-                            //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
-                            this.setState({
-                                calendar: newItems,
-                            });
+
                         }
                     }
                 });
 
+                //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
+                Object.keys(this.state.calendar).forEach(key => {newItems[key] = this.state.calendar[key];});
+                //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
+                this.setState({
+                    calendar: newItems,
+                });
                 //Create a sorted list for the homepage
                 const sortedByDateTodos = this.sortByDate(todoList);
                 this.setState({
@@ -104,6 +107,7 @@ export default class Home extends React.Component {
     }
 
     render() {
+        if(!this.state.calendar[this.state.date]){this.state.calendar[this.state.date]=[];}
         return (
             <React.Fragment>
                 <View style={styles.container}>
@@ -115,13 +119,14 @@ export default class Home extends React.Component {
                         />
                     </View>
                     <View style={styles.homeItem}>
-                        <Text style={styles.homeItemText}>Today's Events</Text>
+                        <Text style={styles.homeItemText}>Todays Events</Text>
                     </View>
                     {/*Shows today's events to the user*/}
                     {<View style={styles.list}>
-                        {Object.keys(this.state.calendar).map((element, i) => (
-                            <HomeListItemCalendar key = {i} name = {this.state.calendar[element][i].name} start = {this.state.calendar[element][i].startTime} end = {this.state.calendar[element][i].endTime} />
+                        {this.state.calendar[this.state.date].slice(0,3).map((element) => (
+                            <HomeListItemCalendar key = {element.eventNr} name = {element.name} start = {element.startTime} end = {element.endTime} />
                         ))}
+
                     </View>}
 
 
