@@ -42,7 +42,6 @@ export default class Home extends React.Component {
 
                     //check if key includes event
                     else if(key.substring(0,5) === "event"){
-                        console.log("Key includes event. Key is: " + key);
                         //Parse the JSON back to a js object
                         let parsedValue = JSON.parse(value);
                         //Get key of the js object, which will be the date
@@ -50,17 +49,12 @@ export default class Home extends React.Component {
                         //Get all events on this date and show them to the user
                         let today = Moment().format("YYYY-MM-DD");
                         if(listKeys.toString().match(today)){
-                            console.log("listKeys matches today's date.");
                             if(!this.state.calendar[listKeys[0]]){
                                 this.state.calendar[listKeys[0]] = [];
                             }
                             //Use this date as a key when storing the event in state.
                             //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
-                            console.log("Adding event to calendar: " + key + " With value: ");
-                            console.log(parsedValue[listKeys[0]][0]);
                             this.state.calendar[listKeys[0]].push(parsedValue[listKeys[0]][0]);
-                            console.log("this.state.calendar[date] is now");
-                            console.log(this.state.calendar[this.state.date]);
                             //Making a new, empty object to add the new item in
 
                         }
