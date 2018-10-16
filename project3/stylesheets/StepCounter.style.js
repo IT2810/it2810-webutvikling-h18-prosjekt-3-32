@@ -1,24 +1,24 @@
 import {StyleSheet} from "react-native";
 
 export default StyleSheet.create({
-    pedometerContainer: {
+    stepCounterContainer: {
         height: "100%",
         width: "100%",
-        backgroundColor: "lightgray",
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: "center",
     },
 
-    yellowBubble: {
-        backgroundColor: "yellow",
+    stepCounterItem1: {
+        backgroundColor: "#ededed",
+        width: "100%",
+        height: "25%",
+        borderTopWidth: 0.3,
+        borderBottomWidth: 0.3,
+        justifyContent: "center",
+    },
+
+    slider: {
         width: "90%",
-        paddingTop: 10,
-        paddingBottom: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        borderRadius: 10,
-        marginBottom: 20,
+        marginLeft: "5%",
     },
 
     pedometerText: {
@@ -32,5 +32,25 @@ export default StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+
+    stepCounterItem2: {
+        backgroundColor: "#ededed",
+        width: "100%",
+        height: "50%",
+        borderBottomWidth: 0.3,
+        justifyContent: "space-around",
+        alignItems: "center",
+    },
+
+    pedometerNumber2: {
+        fontSize: 16,
+        textAlign: 'center',
+    },
+
+    motivationText: {
+        fontSize: 14,
+        width: "90%",
+        textAlign: "center",
     }
 });

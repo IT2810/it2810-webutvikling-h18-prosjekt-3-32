@@ -17,6 +17,7 @@ import { Pedometer } from 'expo';
 import { Text, View, AsyncStorage } from 'react-native';
 import { Slider } from 'react-native-elements';
 import styles from '../stylesheets/StepCounter.style.js';
+import ProgressCircle from "react-native-progress-circle";
 
 
 export default class StepCounter extends React.Component {
@@ -198,7 +199,7 @@ export default class StepCounter extends React.Component {
     render() {
         return (
             <View style={styles.pedometerContainer}>
-                <View style={styles.yellowBubble}>
+                <View style={styles.stepCounterItem1}>
                     <Text style={styles.pedometerText}>
                         Steps today:
                     </Text>
@@ -208,7 +209,7 @@ export default class StepCounter extends React.Component {
                     </Text>
                 </View>
 
-                <View style={styles.yellowBubble}>
+                <View style={styles.stepCounterItem1}>
                     <Text style={styles.pedometerText}>
                         Your daily step goal:
                     </Text>
@@ -218,20 +219,30 @@ export default class StepCounter extends React.Component {
                     </Text>
 
                     <Slider
-                        value={parseInt(this.state.goalSteps)} maximumValue={20000} step={500} thumbTintColor={"#4fcfff"}
+                        style={styles.slider}
+                        value={parseInt(this.state.goalSteps)} maximumValue={20000} step={500} thumbTintColor={"#ffb821"}
                         onValueChange={(goalSteps) => this._storeGoal(goalSteps)} />
                 </View>
 
-                <View style={styles.yellowBubble}>
+                <View style={styles.stepCounterItem2}>
                     <Text style={styles.pedometerText}>
                         Average daily steps last week:
                     </Text>
 
-                    <Text style={styles.pedometerNumber}>
-                        {this.state.averageStepsLastWeek}
-                    </Text>
+                    <ProgressCircle
+                        percent={(this.state.averageStepsLastWeek/this.state.goalSteps) * 100}
+                        radius={60}
+                        borderWidth={15}
+                        color="#ffb821"
+                        shadowColor="#999"
+                        bgColor="#fff"
+                    >
+                        <Text style={styles.pedometerNumber2}>
+                            {this.state.averageStepsLastWeek}
+                        </Text>
+                    </ProgressCircle>
 
-                    <Text style={styles.pedometerNumber}>
+                    <Text style={styles.motivationText}>
                         {this.state.motivationalMessage}
                     </Text>
                 </View>
