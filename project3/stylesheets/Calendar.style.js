@@ -106,7 +106,7 @@ export default StyleSheet.create({
     modal: {
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
+        height: 700,
         display: "flex",
         justifyContent: "flex-start",
         marginTop: 0,

@@ -11,12 +11,13 @@ export default class CalendarDisplayer extends React.Component {
         date: "",
         startTime: "",
         endTime: "",
+        eventDate: "",
         eventText: "",
+        prevEventNr: 0,
         currEventNr: 1,
         modalVisible: false,
         items: {},
       };
-
     }
 
     componentDidMount(){
@@ -39,7 +40,10 @@ export default class CalendarDisplayer extends React.Component {
                         let listKeys = Object.keys(parsedValue);
                         //Use this date as a key when storing the event in state.
                         //parsedValue[listKeys[0]] is the value of the object, which contains event name, start time and end time
-                        this.state.items[listKeys[0]] = parsedValue[listKeys[0]];
+                        if(!this.state.items[listKeys[0]]){
+                          this.state.items[listKeys[0]] = [];
+                        }
+                        this.state.items[listKeys[0]].push(parsedValue[listKeys[0]][0]);
                         //Making a new, empty object to add the new item in
                         const newItems = {};
                         //Get every key (every date) in this.state.items and for each key, get items (name and time) in the state-list, and add it to newItems
@@ -86,7 +90,8 @@ export default class CalendarDisplayer extends React.Component {
               // specify your item comparison function for increased performance
               rowHasChanged={this.rowHasChanged.bind(this)}
             />
-            <TouchableOpacity style={styles.addEventButton} onPress={() => this.setModalVisible(true)} >
+            <TouchableOpacity style={styles.addEventButton}
+              onPress={() => this.setModalVisible(true)} >
               <Text style={styles.addEventText}>{"Add new event"}</Text>
             </TouchableOpacity>
             <View>
@@ -111,6 +116,7 @@ export default class CalendarDisplayer extends React.Component {
                             style={styles.textInput}
                             onChangeText={(text) => this.setState({eventText : text})}
                             placeholder={"Event description"}
+                            value={this.state.eventText}
                         />
 
                         <View style={styles.modalItem}>
@@ -134,6 +140,7 @@ export default class CalendarDisplayer extends React.Component {
                                 placeholder="start time"
                                 is24Hour={true}
                                 format="LT"
+                                iconSource={require('../assets/clock.png')}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 onDateChange={(time) => {
@@ -148,6 +155,7 @@ export default class CalendarDisplayer extends React.Component {
                                 placeholder="end time"
                                 is24Hour={true}
                                 format="LT"
+                                iconSource={require('../assets/clock.png')}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 onDateChange={(time) => {
@@ -158,14 +166,13 @@ export default class CalendarDisplayer extends React.Component {
                         </View>
                         <View style={styles.modalItem}>
                             {/*Button to save the changes done in the modal*/}
-                            <TouchableOpacity style={styles.saveTodo}
-                                              onPress={() => { this.addEvent(this.state.currEventNr);}}>
+                            <TouchableOpacity style={styles.saveTodo} onPress={() => { this.addEvent(this.state.currEventNr);}}>
                                 <Text style={styles.saveText}>Save</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.modalItem}>
                             {/*Button to delete the todo*/}
-                            <TouchableOpacity style={styles.deleteTodo} >
+                            <TouchableOpacity style={styles.deleteTodo} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
                                 <Text style={styles.deleteText}>Delete</Text>
                             </TouchableOpacity>
                         </View>
@@ -179,51 +186,122 @@ export default class CalendarDisplayer extends React.Component {
 
     //Set the modal visible
     setModalVisible(visible) {
-      this.setState({modalVisible: visible});
+      this.setState({
+
+        modalVisible: visible
+      });
+    }
+
+    deleteEvent = (id) => {
+        let deleteIndex = null;
+        const evtDate = this.state.eventDate;
+        //Go through each element in today's list
+        Object.keys(this.state.items[evtDate]).forEach( index =>
+          //If events eventNr is equal to current event nr, then we know what to delete.
+          {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
+            //Saving the index
+            deleteIndex = index;
+          }}
+        );
+        //If we found something to delete
+        if(deleteIndex!=null){
+          //Delete it
+          this.state.items[evtDate].splice(deleteIndex, 1);
+        }
+        //Also deletes event from Async
+        AsyncStorage.removeItem("event"+id.toString());
+
+        //Making new empty object to add the newItems in
+        const newItems = {};
+        //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
+        Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+
+        //Set item state to be newItems, and reset all other states
+        this.setState({
+          items: newItems,
+          currEventNr: this.state.currEventNr+1,
+          eventText: "",
+          eventDate: "",
+          startTime: "",
+          endTime: "",
+          modalVisible: false,
+        });
+
+        this.loadItems.bind(this);
     }
 
     addEvent = (id) => {
+        //Get current date
+        const newDate = this.state.date;
+        const evtDate = this.state.eventDate;
+        //Check whether the event already exists, or if it's a new one
+        if(this.state.currEventNr < this.state.prevEventNr){
+          let deleteIndex = null;
+          //Go through each element in today's list
+          Object.keys(this.state.items[evtDate]).forEach( index =>
+            //If events eventNr is equal to current event nr, then we know what to delete.
+            {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
+              //Saving the index
+              deleteIndex = index;
+            }}
+          );
+          //If we found something to delete
+          if(deleteIndex!=null){
+            //Delete it
+            this.state.items[evtDate].splice(deleteIndex, 1);
+          }
+        }
+
+        //Now, after checking (and deleting) if we had to delete something, we can start creating a new event object
+
         //Check if all inputs fields are filled in
         if(this.state.eventText !== "" && this.state.date !== "" && this.state.startTime !== "" && this.state.startTime !== ""){
-          //Get current date
-          const currDate = this.state.date;
           //If there is no object for current date
-          if(!this.state.items[currDate]){
+          if(!this.state.items[newDate]){
             //Then make object with current date as key
-            this.state.items[currDate] = [];
+            this.state.items[newDate] = [];
           }
-          //Check if date has an object where name value is "No upcoming events."
-          //If so, this must be deleted in order for it not to show in calendar
-          if(this.state.items[currDate][0]["name"]=="No upcoming events."){
-            //Delete date key in object
-            delete this.state.items[currDate];
-            //Create new, empty date key in object
-            this.state.items[currDate] = [];
+          //If date contains at least one element
+          if(this.state.items[newDate].length>0){
+            //Check if date has an object where name value is "No upcoming events."
+            //If so, this must be deleted in order for it not to show in calendar
+            if(this.state.items[newDate][0]["name"]=="No upcoming events."){
+              //Delete event that says "no upcoming event"
+              delete this.state.items[newDate];
+              //Create new, empty date key in object
+              this.state.items[newDate] = [];
+            }
           }
-          //Add event to object
-          this.state.items[currDate].push({
+
+          //Push event Object to today's list
+          this.state.items[newDate].push({
             name: this.state.eventText,
             startTime: this.state.startTime,
+            eventDate: newDate,
             endTime: this.state.endTime,
+            eventNr: this.state.currEventNr,
           });
+
           // Making new empty object to add the newItems in
           const newItems = {};
           //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
           Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
           //Make object to store in AsyncStorage
           const AsyncObject = {};
-          AsyncObject[currDate] = [];
-          AsyncObject[currDate].push({
+          AsyncObject[newDate] = [];
+          AsyncObject[newDate].push({
             name: this.state.eventText,
+            eventDate: newDate,
             startTime: this.state.startTime,
             endTime: this.state.endTime,
+            eventNr: this.state.currEventNr,
           });
           //Set item state to be newItems, and reset all other states
           this.setState({
             items: newItems,
             currEventNr: this.state.currEventNr+1,
             eventText: "",
-            date: "",
+            eventDate: "",
             startTime: "",
             endTime: "",
           });
@@ -233,6 +311,12 @@ export default class CalendarDisplayer extends React.Component {
           this.storeEvent("CurrentEventNr", id.toString());
           //Close modal
           this.setModalVisible(!this.state.modalVisible);
+          if(this.state.currEventNr<this.state.prevEventNr){
+            this.setState({
+              currEventNr: this.state.prevEventNr,
+
+            });
+          }
           this.loadItems.bind(this);
         }
         //If something is not filled in, alert the user
@@ -251,16 +335,25 @@ export default class CalendarDisplayer extends React.Component {
 
     loadItems(day) {
       setTimeout(() => {
-        //If there are no events in state
+        //Get today's date
+        const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+        //If there are no events in state at all
         if(Object.keys(this.state.items).length === 0){
-          //Get today's date
-          const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
-          const strTime = this.timeToString(time);
           this.state.items[strTime] = [];
           //Add description to object. Notice how no start or end time is added
           //in order for this item to be returned in a different way
           this.state.items[strTime].push({
             name: 'No upcoming events.',
+          });
+        }
+        //Check if today's list is empty, if yes, add "No events today"
+        if(!this.state.items[strTime]){
+          this.state.items[strTime] = [];
+          //Add description to object. Notice how no start or end time is added
+          //in order for this item to be returned in a different way
+          this.state.items[strTime].push({
+            name: 'No events to show.',
           });
         }
         //Making a new, empty object to add the newItems in
@@ -276,27 +369,33 @@ export default class CalendarDisplayer extends React.Component {
 
     renderItem(item) {
       //If item has starTime and endTime, then return this code.
-      console.log(item);
       if(item.startTime && item.endTime){
         return (
-          <TouchableOpacity style={styles.item} onPress={this.showItemInfo.bind(item)}>
+          <TouchableOpacity style={styles.item} onPress={() => this.showItemInfo(item)}>
             <Text style={styles.itemTime}>{item.startTime + " - " + item.endTime}</Text>
             <Text style={styles.itemText} >{item.name}</Text>
           </TouchableOpacity>
         );
       }
-      //If it doesn't have start or end time, then return nothing.
+      //If it doesn't have start or end time, then tell the user they have no upcoming events.
       else{
           return (
             <TouchableOpacity style={styles.item}>
-              <Text style={styles.itemText}> {"No upcoming events."} </Text>
+              <Text style={styles.itemText}> {item.name} </Text>
             </TouchableOpacity>
           );
       }
     }
 
     showItemInfo(item){
-      alert(item.name);
+       this.setState({
+         eventText: item.name,
+         startTime: item.startTime,
+         endTime: item.endTime,
+         eventDate: item.eventDate,
+         prevEventNr: this.state.currEventNr,
+         currEventNr: item.eventNr,
+       }, () => this.setModalVisible(true));
     }
 
     renderEmptyDate() {
