@@ -54,7 +54,7 @@ export default class ListItem extends React.Component {
     }
 
     //This Function checks whether a given due date to an to-do is today or have been
-    //The text will be red, as an reminder for the user 
+    //The text will be red, as an reminder for the user
     checkDueDate(){
         const today = new Date();
         const dueDate = new Date(this.props.date);
@@ -124,7 +124,7 @@ export default class ListItem extends React.Component {
                         onPress={() => {
                             this.setModalVisible(true);
                         }}>
-                        <Image style={styles.todoInfo} source={require('../assets/information.png')}/>
+                        <Image style={styles.todoInfo} source={require('../assets/edit.png')}/>
                     </TouchableOpacity>
                 </TouchableOpacity>
                 <View style={this.state.done ? styles.bottomDone : styles.todoItemBottom}>
@@ -139,6 +139,9 @@ export default class ListItem extends React.Component {
                         onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
                         <View style={styles.modal}>
                             {/*Simple backbutton if the user choose to not do any changes*/}
+                            <View style={styles.newTodoTitleBar}>
+                              <Text style={styles.newTodoTitle}>{"Todo info"}</Text>
+                            </View>
                             <TouchableOpacity
                                 onPress={() => {this.setModalVisible(!this.state.modalVisible);}}
                                 style={styles.modalClose}>
@@ -162,19 +165,18 @@ export default class ListItem extends React.Component {
                                     onDateChange={(date) => {this.setState({date:date})}}
                                 />
                             </View>
-                            <View style={styles.modalItem}>
-                                {/*Button to save the changes done in the modal*/}
-                                <TouchableOpacity style={styles.saveTodo}
-                                                  onPress={() => {this.saveChanges()}}>
-                                    <Text style={styles.saveText}>Save</Text>
-                                </TouchableOpacity>
+
+                            <View style={styles.buttonsView}>
+                                  {/*Button to save the changes done in the modal*/}
+                                  <TouchableOpacity style={styles.saveButton} onPress={() => {this.saveChanges()}}>
+                                      <Text style={styles.saveText}>Save</Text>
+                                  </TouchableOpacity>
+                                  {/*Button to delete the todo*/}
+                                  <TouchableOpacity style={styles.deleteButton} onPress={() => this.deleteTodo(this.props.todoNr)}>
+                                      <Text style={styles.deleteText}>Delete</Text>
+                                  </TouchableOpacity>
                             </View>
-                            <View style={styles.modalItem}>
-                                {/*Button to delete the todo*/}
-                                <TouchableOpacity style={styles.deleteTodo} onPress={() => this.deleteTodo(this.props.todoNr)}>
-                                    <Text style={styles.deleteText}>Delete</Text>
-                                </TouchableOpacity>
-                            </View>
+
                         </View>
                     </Modal>
                 </View>

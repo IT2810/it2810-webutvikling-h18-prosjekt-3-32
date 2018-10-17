@@ -111,13 +111,7 @@ export default class Home extends React.Component {
         return (
             <React.Fragment>
                 <View style={styles.container}>
-                    <View style={{padding: 10, borderBottomWidth: 0.5}}>
-                        {/*Refreshbutton so the user can update the homepage*/}
-                        <Button
-                            onPress={() => this.refresh()}
-                            title={"Refresh homepage"}
-                        />
-                    </View>
+
                     <View style={styles.homeItem}>
                         <Text style={styles.homeItemText}>Todays Events</Text>
                     </View>
@@ -139,6 +133,13 @@ export default class Home extends React.Component {
                             <HomeListItemTodo name = {element.todoText} key = {element.key} done = {element.done} date = {element.todoDate} todoNr = {element.todoNr}/>
                         )}
                     </View>}
+                    <View style={styles.refreshButtonView}>
+                        {/*Refreshbutton so the user can update the homepage*/}
+                        <Button
+                            onPress={() => this.refresh()}
+                            title={"Refresh homepage"}
+                        />
+                    </View>
                 </View>
             </React.Fragment>
         );

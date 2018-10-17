@@ -10,15 +10,14 @@ export default StyleSheet.create({
     homeItem: {
         height: "8%",
         width: "100%",
-        backgroundColor: "#d1d1d1",
+        backgroundColor: "#5cacec",
         alignItems: "center",
         justifyContent: "center",
     },
 
     homeItemText: {
         fontSize: 18,
-        color: "#7f7f7f",
-        fontWeight: "bold",
+        color: "white",
     },
 
     list:{
@@ -32,4 +31,12 @@ export default StyleSheet.create({
         backgroundColor: "red",
 
     },
+    refreshButtonView: {
+      padding: 10,
+      borderBottomWidth: 0.5,
+      position: "absolute",
+      bottom: 0,
+      width: "100%",
+    },
+
 });

@@ -32,7 +32,7 @@ export default class CalendarDisplayer extends React.Component {
                     if(key === "CurrentEventNr"){
                         this.setState({currEventNr:parseInt(value)+1});
                     }
-                    //check if key includes event
+                    //If key includes event, get the value and add it to the Object with events in state
                     if(key.includes("event")){
                         //Parse the JSON back to a js object
                         let parsedValue = JSON.parse(value);
@@ -80,7 +80,7 @@ export default class CalendarDisplayer extends React.Component {
               // callback that fires when the calendar is opened or closed
               onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
               // callback that gets called on day press
-              onDayPress={(day)=>{console.log('day pressed')}}
+              onDayPress={(day)=>{this.setState({date: day.dateString})}}
               // callback that gets called when day changes while scrolling agenda list
               onDayChange={(day)=>{console.log('day changed')}}
               // specify how each item should be rendered in agenda
@@ -104,14 +104,16 @@ export default class CalendarDisplayer extends React.Component {
                     onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
                     <View style={styles.modal}>
                         {/*Simple backbutton if the user choose to not do any changes*/}
+
+
                         <View style={styles.newEventTitleBar}>
-                          <TouchableOpacity
-                              onPress={() =>{this.closeModal();}}
-                              style={styles.modalClose}>
-                              <Image style={styles.backBtn} source={require('../assets/back.png')}/>
-                          </TouchableOpacity>
                           <Text style={styles.newEventTitle}>{"Event info"}</Text>
                         </View>
+                        <TouchableOpacity
+                            onPress={() =>{this.closeModal();}}
+                            style={styles.modalClose}>
+                            <Image style={styles.backBtn} source={require('../assets/back.png')}/>
+                        </TouchableOpacity>
                         <TextInput
                             style={styles.textInput}
                             onChangeText={(text) => this.setState({eventText : text})}
@@ -164,17 +166,15 @@ export default class CalendarDisplayer extends React.Component {
                                 }
                             />
                         </View>
-                        <View style={styles.modalItem}>
-                            {/*Button to save the changes done in the modal*/}
-                            <TouchableOpacity style={styles.saveTodo} onPress={() => { this.addEvent(this.state.currEventNr);}}>
-                                <Text style={styles.saveText}>Save</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.modalItem}>
-                            {/*Button to delete the todo*/}
-                            <TouchableOpacity style={styles.deleteTodo} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
-                                <Text style={styles.deleteText}>Delete</Text>
-                            </TouchableOpacity>
+                        <View style={styles.buttonsView}>
+                              {/*Button to save the changes done in the modal*/}
+                              <TouchableOpacity style={styles.saveButton} onPress={() => { this.addEvent(this.state.currEventNr);}}>
+                                  <Text style={styles.saveText}>Save</Text>
+                              </TouchableOpacity>
+                              {/*Button to delete the todo*/}
+                              <TouchableOpacity style={styles.deleteButton} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
+                                  <Text style={styles.deleteText}>Delete</Text>
+                              </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
@@ -184,12 +184,15 @@ export default class CalendarDisplayer extends React.Component {
         );
     }
 
+    //This is triggered when the back button is pressed when editing an event or when creating an event
     closeModal(){
-      console.log("trying to close modal");
       let newEventNr = this.state.currEventNr;
+      //If the event in question already exists, then the event nr must be set to the old event nr,
+      //In order to not overwrite the event in question when a new event is added later on
       if(this.state.currEventNr < this.state.prevEventNr){
         newEventNr = this.state.prevEventNr;
       }
+      //Reset state values and close modal
       this.setState({
         eventText: "",
         startTime: "",
@@ -200,10 +203,9 @@ export default class CalendarDisplayer extends React.Component {
       });
     }
 
-    //Set the modal visible
+    //Hide/Show the modal window
     setModalVisible(visible) {
       this.setState({
-
         modalVisible: visible
       });
     }
@@ -355,6 +357,7 @@ export default class CalendarDisplayer extends React.Component {
         const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
         const strTime = this.timeToString(time);
         //If there are no events in state at all
+        console.log(Object.keys(this.state.items));
         if(Object.keys(this.state.items).length === 0){
           this.state.items[strTime] = [];
           //Add description to object. Notice how no start or end time is added

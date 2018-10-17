@@ -55,32 +55,45 @@ export default StyleSheet.create({
     },
 
     //-------Modal elements----------
-    deleteTodo: {
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#ff3d3d",
-        justifyContent: "center",
-        alignItems: "center",
-    },
 
     deleteText: {
         fontSize: 16,
-        color: "#f7f7f7",
-        fontWeight: "bold",
-    },
-
-    saveTodo: {
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#3aadff",
-        justifyContent: "center",
-        alignItems: "center",
+        color: "red",
     },
 
     saveText: {
         fontSize: 16,
-        color: "#f7f7f7",
-        fontWeight: "bold",
+        color: "green",
+    },
+
+    deleteButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 100,
+        borderColor: "red",
+        borderWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    saveButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 100,
+        borderColor: "green",
+        borderWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    buttonsView: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        width: "60%",
+        height: "10%",
+        position: "absolute",
+        bottom: 50,
     },
 
     todoInfo:{
@@ -93,15 +106,14 @@ export default StyleSheet.create({
         alignSelf: "flex-start",
         marginLeft: 10,
         marginBottom: 15,
+        position: "absolute",
+        top: 17,
+        left: -10,
+        backgroundColor: "lightgrey",
+        height: "5%",
+        width: 70,
     },
 
-    modalText: {
-        width: "100%",
-        fontSize: 25,
-        textAlign: "center",
-        backgroundColor: "#dddddd",
-        padding: 10,
-    },
 
     modal: {
         alignItems: "center",
@@ -115,18 +127,18 @@ export default StyleSheet.create({
     modalItem: {
         width: "100%",
         height: "15%",
-        backgroundColor: "#ededed",
-        borderBottomWidth: 0.2,
+        borderBottomWidth: 0.7,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
     },
 
     textInput: {
-        width: "80%",
-        height: "12%",
-        color: "#a0a0a0",
-        fontSize: 18,
+        width: "100%",
+        fontSize: 25,
+        textAlign: "center",
+        backgroundColor: "#ededed",
+        padding: 20,
     },
 
     newEventTitle: {
@@ -136,11 +148,12 @@ export default StyleSheet.create({
         backgroundColor: "lightgrey",
         textAlign: "center",
         flex: 8,
-        lineHeight: 50,
+        lineHeight: 80,
     },
 
     backBtn: {
         height: "100%",
+        width: "100%",
         flex: 2,
         marginTop: 10,
     },
@@ -148,7 +161,7 @@ export default StyleSheet.create({
     newEventTitleBar: {
       display: "flex",
       flexDirection: "row",
-      height: "7.5%",
+      height: "10%",
       alignItems: "center",
       justifyContent: "center",
     }
