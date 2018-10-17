@@ -1,17 +1,18 @@
 import React from 'react';
 import {Image} from "react-native";
 import { createMaterialTopTabNavigator } from "react-navigation";
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Home from "./Home.js";
 import StepCounter from "./StepCounter";
 import CalendarDisplayer from "./CalendarDisplayer";
 import TodoList from "./TodoList";
 
-export default createMaterialTopTabNavigator ({
+export default createMaterialBottomTabNavigator ({
     Home: {
       screen: Home,
       navigationOptions: {
           tabBarIcon: ({ tintColor }) => {
-              return <Image style={{height:30, width:30}} source={require('../assets/home.png')}/>;
+              return <Image style={{height:23, width:23}} source={require('../assets/home.png')}/>;
           }
       }
     },
@@ -20,7 +21,7 @@ export default createMaterialTopTabNavigator ({
       screen: TodoList,
       navigationOptions: {
           tabBarIcon: ({ tintColor }) => {
-              return <Image style={{height:30, width:30}} source={require('../assets/todo.png')}/>;
+              return <Image style={{height:23, width:23}} source={require('../assets/todo.png')}/>;
           }
       }
     },
@@ -29,7 +30,7 @@ export default createMaterialTopTabNavigator ({
         screen: StepCounter,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => {
-                return <Image style={{height:30, width:30}} source={require('../assets/stepcounter.png')}/>;
+                return <Image style={{height:23, width:23}} source={require('../assets/stepcounter.png')}/>;
             }
         }
     },
@@ -38,11 +39,16 @@ export default createMaterialTopTabNavigator ({
       screen: CalendarDisplayer,
       navigationOptions: {
           tabBarIcon: ({ tintColor }) => {
-              return <Image style={{height:30, width:30}} source={require('../assets/calendar.png')}/>;
-          }
+              return <Image style={{height:23, width:23}} source={require('../assets/calendar.png')}/>;
+          },
+
       }
     },
 }, {
+  barStyle: {
+    backgroundColor: "#5cacec",
+  },
+  activeColor: "white",
   tabBarOptions: {
     labelStyle: {
       fontSize: 14,

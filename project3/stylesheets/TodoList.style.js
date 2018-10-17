@@ -20,7 +20,7 @@ export default StyleSheet.create({
         height: 50,
         marginRight: 10,
         borderRadius: 25,
-        borderColor: "#a0a0a0",
+        borderColor: "#5cacec",
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -28,7 +28,7 @@ export default StyleSheet.create({
 
     toolbarAddBtnText: {
         fontSize: 15,
-        color: "#a0a0a0",
+        color: "#5cacec",
     },
 
     textInput: {

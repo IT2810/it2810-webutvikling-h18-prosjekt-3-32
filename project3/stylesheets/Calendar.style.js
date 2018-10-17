@@ -107,20 +107,13 @@ export default StyleSheet.create({
         marginLeft: 10,
         marginBottom: 15,
         position: "absolute",
-        top: 5,
+        top: 17,
         left: -10,
         backgroundColor: "lightgrey",
         height: "5%",
         width: 70,
     },
 
-    modalText: {
-        width: "100%",
-        fontSize: 25,
-        textAlign: "center",
-        backgroundColor: "#dddddd",
-        padding: 10,
-    },
 
     modal: {
         alignItems: "center",
@@ -141,10 +134,11 @@ export default StyleSheet.create({
     },
 
     textInput: {
-        width: "80%",
-        height: "12%",
-        color: "#a0a0a0",
-        fontSize: 18,
+        width: "100%",
+        fontSize: 25,
+        textAlign: "center",
+        backgroundColor: "#ededed",
+        padding: 20,
     },
 
     newEventTitle: {
@@ -154,7 +148,7 @@ export default StyleSheet.create({
         backgroundColor: "lightgrey",
         textAlign: "center",
         flex: 8,
-        lineHeight: 50,
+        lineHeight: 80,
     },
 
     backBtn: {
@@ -167,7 +161,7 @@ export default StyleSheet.create({
     newEventTitleBar: {
       display: "flex",
       flexDirection: "row",
-      height: "7.5%",
+      height: "10%",
       alignItems: "center",
       justifyContent: "center",
     }
