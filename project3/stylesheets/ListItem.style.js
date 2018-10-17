@@ -122,18 +122,18 @@ export default StyleSheet.create({
         marginLeft: 10,
         marginBottom: 15,
         position: "absolute",
-        top: 17,
+        top: 0,
         left: -10,
-        backgroundColor: "lightgrey",
-        height: "5%",
-        width: 70,
+        backgroundColor: "#5cacec",
+        height: "20%",
+        width: 50,
+        alignItems: "center",
+        justifyContent: "center",
     },
 
-    backBtn: {
-        height: "100%",
-        width: "100%",
-        flex: 2,
-        marginTop: 10,
+    closeImg: {
+        height: 20,
+        width: 20
     },
 
     modalText: {
@@ -144,17 +144,29 @@ export default StyleSheet.create({
         padding: 20,
     },
 
+    modalView: {
+        height: "100%",
+        backgroundColor: "rgba(0,0,0,0.8)",
+    },
+
     modal: {
         alignItems: "center",
         justifyContent: "center",
-        height: 700,
+        height: 360,
+        width: "90%",
         display: "flex",
         justifyContent: "flex-start",
+        backgroundColor: "#ededed",
+        borderWidth: 0.8,
+        position: "absolute",
+        left: "5%",
+        top: "25%",
     },
+
 
     modalItem: {
         width: "100%",
-        height: "15%",
+        height: "25%",
         borderBottomWidth: 0.7,
         justifyContent: "center",
         alignItems: "center",
@@ -165,16 +177,17 @@ export default StyleSheet.create({
         //width: "80%",
         height: "100%",
         fontSize: 20,
-        backgroundColor: "lightgrey",
+        backgroundColor: "#5cacec",
         textAlign: "center",
         flex: 8,
-        lineHeight: 80,
+        lineHeight: 70,
+        color: "white",
     },
 
     newTodoTitleBar: {
       display: "flex",
       flexDirection: "row",
-      height: "10%",
+      height: "20%",
       alignItems: "center",
       justifyContent: "center",
     },

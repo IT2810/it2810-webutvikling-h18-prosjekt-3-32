@@ -145,7 +145,7 @@ export default StyleSheet.create({
         //width: "80%",
         height: "100%",
         fontSize: 20,
-        backgroundColor: "lightgrey",
+        backgroundColor: "#5cacec",
         textAlign: "center",
         flex: 8,
         lineHeight: 80,

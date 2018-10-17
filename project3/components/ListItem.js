@@ -134,10 +134,11 @@ export default class ListItem extends React.Component {
                     {/*Modal which contains several options to the user regarding the todo*/}
                     <Modal
                         animationType="slide"
-                        transparent={false}
+                        transparent={true}
                         visible={this.state.modalVisible}
                         onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                        <View style={styles.modal}>
+                        <View style={styles.modalView}>
+                          <View style={styles.modal}>
                             {/*Simple backbutton if the user choose to not do any changes*/}
                             <View style={styles.newTodoTitleBar}>
                               <Text style={styles.newTodoTitle}>{"Todo info"}</Text>
@@ -145,7 +146,7 @@ export default class ListItem extends React.Component {
                             <TouchableOpacity
                                 onPress={() => {this.setModalVisible(!this.state.modalVisible);}}
                                 style={styles.modalClose}>
-                                <Image style={styles.backBtn} source={require('../assets/back.png')}/>
+                                <Image style={styles.closeImg} source={require('../assets/close.png')}/>
                             </TouchableOpacity>
                             {/*The user may change the todoText*/}
                             <TextInput style={styles.modalText}
@@ -178,6 +179,7 @@ export default class ListItem extends React.Component {
                             </View>
 
                         </View>
+                      </View>
                     </Modal>
                 </View>
             </React.Fragment>
