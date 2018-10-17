@@ -55,32 +55,45 @@ export default StyleSheet.create({
     },
 
     //-------Modal elements----------
-    deleteTodo: {
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#ff3d3d",
-        justifyContent: "center",
-        alignItems: "center",
-    },
 
     deleteText: {
         fontSize: 16,
-        color: "#f7f7f7",
-        fontWeight: "bold",
-    },
-
-    saveTodo: {
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#3aadff",
-        justifyContent: "center",
-        alignItems: "center",
+        color: "red",
     },
 
     saveText: {
         fontSize: 16,
-        color: "#f7f7f7",
-        fontWeight: "bold",
+        color: "green",
+    },
+
+    deleteButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 100,
+        borderColor: "red",
+        borderWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    saveButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 100,
+        borderColor: "green",
+        borderWidth: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    buttonsView: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        width: "60%",
+        height: "10%",
+        position: "absolute",
+        bottom: 50,
     },
 
     todoInfo:{
@@ -93,6 +106,12 @@ export default StyleSheet.create({
         alignSelf: "flex-start",
         marginLeft: 10,
         marginBottom: 15,
+        position: "absolute",
+        top: 5,
+        left: -10,
+        backgroundColor: "lightgrey",
+        height: "5%",
+        width: 70,
     },
 
     modalText: {
@@ -115,8 +134,7 @@ export default StyleSheet.create({
     modalItem: {
         width: "100%",
         height: "15%",
-        backgroundColor: "#ededed",
-        borderBottomWidth: 0.2,
+        borderBottomWidth: 0.7,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
@@ -141,6 +159,7 @@ export default StyleSheet.create({
 
     backBtn: {
         height: "100%",
+        width: "100%",
         flex: 2,
         marginTop: 10,
     },
