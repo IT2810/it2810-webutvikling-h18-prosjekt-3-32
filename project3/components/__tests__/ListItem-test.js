@@ -1,5 +1,5 @@
 import React from "react";
-import ListItem from "../components/ListItem";
+import ListItem from "../ListItem";
 import ShallowRenderer from "react-test-renderer/shallow";
 import renderer from "react-test-renderer";
 
