@@ -238,10 +238,9 @@ export default class CalendarDisplayer extends React.Component {
     };
 
     loadItems(day) {
-      setTimeout(() => {
         //Get today's date
-        const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
+        //const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
+        const strTime = day.dateString;
         //If there are no events in state at all
         if(Object.keys(this.state.items).length === 0){
           this.state.items[strTime] = [];
@@ -268,10 +267,10 @@ export default class CalendarDisplayer extends React.Component {
         this.setState({
           items: newItems,
         });
-      }, 1000);
     }
 
     renderItem(item) {
+      //console.log(item);
       //If item has starTime and endTime, then return this code.
       if(item.startTime && item.endTime){
         return (
@@ -285,7 +284,7 @@ export default class CalendarDisplayer extends React.Component {
       else{
           return (
             <TouchableOpacity style={styles.item}>
-              <Text style={styles.itemText}> {item.name} </Text>
+              <Text style={styles.itemText} value={item.name}> {item.name} </Text>
             </TouchableOpacity>
           );
       }
@@ -306,18 +305,13 @@ export default class CalendarDisplayer extends React.Component {
     renderEmptyDate() {
       return (
         <TouchableOpacity style={styles.item}>
-          <Text style={styles.itemText}>No events to show </Text>
+          <Text style={styles.itemText} value="empty"> {"Empty date"} </Text>
         </TouchableOpacity>
       );
     }
 
     rowHasChanged(r1, r2) {
       return r1.name !== r2.name;
-    }
-
-    timeToString(time) {
-      const date = new Date(time);
-      return date.toISOString().split('T')[0];
     }
 
     //------ RENDER ------ //
