@@ -142,11 +142,12 @@ export default StyleSheet.create({
     textInput: {
         width: "90%",
         marginTop: "3%",
-        fontSize: 25,
+        borderWidth: 0.7,
+        fontSize: 20,
         textAlign: "center",
         backgroundColor: "#ededed",
-        padding: 20,
-        borderWidth: 1,
+        paddingTop: 20,
+        paddingBottom: 20,
     },
 
     newEventTitle: {
