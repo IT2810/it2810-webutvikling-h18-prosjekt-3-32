@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home.js renders correctly? 1`] = `
+<View
+  style={
+    Object {
+      "display": "flex",
+      "height": "100%",
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "white",
+          "height": "10%",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "black",
+            "fontSize": 18,
+            "lineHeight": 50,
+            "textAlign": "center",
+          }
+        }
+      >
+        Upcoming events
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ededed",
+          "borderBottomWidth": 0.2,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 60,
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "marginLeft": "1.5%",
+            "maxWidth": "70%",
+          }
+        }
+      >
+        HMS-kurs
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "gray",
+            "fontSize": 13,
+            "marginRight": "1.5%",
+          }
+        }
+      >
+        2018-10-02
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ededed",
+          "borderBottomWidth": 0.2,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 60,
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "marginLeft": "1.5%",
+            "maxWidth": "70%",
+          }
+        }
+      >
+        Bedpress med gutta as. Det blir fette najs. Kjørrr
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "gray",
+            "fontSize": 13,
+            "marginRight": "1.5%",
+          }
+        }
+      >
+        2018-10-04
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "white",
+          "height": "10%",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "black",
+            "fontSize": 18,
+            "lineHeight": 50,
+            "textAlign": "center",
+          }
+        }
+      >
+        To do
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ededed",
+          "borderBottomWidth": 0.2,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 60,
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "marginLeft": "1.5%",
+            "maxWidth": "70%",
+          }
+        }
+      >
+        Bake pepperkaker
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "gray",
+            "fontSize": 13,
+            "marginRight": "1.5%",
+          }
+        }
+      />
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ededed",
+          "borderBottomWidth": 0.2,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 60,
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "marginLeft": "1.5%",
+            "maxWidth": "70%",
+          }
+        }
+      >
+        Fikse prosjekt3
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "gray",
+            "fontSize": 13,
+            "marginRight": "1.5%",
+          }
+        }
+      />
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#ededed",
+          "borderBottomWidth": 0.2,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 60,
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "marginLeft": "1.5%",
+            "maxWidth": "70%",
+          }
+        }
+      >
+        Flæææ
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "gray",
+            "fontSize": 13,
+            "marginRight": "1.5%",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "yellow",
+        "height": "5%",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      Number of steps last 24 hours: 100
+    </Text>
+  </View>
+</View>
+`;
