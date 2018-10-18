@@ -1,25 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HomeListItem.js renders correctly? 1`] = `
+exports[`HomeListItemCalendar.js renders correctly? 1`] = `
 <View
-  accessible={true}
-  isTVSelectable={true}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
   style={
     Object {
       "alignItems": "center",
       "backgroundColor": "#ededed",
-      "borderBottomWidth": 0.2,
-      "display": "flex",
-      "flexDirection": "row",
-      "height": 60,
-      "justifyContent": "space-between",
-      "opacity": 1,
+      "borderTopWidth": 0.5,
+      "height": 70,
+      "justifyContent": "center",
       "width": "100%",
     }
   }
@@ -30,9 +19,9 @@ exports[`HomeListItem.js renders correctly? 1`] = `
     ellipsizeMode="tail"
     style={
       Object {
+        "color": "#7f7f7f",
         "fontSize": 16,
-        "marginLeft": "1.5%",
-        "maxWidth": "70%",
+        "marginBottom": 10,
       }
     }
   />
@@ -42,11 +31,12 @@ exports[`HomeListItem.js renders correctly? 1`] = `
     ellipsizeMode="tail"
     style={
       Object {
-        "color": "gray",
-        "fontSize": 13,
-        "marginRight": "1.5%",
+        "color": "#7f7f7f",
+        "fontSize": 12,
       }
     }
-  />
+  >
+     - 
+  </Text>
 </View>
 `;

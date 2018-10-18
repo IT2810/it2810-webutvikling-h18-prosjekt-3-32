@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image} from "react-native";
-import { createMaterialTopTabNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Home from "./Home.js";
 import StepCounter from "./StepCounter";
