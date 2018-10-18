@@ -66,8 +66,8 @@ export default class TodoList extends React.Component {
                 });
 
                 //Sorts the imported list from AsyncStorage and updates the state to all three lists
-                const sortedByDateTodos = this.sortByDate(todoList);
-                const sortedByDateFinishedTodos = this.sortByDate(finishedTodoList);
+                let sortedByDateTodos = this.sortByDate(todoList);
+                let sortedByDateFinishedTodos = this.sortByDate(finishedTodoList);
                 this.setState({
                     showList:sortedByDateTodos,
                     todoList:sortedByDateTodos,
@@ -111,11 +111,10 @@ export default class TodoList extends React.Component {
 
     //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
     handleFinishedTodo(list){
-        let id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
+        const id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
         let AsyncList = [text,date,done];
 
-        AsyncStorage.removeItem(id.toString());
-
+        this.removeTodo(id.toString());
         this.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
         this.setState({finishedTodoList:list});
     }
@@ -164,7 +163,7 @@ export default class TodoList extends React.Component {
         this.updateShowList(deleteList);
 
         //The item is also removed from the AsyncStorage
-        AsyncStorage.removeItem(id.toString());
+        this.removeTodo(id.toString());
     };
 
     //This function sorts the current list by date
@@ -207,6 +206,15 @@ export default class TodoList extends React.Component {
     storeTodo = async (id, data) => {
         try {
             await AsyncStorage.setItem(id, data);
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    //Function to remove values in the AsyncStorage
+    removeTodo = async (id) => {
+        try {
+            await AsyncStorage.removeItem(id);
         } catch (error) {
             throw error;
         }
