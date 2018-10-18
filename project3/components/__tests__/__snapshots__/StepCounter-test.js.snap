@@ -1,0 +1,375 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepCounter.js renders correctly? 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "borderTopWidth": 0.3,
+        "height": "25%",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Steps today:
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      0
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "borderTopWidth": 0.3,
+        "height": "25%",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Your daily step goal:
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      0
+    </Text>
+    <View
+      animationType="timing"
+      onLayout={[Function]}
+      onValueChange={[Function]}
+      step={500}
+      style={
+        Array [
+          Object {
+            "height": 40,
+            "justifyContent": "center",
+          },
+          false,
+          Object {
+            "marginLeft": "5%",
+            "width": "90%",
+          },
+        ]
+      }
+      thumbTouchSize={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      }
+      value={0}
+    >
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#b3b3b3",
+            },
+            Object {
+              "borderRadius": 2,
+              "height": 4,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "#3f3f3f",
+            "borderRadius": 2,
+            "height": 4,
+            "marginTop": -0,
+            "opacity": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      />
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#ffb821",
+            "borderRadius": 10,
+            "height": 20,
+            "opacity": 0,
+            "position": "absolute",
+            "top": 22,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+              Object {
+                "translateY": -0,
+              },
+            ],
+            "width": 20,
+          }
+        }
+      />
+      <View
+        onMoveShouldSetResponder={[Function]}
+        onMoveShouldSetResponderCapture={[Function]}
+        onResponderEnd={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderReject={[Function]}
+        onResponderRelease={[Function]}
+        onResponderStart={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onStartShouldSetResponderCapture={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {},
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "height": "50%",
+        "justifyContent": "space-around",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Average daily steps last week:
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#999",
+            "borderRadius": 60,
+            "height": 120,
+            "width": 120,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+            },
+            Object {
+              "height": 120,
+              "width": 60,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomRightRadius": 0,
+                "borderTopRightRadius": 0,
+                "left": 0,
+                "position": "absolute",
+                "top": 0,
+              },
+              Object {
+                "backgroundColor": "#ffb821",
+                "borderRadius": 60,
+                "height": 120,
+                "transform": Array [
+                  Object {
+                    "translateX": 30,
+                  },
+                  Object {
+                    "rotate": "180deg",
+                  },
+                  Object {
+                    "translateX": -30,
+                  },
+                ],
+                "width": 60,
+              },
+            ]
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+            },
+            Object {
+              "height": 120,
+              "width": 60,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomRightRadius": 0,
+                "borderTopRightRadius": 0,
+                "left": 0,
+                "position": "absolute",
+                "top": 0,
+              },
+              Object {
+                "backgroundColor": "#ffb821",
+                "borderRadius": 60,
+                "height": 120,
+                "transform": Array [
+                  Object {
+                    "translateX": 30,
+                  },
+                  Object {
+                    "rotate": "360deg",
+                  },
+                  Object {
+                    "translateX": -30,
+                  },
+                ],
+                "width": 60,
+              },
+            ]
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 45,
+              "height": 90,
+              "width": 90,
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 16,
+              "textAlign": "center",
+            }
+          }
+        >
+          500
+        </Text>
+      </View>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 14,
+          "textAlign": "center",
+          "width": "90%",
+        }
+      }
+    >
+      Just a little more walking and you should reach your goal!
+    </Text>
+  </View>
+</View>
+`;

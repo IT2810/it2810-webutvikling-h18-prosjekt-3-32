@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, List, AsyncStorage, ScrollView, Button} from 'react-native';
+import {Text, View, AsyncStorage, Button} from 'react-native';
 import styles from "../stylesheets/Home.style.js";
 import HomeListItemTodo from "./HomeListItemTodo";
 import HomeListItemCalendar from "./HomeListItemCalendar";
@@ -16,6 +16,14 @@ export default class Home extends React.Component {
             date: date,
         };
     }
+
+    //------ LIFE CYCLE ------//
+
+    componentDidMount(){
+        this.refresh();
+    }
+
+    //------ FUNCTIONS  ------//
 
     //This function runs when the user loads the application and press the refreshbutton
     refresh(){
@@ -72,10 +80,35 @@ export default class Home extends React.Component {
                     todoList:sortedByDateTodos,
                 });
 
+                //Checking if the todolist is empty, and creates a listItem that says no upcoming todos
+                if(this.state.todoList.length === 0){
+                    let emptyTodoList = [];
+                    emptyTodoList.push({
+                        key: -1,
+                        todoNr: -1,
+                        todoText: "No upcoming Todos",
+                        todoDate: "",
+                        done: false,
+                    });
+                    this.setState({todoList:emptyTodoList});
+                }
+
+                //Checking if the calendarlist is empty, and creates a listItem that says no upcoming events
+                let today = Moment().format("YYYY-MM-DD");
+                if(!this.state.calendar[today]){
+                    this.state.calendar[today] = [];
+                }
+                //If today's calendarList is empty:
+                if(this.state.calendar[today].length<1){
+                    let newCalendar = {};
+                    //Add a new item to tell the user there are no events
+                    newCalendar[today] = [{name: "You have no events today.", eventNr: 0,}];
+                    this.setState({
+                        calendar: newCalendar,
+                    });
+                }
             });
         });
-
-
     }
 
     //This function sorts the current list by date
@@ -102,9 +135,7 @@ export default class Home extends React.Component {
         return todosWithDate.concat(todosWithoutDate);
     };
 
-    componentDidMount(){
-        this.refresh();
-    }
+    //------ RENDER  ------//
 
     render() {
         if(!this.state.calendar[this.state.date]){this.state.calendar[this.state.date]=[];}

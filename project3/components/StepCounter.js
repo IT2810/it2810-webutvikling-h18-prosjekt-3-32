@@ -11,9 +11,8 @@ and a successful OAuth verification to your Google account.
 Boiler code from Expo docs: https://docs.expo.io/versions/latest/sdk/pedometer
 */
 
-import Expo from 'expo';
 import React from 'react';
-import { Pedometer } from 'expo';
+import { Expo, Pedometer } from 'expo';
 import { Text, View, AsyncStorage } from 'react-native';
 import { Slider } from 'react-native-elements';
 import styles from '../stylesheets/StepCounter.style.js';
@@ -38,6 +37,7 @@ export default class StepCounter extends React.Component {
         }
     }
 
+    //------ LIFE CYCLE  ------//
 
     componentDidMount() {
         // Starts the API calls and state updating.
@@ -45,7 +45,7 @@ export default class StepCounter extends React.Component {
             this._subscribe();
         }
         catch (error) {
-            console.log(error);
+            throw(error);
         }
     }
 
@@ -55,18 +55,19 @@ export default class StepCounter extends React.Component {
             this._unsubscribe();
         }
         catch (error) {
-            console.log(error);
+            throw(error);
         }
 
     }
 
+    //------ FUNCTIONS  ------//
 
     // Boiler code from React Native docs to save the goal set by user to AsyncStorage
     _storeGoal = async (goal) => {
         // Sets state to ensure the view is updated
         this.setState({
             goalSteps: goal
-        })
+        });
 
         // Tries to save goal to persistent storage
         try {
@@ -74,7 +75,7 @@ export default class StepCounter extends React.Component {
 
         } catch (error) {
             // Error saving data
-            console.log("_storeGoal caused: " + error);
+            throw("_storeGoal caused: " + error);
         }
 
         // Code below updates the motivational message if goal is achieved
@@ -89,7 +90,7 @@ export default class StepCounter extends React.Component {
                 motivationalMessage: "Just a bit of walking and you will reach your goal!"
             })
         }
-    }
+    };
 
     // Boiler code from React Native docs, fetches goal from persistent storage
     _retrieveGoal = async () => {
@@ -108,12 +109,13 @@ export default class StepCounter extends React.Component {
             }
         } catch (error) {
             // Error retrieving data, could be first use of app?
-            console.log("_retrieveGoal caused: " + error)
             this.setState({
                 goalSteps: 12000
-            })
+            });
+            throw("_retrieveGoal caused: " + error)
+
         }
-    }
+    };
 
 
     _subscribe = () => {
@@ -122,7 +124,7 @@ export default class StepCounter extends React.Component {
 
         // Sets up connection Google Fit API or Apple Core API
         this._subscription = Pedometer.watchStepCount(result => {
-            initialSteps = this.state.stepsToday;
+            const initialSteps = this.state.stepsToday;
             this.setState({
                 currentStepCount: initialSteps + result.steps
             });
@@ -181,13 +183,14 @@ export default class StepCounter extends React.Component {
                 });
             },
             error => {
-                console.log(error);
                 this.setState({
                     averageStepsLastWeek: "0"
                 });
+                throw(error);
+
             }
         );
-    }
+    };
 
     // Disconnects the connection to the APIs
     _unsubscribe = () => {
@@ -195,6 +198,7 @@ export default class StepCounter extends React.Component {
         this._subscription = null;
     };
 
+    //------ RENDER  ------//
 
     render() {
         return (

@@ -1,15 +1,16 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, List, TouchableOpacity, Modal, Image, TextInput } from 'react-native';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { AsyncStorage, Text, View, TouchableOpacity, Modal, Image, TextInput } from 'react-native';
+import { Agenda } from 'react-native-calendars';
 import styles from "../stylesheets/Calendar.style.js";
 import DatePicker from 'react-native-datepicker';
+import Moment from 'moment';
 
 export default class CalendarDisplayer extends React.Component {
     constructor(props) {
       super(props);
+      let date = Moment().format("YYYY-MM-DD");
       this.state = {
-        didMount: false,
-        date: "",
+        date: date,
         startTime: "",
         endTime: "",
         eventDate: "",
@@ -20,6 +21,8 @@ export default class CalendarDisplayer extends React.Component {
         items: {},
       };
     }
+
+    //------ LIFE CYCLE ------//
 
     componentDidMount(){
         //Gets the highest eventNr and updates the state so that no events have the same eventNr and key.
@@ -51,7 +54,6 @@ export default class CalendarDisplayer extends React.Component {
                         Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
                         //Set state to be the newItems object. this.state.items now contains every date that previously was there, and the new one.
                         this.setState({
-                          didMount: true,
                           items: newItems,
                         });
                     }
@@ -60,131 +62,7 @@ export default class CalendarDisplayer extends React.Component {
         });
     }
 
-    render() {
-        return (
-          <View style={styles.calendarContainer}>
-            <Agenda
-              style = {styles.agendaContainer}
-              //Set monday to be first day of week
-              firstDay={1}
-              //Show week numbers
-              showWeekNumbers={true}
-              minDate={'2016-01-01'}
-              maxDate={'2020-12-31'}
-              //Numbers of months user can scroll backwards
-              pastScrollRange={12}
-              //Numbers of months user can scroll forwards. Limited to 12 to make loading time better
-              futureScrollRange={12}
-              //Items in Agenda should be equal to items in state
-              items={this.state.items}
-              // callback that gets called when items for a certain month should be loaded (month became visible)
-              loadItemsForMonth={this.loadItems.bind(this)}
-              // callback that fires when the calendar is opened or closed
-              onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
-              // callback that gets called on day press
-              onDayPress={(day)=>{this.setState({date: day.dateString})}}
-              // callback that gets called when day changes while scrolling agenda list
-              onDayChange={(day)=>{console.log('day changed')}}
-              // specify how each item should be rendered in agenda
-              renderItem={this.renderItem.bind(this)}
-              // specify how empty date content with no items should be rendered
-              renderEmptyDate={this.renderEmptyDate.bind(this)}
-              // specify your item comparison function for increased performance
-              rowHasChanged={this.rowHasChanged.bind(this)}
-            />
-            <TouchableOpacity style={styles.addEventButton}
-              onPress={() => this.setModalVisible(true)} >
-              <Text style={styles.addEventText}>{"Add new event"}</Text>
-            </TouchableOpacity>
-            <View>
-                {/*Modal which contains several options to the user regarding the todo*/}
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    //If the back button on the users phone is pressed, close the Modal
-                    onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                    <View style={styles.modal}>
-                        {/*Simple backbutton if the user choose to not do any changes*/}
-
-
-                        <View style={styles.newEventTitleBar}>
-                          <Text style={styles.newEventTitle}>{"Event info"}</Text>
-                        </View>
-                        <TouchableOpacity
-                            onPress={() =>{this.closeModal();}}
-                            style={styles.modalClose}>
-                            <Image style={styles.backBtn} source={require('../assets/back.png')}/>
-                        </TouchableOpacity>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(text) => this.setState({eventText : text})}
-                            placeholder={"Event description"}
-                            value={this.state.eventText}
-                        />
-
-                        <View style={styles.modalItem}>
-                            {/*Date picker so the user can choose an event date.*/}
-                            <DatePicker
-                                date={this.state.date}
-                                mode="date"
-                                placeholder="select date"
-                                minDate={new Date()}
-                                format="YYYY-MM-DD"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                onDateChange={(date) => {this.setState({date: date})}}
-                            />
-                        </View>
-                        <View style={styles.modalItem}>
-                            {/*Time picker so the user can choose event start time.*/}
-                            <DatePicker
-                                date={this.state.startTime}
-                                mode="time"
-                                placeholder="start time"
-                                is24Hour={true}
-                                format="LT"
-                                iconSource={require('../assets/clock.png')}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                onDateChange={(time) => {
-                                  this.setState({startTime: time});
-                                  }
-                                }
-                            />
-                            {/*Time picker so the user can choose event end time.*/}
-                            <DatePicker
-                                date={this.state.endTime}
-                                mode="time"
-                                placeholder="end time"
-                                is24Hour={true}
-                                format="LT"
-                                iconSource={require('../assets/clock.png')}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                onDateChange={(time) => {
-                                  this.setState({endTime: time});
-                                  }
-                                }
-                            />
-                        </View>
-                        <View style={styles.buttonsView}>
-                              {/*Button to save the changes done in the modal*/}
-                              <TouchableOpacity style={styles.saveButton} onPress={() => { this.addEvent(this.state.currEventNr);}}>
-                                  <Text style={styles.saveText}>Save</Text>
-                              </TouchableOpacity>
-                              {/*Button to delete the todo*/}
-                              <TouchableOpacity style={styles.deleteButton} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
-                                  <Text style={styles.deleteText}>Delete</Text>
-                              </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
-            </View>
-          </View>
-
-        );
-    }
+    //------ FUNCTIONS ------//
 
     //This is triggered when the back button is pressed when editing an event or when creating an event
     closeModal(){
@@ -212,7 +90,7 @@ export default class CalendarDisplayer extends React.Component {
       });
     }
 
-    deleteEvent = (id) => {
+    deleteEvent = async (id) => {
         let deleteIndex = null;
         const evtDate = this.state.eventDate;
         //Go through each element in today's list
@@ -229,7 +107,13 @@ export default class CalendarDisplayer extends React.Component {
           this.state.items[evtDate].splice(deleteIndex, 1);
         }
         //Also deletes event from Async
-        AsyncStorage.removeItem("event"+id.toString());
+        try {
+            await AsyncStorage.removeItem("event"+id.toString());
+            return true;
+        }
+        catch(error) {
+            throw error;
+        }
 
         //Making new empty object to add the newItems in
         const newItems = {};
@@ -285,7 +169,7 @@ export default class CalendarDisplayer extends React.Component {
           if(this.state.items[newDate].length>0){
             //Check if date has an object where name value is "No upcoming events."
             //If so, this must be deleted in order for it not to show in calendar
-            if(this.state.items[newDate][0]["name"]=="No upcoming events."){
+            if(this.state.items[newDate][0]["name"]=="No upcoming events." || this.state.items[newDate][0]["name"]=="No events to show." ){
               //Delete event that says "no upcoming event"
               delete this.state.items[newDate];
               //Create new, empty date key in object
@@ -430,4 +314,134 @@ export default class CalendarDisplayer extends React.Component {
       return r1.name !== r2.name;
     }
 
-  }
+    //------ RENDER ------ //
+
+    render() {
+        return (
+            <View style={styles.calendarContainer}>
+                <Agenda
+                    style = {styles.agendaContainer}
+                    //Set monday to be first day of week
+                    firstDay={1}
+                    //Show week numbers
+                    showWeekNumbers={true}
+                    minDate={'2016-01-01'}
+                    maxDate={'2020-12-31'}
+                    //Numbers of months user can scroll backwards
+                    pastScrollRange={12}
+                    //Numbers of months user can scroll forwards. Limited to 12 to make loading time better
+                    futureScrollRange={12}
+                    //Items in Agenda should be equal to items in state
+                    items={this.state.items}
+                    // callback that gets called when items for a certain month should be loaded (month became visible)
+                    loadItemsForMonth={this.loadItems.bind(this)}
+                    // callback that fires when the calendar is opened or closed
+                    onCalendarToggled={(calendarOpened) => {}}
+                    // callback that gets called on day press
+                    onDayPress={(day)=>{this.setState({date: day.dateString})}}
+                    // callback that gets called when day changes while scrolling agenda list
+                    onDayChange={(day)=>{}}
+                    // specify how each item should be rendered in agenda
+                    renderItem={this.renderItem.bind(this)}
+                    // specify how empty date content with no items should be rendered
+                    renderEmptyDate={this.renderEmptyDate.bind(this)}
+                    // specify your item comparison function for increased performance
+                    rowHasChanged={this.rowHasChanged.bind(this)}
+                />
+                <TouchableOpacity style={styles.addEventButton}
+                                  onPress={() => this.setModalVisible(true)} >
+                    <Text style={styles.addEventText}>{"Add new event"}</Text>
+                </TouchableOpacity>
+                <View>
+                    {/*Modal which contains several options to the user regarding the todo*/}
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        //If the back button on the users phone is pressed, close the Modal
+                        onRequestClose={()=>{this.closeModal();}}>
+                        <View style={styles.modalView}>
+                            <View style={styles.modal}>
+                                {/*Simple backbutton if the user choose to not do any changes*/}
+
+
+                                <View style={styles.newEventTitleBar}>
+                                    <Text style={styles.newEventTitle}>{"Event info"}</Text>
+                                </View>
+                                <TouchableOpacity
+                                    onPress={() =>{this.closeModal();}}
+                                    style={styles.modalClose}>
+                                    <Image style={styles.closeImg} source={require('../assets/close.png')}/>
+                                </TouchableOpacity>
+                                <TextInput
+                                    style={styles.textInput}
+                                    onChangeText={(text) => this.setState({eventText : text})}
+                                    placeholder={"Event description"}
+                                    value={this.state.eventText}
+                                    multiline={true}
+                                />
+
+                                <View style={styles.modalItem}>
+                                    {/*Date picker so the user can choose an event date.*/}
+                                    <DatePicker
+                                        date={this.state.date}
+                                        mode="date"
+                                        placeholder="select date"
+                                        minDate={new Date()}
+                                        format="YYYY-MM-DD"
+                                        confirmBtnText="Confirm"
+                                        cancelBtnText="Cancel"
+                                        onDateChange={(date) => {this.setState({date: date})}}
+                                    />
+                                </View>
+                                <View style={styles.modalItem}>
+                                    {/*Time picker so the user can choose event start time.*/}
+                                    <DatePicker
+                                        date={this.state.startTime}
+                                        mode="time"
+                                        placeholder="start time"
+                                        is24Hour={true}
+                                        format={('HH:MM')}
+                                        iconSource={require('../assets/clock.png')}
+                                        confirmBtnText="Confirm"
+                                        cancelBtnText="Cancel"
+                                        onDateChange={(time) => {
+                                            this.setState({startTime: time});
+                                        }
+                                        }
+                                    />
+                                    {/*Time picker so the user can choose event end time.*/}
+                                    <DatePicker
+                                        date={this.state.endTime}
+                                        mode="time"
+                                        placeholder="end time"
+                                        is24Hour={true}
+                                        format={('HH:MM')}
+                                        iconSource={require('../assets/clock.png')}
+                                        confirmBtnText="Confirm"
+                                        cancelBtnText="Cancel"
+                                        onDateChange={(time) => {
+                                            this.setState({endTime: time});
+                                        }
+                                        }
+                                    />
+                                </View>
+                                <View style={styles.buttonsView}>
+                                    {/*Button to save the changes done in the modal*/}
+                                    <TouchableOpacity style={styles.saveButton} onPress={() => { this.addEvent(this.state.currEventNr);}}>
+                                        <Text style={styles.saveText}>Save</Text>
+                                    </TouchableOpacity>
+                                    {/*Button to delete the todo*/}
+                                    <TouchableOpacity style={styles.deleteButton} onPress={() => { this.deleteEvent(this.state.currEventNr);}}>
+                                        <Text style={styles.deleteText}>Delete</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
+            </View>
+
+        );
+    }
+}

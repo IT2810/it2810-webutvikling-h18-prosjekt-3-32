@@ -17,6 +17,9 @@ export default class ListItem extends React.Component {
         });
     }
 
+    //------ LIFE CYCLE  ------//
+
+
     //Since both date and name may be changed, the state is set by the props which comes from TodoList.js
     //When the name or date is changed, the state is changed and the user get immediate update!
     componentDidMount(){
@@ -33,6 +36,9 @@ export default class ListItem extends React.Component {
         AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
+    //------ FUNCTIONS  ------//
+
+
     //This function checks the current state of the device (active, background, inactive)
     //If the app is closed, this.handleFinishedTodo will be triggered
     handleAppStateChange = (nextAppState) => {
@@ -48,7 +54,7 @@ export default class ListItem extends React.Component {
     //The to-do is also renamed in the AsyncStorage (see line 69 in TodoList.js for more!)
     handleFinishedTodo(){
         if(this.state.done){
-            const finishedList = [this.props.todoNr, this.state.name, this.state.date, this.state.done];
+            let finishedList = [this.props.todoNr, this.state.name, this.state.date, this.state.done];
             this.props.handleFinishedTodo(finishedList);
         }
     }
@@ -74,6 +80,12 @@ export default class ListItem extends React.Component {
         else{
             this.setState({done:!this.state.done});
         }
+    }
+
+    handleChangedDate(date){
+        this.setState({
+            date: date,
+        });
     }
 
     //Set the modal visible, if the to-do isn't finished.
@@ -109,6 +121,8 @@ export default class ListItem extends React.Component {
         this.checkDueDate();
     };
 
+    //------ RENDER  ------//
+
     render() {
         return (
             <React.Fragment>
@@ -134,10 +148,11 @@ export default class ListItem extends React.Component {
                     {/*Modal which contains several options to the user regarding the todo*/}
                     <Modal
                         animationType="slide"
-                        transparent={false}
+                        transparent={true}
                         visible={this.state.modalVisible}
                         onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                        <View style={styles.modal}>
+                        <View style={styles.modalView}>
+                          <View style={styles.modal}>
                             {/*Simple backbutton if the user choose to not do any changes*/}
                             <View style={styles.newTodoTitleBar}>
                               <Text style={styles.newTodoTitle}>{"Todo info"}</Text>
@@ -145,7 +160,7 @@ export default class ListItem extends React.Component {
                             <TouchableOpacity
                                 onPress={() => {this.setModalVisible(!this.state.modalVisible);}}
                                 style={styles.modalClose}>
-                                <Image style={styles.backBtn} source={require('../assets/back.png')}/>
+                                <Image style={styles.closeImg} source={require('../assets/close.png')}/>
                             </TouchableOpacity>
                             {/*The user may change the todoText*/}
                             <TextInput style={styles.modalText}
@@ -162,7 +177,7 @@ export default class ListItem extends React.Component {
                                     format="YYYY-MM-DD"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
-                                    onDateChange={(date) => {this.setState({date:date})}}
+                                    onDateChange={(date) => {this.handleChangedDate(date)}}
                                 />
                             </View>
 
@@ -176,8 +191,8 @@ export default class ListItem extends React.Component {
                                       <Text style={styles.deleteText}>Delete</Text>
                                   </TouchableOpacity>
                             </View>
-
                         </View>
+                      </View>
                     </Modal>
                 </View>
             </React.Fragment>

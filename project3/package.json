@@ -6,17 +6,34 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jext-expo",
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
+      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
+    }
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "expo": "^30.0.1",
+    "mock-async-storage": "^2.0.3",
+    "jest": "^23.6.0",
+    "jest-expo": "^30.0.0",
     "moment": "file:node_modules\\moment",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-calendars": "^1.21.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^0.19.1",
-    "react-native-simple-radio-button": "^2.7.3",
-    "react-navigation": "^2.17.0"
+    "react-navigation": "^2.17.0",
+    "react-test-renderer": "latest",
+    "react-native-progress-circle": "latest",
+    "react-navigation-material-bottom-tabs": "latest"
+  },
+  "devDependencies": {
+    "jest-expo": "^30.0.0"
   }
 }
