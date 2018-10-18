@@ -102,6 +102,7 @@ export default class CalendarDisplayer extends React.Component {
                     visible={this.state.modalVisible}
                     //If the back button on the users phone is pressed, close the Modal
                     onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                  <View style={styles.modalView}>
                     <View style={styles.modal}>
                         {/*Simple backbutton if the user choose to not do any changes*/}
 
@@ -112,7 +113,7 @@ export default class CalendarDisplayer extends React.Component {
                         <TouchableOpacity
                             onPress={() =>{this.closeModal();}}
                             style={styles.modalClose}>
-                            <Image style={styles.backBtn} source={require('../assets/back.png')}/>
+                            <Image style={styles.closeImg} source={require('../assets/close.png')}/>
                         </TouchableOpacity>
                         <TextInput
                             style={styles.textInput}
@@ -177,6 +178,7 @@ export default class CalendarDisplayer extends React.Component {
                               </TouchableOpacity>
                         </View>
                     </View>
+                  </View>
                 </Modal>
             </View>
           </View>
