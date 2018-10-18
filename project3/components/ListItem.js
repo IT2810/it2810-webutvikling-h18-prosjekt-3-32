@@ -183,7 +183,6 @@ export default class ListItem extends React.Component {
                                       <Text style={styles.deleteText}>Delete</Text>
                                   </TouchableOpacity>
                             </View>
-
                         </View>
                       </View>
                     </Modal>

@@ -48,7 +48,7 @@ exports[`TodoList renders correctly! 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "borderColor": "#a0a0a0",
+          "borderColor": "#5cacec",
           "borderRadius": 25,
           "borderWidth": 1,
           "height": 50,
@@ -65,7 +65,7 @@ exports[`TodoList renders correctly! 1`] = `
         ellipsizeMode="tail"
         style={
           Object {
-            "color": "#a0a0a0",
+            "color": "#5cacec",
             "fontSize": 15,
           }
         }

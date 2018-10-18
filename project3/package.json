@@ -19,6 +19,7 @@
   "dependencies": {
     "babel-preset-env": "^1.7.0",
     "expo": "^30.0.1",
+    "mock-async-storage": "^2.0.3",
     "jest": "^23.6.0",
     "jest-expo": "^30.0.0",
     "moment": "file:node_modules\\moment",

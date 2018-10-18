@@ -1,11 +1,11 @@
 import React from "react";
 import TodoList from "../components/TodoList";
-import ListItem from "../components/ListItem";
 
 import ShallowRenderer from "react-test-renderer/shallow";
 import renderer from "react-test-renderer";
-import Moment from "moment";
+import MockAsyncStorage from "mock-async-storage";
 
+import { AsyncStorage as storage } from "react-native";
 
 //Snapshot testing of TodoList.js
 test("TodoList renders correctly!", () => {
@@ -88,22 +88,6 @@ test("check update Todo with date", () =>{
     expect(todoComponent.state.todoList).toEqual(testList);
 });
 
-//Test to check if onChangeValue at TextInput works
-test("test onChangeValue at textInput", () => {
-    const mockSetState = jest.fn();
-
-    //Creates a shallowRenderer to get the renderoutput of TodoList
-    const shallow = new ShallowRenderer();
-    shallow.render(<TodoList/>);
-    const result = shallow.getRenderOutput();
-
-    //Navigating to find the onChangeText at textinput and triggers it
-    result.props.children[0].props.children[0].props.onChangeText(mockSetState("test"));
-
-    //Checks if the onChangeText was triggered one time
-    expect(mockSetState).toHaveBeenCalledTimes(1);
-});
-
 //Test to check if the function sortByDate works
 test("check if the function sortByDate works", () => {
     //Creates instance of TodoList
@@ -131,13 +115,19 @@ test("check if the function sortByDate works", () => {
 });
 
 //Test to check if the function handleFinishedTodo works
-test("check if handleFinishedTodo", () => {
+test("check if handleFinishedTodo works", () => {
     //Creates instance of TodoList
     const testTodoListComponent = <TodoList/>;
     const todoComponent = renderer.create(testTodoListComponent).getInstance();
 
     //Creates a finished todolist
-    let finishedList = ["todo1", "test", "2018-12-24", true];
+    let finishedList = [{
+        key:1,
+        todoNr:"todo1",
+        todoText:"test",
+        todoDate:"2018-12-24",
+        done:true
+    }];
 
     //Triggers handleFinishedTodo with the finishedList as parameter
     todoComponent.handleFinishedTodo(finishedList);
@@ -145,4 +135,119 @@ test("check if handleFinishedTodo", () => {
     //Checks if the state is updated
     expect(todoComponent.state.finishedTodoList).toEqual(finishedList);
 
+});
+
+test("check if handleShowFinishedTodos works", () => {
+    //Creates instance of TodoList
+    const testTodoListComponent = <TodoList/>;
+    const todoComponent = renderer.create(testTodoListComponent).getInstance();
+
+    //Creates a finished todolist
+    let finishedList = [{
+        key:1,
+        todoNr:"todo1",
+        todoText:"test",
+        todoDate:"2018-12-24",
+        done:true
+    }];
+
+    //Setting the state to be true for the first expect
+    todoComponent.setState({showFinishedTodos:false, finishedTodoList:finishedList});
+
+    //Triggers handleShowFinishedTodos which will enter the if-statement
+    todoComponent.handleShowFinishedTodos();
+
+    //Checks if the state for finishedTodoList is updated
+    expect(todoComponent.state.showList).toEqual(finishedList);
+
+    //Creates an unfinished todolist
+    let unfinishedList = [{
+        key:1,
+        todoNr:"todo1",
+        todoText:"test",
+        todoDate:"2018-12-24",
+        done:false
+    }];
+
+    //Setting the state to be false for the second expect
+    todoComponent.setState({showFinishedTodos:true, todoList:unfinishedList});
+
+    //Triggers handleShowFinishedTodos which will enter the else-statement
+    todoComponent.handleShowFinishedTodos();
+
+    //Checks if the state todoList is updated
+    expect(todoComponent.state.showList).toEqual(unfinishedList);
+});
+
+//---Testing functions in Render() (onPress, onChangeText..)---//
+
+//Test to check if onChangeValue at TextInput works
+test("test onChangeValue at textInput", () => {
+    const mockOnChangeValue = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of TodoList
+    const shallow = new ShallowRenderer();
+    shallow.render(<TodoList/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onChangeText at textinput and triggers it
+    result.props.children[0].props.children[0].props.onChangeText(mockOnChangeValue("test"));
+
+    //Checks if the onChangeText was triggered one time
+    expect(mockOnChangeValue).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onPress at Button works
+test("test onPress at Button", () => {
+    const mockOnPress = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of TodoList
+    const shallow = new ShallowRenderer();
+    shallow.render(<TodoList/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at Button and triggers it
+    result.props.children[1].props.children.props.onPress(mockOnPress(true));
+
+    //Checks if the onChangeText was triggered one time
+    expect(mockOnPress).toHaveBeenCalledTimes(1);
+});
+
+//---Testing AsyncStorage---//
+
+test("Functions using AsyncStorage", async () => {
+    //Setting up mock Async
+    const asyncMock = () => {
+        const mockImpl = new MockAsyncStorage();
+        jest.mock("AsyncStorage", () => mockImpl);
+    };
+
+    //Creates instance of TodoList
+    const testTodoListComponent = <TodoList/>;
+    const todoComponent = renderer.create(testTodoListComponent).getInstance();
+
+    //Creates a testList
+    const testList = ["todo1", "test", "", false];
+
+    //Initialize the mock for AsyncStorage
+    asyncMock();
+
+    //--Testing StoreTodo in TodoList (Storing in AsyncStorage)--//
+    const testAsyncList = [testList[1], testList[2], testList[3]];
+
+    //Triggers storeTodo in TodoList
+    await todoComponent.storeTodo(testList[1].toString(), JSON.stringify(testAsyncList));
+    const value = await storage.getItem(testList[1].toString());
+    const parsedValue = JSON.parse(value);
+
+    expect(parsedValue).toEqual(testAsyncList);
+
+    //--Testing removeTodo in TodoList (Removing item in AsyncStorage)--//
+
+    //Triggers removeTodo in TodoList, which will remove the item in the mockAsyncStorage
+    await todoComponent.removeTodo(testList[1].toString());
+    const value1 = await storage.getItem(testList[1].toString());
+
+    //Will be undefined since there isn't anything there.
+    expect(value1).toBeUndefined();
 });

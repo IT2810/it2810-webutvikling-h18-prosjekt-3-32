@@ -94,6 +94,8 @@ test("check if handleFinishedTodo triggers if ...state.done is true", () => {
     expect(mockOnPress).toHaveBeenCalledTimes(1);
 });
 
+//---Testing functions in Render() (onPress, onChangeText..)---//
+
 //Test to check if onPress at TouchableOpacity(1) works
 test("test onPress at TouchableOpacity(1)", () => {
     const mockOnPress = jest.fn();
@@ -141,4 +143,103 @@ test("test onPress at TouchableOpacity(2)", () => {
     //Expecting the mockfunction to have been called one time
     expect(mockOnPress).toHaveBeenCalledTimes(1);
 });
+
+//Test to check if onRequestClose at Modal works
+test("test onRequestClose at Modal", () => {
+    const mockOnRequest = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at Modal and triggers it
+    result.props.children[2].props.children.props.onRequestClose(mockOnRequest(true));
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnRequest).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onPress at TouchableOpacity(3) works
+test("test onPress at TouchableOpacity(3)", () => {
+    const mockOnPress = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at TouchableOpacity and triggers it
+    result.props.children[2].props.children.props.children.props.children.props.children[1].props.onPress(mockOnPress(true));
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnPress).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onChangeText at TextInput(1) works
+test("test onChangeText at TextInput(1)", () => {
+    const mockOnChangeText = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onChangeText at TextInput and triggers it
+    result.props.children[2].props.children.props.children.props.children.props.children[2].props.onChangeText(mockOnChangeText("test"));
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnChangeText).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onDateChange at Datepicker(1) works
+test("test onPress at Datepicker(1)", () => {
+    const mockOnDateChange = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at Datepicker and triggers it
+    result.props.children[2].props.children.props.children.props.children.props.children[3].props.children.props.onDateChange(mockOnDateChange());
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnDateChange).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onDateChange at TouchableOpacity(4) works
+test("test onPress at TouchableOpacity(4)", () => {
+    const mockOnPress = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at TouchableOpacity and triggers it
+    result.props.children[2].props.children.props.children.props.children.props.children[4].props.children[0].props.onPress(mockOnPress());
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnPress).toHaveBeenCalledTimes(1);
+});
+
+//Test to check if onDateChange at TouchableOpacity(5) works
+test("test onPress at TouchableOpacity(5)", () => {
+    const mockDeleteTodo = jest.fn();
+    const mockOnPress = jest.fn();
+
+    //Creates a shallowRenderer to get the renderoutput of ListItem
+    const shallow = new ShallowRenderer();
+    shallow.render(<ListItem deleteTodo = {mockDeleteTodo}/>);
+    const result = shallow.getRenderOutput();
+
+    //Navigating to find the onPress at TouchableOpacity and triggers it
+    result.props.children[2].props.children.props.children.props.children.props.children[4].props.children[1].props.onPress(mockOnPress(1));
+
+    //Expecting the mockfunction to have been called one time
+    expect(mockOnPress).toHaveBeenCalledTimes(1);
+});
+
+
 
