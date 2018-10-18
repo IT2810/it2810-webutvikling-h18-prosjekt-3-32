@@ -11,9 +11,8 @@ and a successful OAuth verification to your Google account.
 Boiler code from Expo docs: https://docs.expo.io/versions/latest/sdk/pedometer
 */
 
-import Expo from 'expo';
 import React from 'react';
-import { Pedometer } from 'expo';
+import { Expo, Pedometer } from 'expo';
 import { Text, View, AsyncStorage } from 'react-native';
 import { Slider } from 'react-native-elements';
 import styles from '../stylesheets/StepCounter.style.js';

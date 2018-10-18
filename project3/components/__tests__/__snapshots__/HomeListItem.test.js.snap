@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeListItem.js renders correctly? 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ededed",
+      "borderBottomWidth": 0.2,
+      "display": "flex",
+      "flexDirection": "row",
+      "height": 60,
+      "justifyContent": "space-between",
+      "opacity": 1,
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "marginLeft": "1.5%",
+        "maxWidth": "70%",
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "gray",
+        "fontSize": 13,
+        "marginRight": "1.5%",
+      }
+    }
+  />
+</View>
+`;

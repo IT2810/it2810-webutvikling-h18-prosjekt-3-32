@@ -1,0 +1,265 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepCounter.js renders correctly? 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "lightgray",
+      "flex": 1,
+      "height": "100%",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "yellow",
+        "borderRadius": 10,
+        "marginBottom": 20,
+        "paddingBottom": 20,
+        "paddingLeft": 20,
+        "paddingRight": 20,
+        "paddingTop": 10,
+        "width": "90%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Steps today:
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      0
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "yellow",
+        "borderRadius": 10,
+        "marginBottom": 20,
+        "paddingBottom": 20,
+        "paddingLeft": 20,
+        "paddingRight": 20,
+        "paddingTop": 10,
+        "width": "90%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Your daily step goal:
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      0
+    </Text>
+    <View
+      animationType="timing"
+      onLayout={[Function]}
+      onValueChange={[Function]}
+      step={500}
+      style={
+        Array [
+          Object {
+            "height": 40,
+            "justifyContent": "center",
+          },
+          false,
+          undefined,
+        ]
+      }
+      thumbTouchSize={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      }
+      value={0}
+    >
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#b3b3b3",
+            },
+            Object {
+              "borderRadius": 2,
+              "height": 4,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "#3f3f3f",
+            "borderRadius": 2,
+            "height": 4,
+            "marginTop": -0,
+            "opacity": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      />
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#4fcfff",
+            "borderRadius": 10,
+            "height": 20,
+            "opacity": 0,
+            "position": "absolute",
+            "top": 22,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+              Object {
+                "translateY": -0,
+              },
+            ],
+            "width": 20,
+          }
+        }
+      />
+      <View
+        onMoveShouldSetResponder={[Function]}
+        onMoveShouldSetResponderCapture={[Function]}
+        onResponderEnd={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderReject={[Function]}
+        onResponderRelease={[Function]}
+        onResponderStart={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onStartShouldSetResponderCapture={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {},
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "yellow",
+        "borderRadius": 10,
+        "marginBottom": 20,
+        "paddingBottom": 20,
+        "paddingLeft": 20,
+        "paddingRight": 20,
+        "paddingTop": 10,
+        "width": "90%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      Average daily steps last week:
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      500
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "paddingTop": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      Just a little more walking and you should reach your goal!
+    </Text>
+  </View>
+</View>
+`;
