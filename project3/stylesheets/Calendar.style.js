@@ -6,9 +6,7 @@ export default StyleSheet.create({
       width: "100%",
       height: "100%",
     },
-    agendaContainer: {
-      height: "80%"
-    },
+
     addEventButton: {
       position: "absolute",
       width: 70,
@@ -107,7 +105,7 @@ export default StyleSheet.create({
         marginLeft: 10,
         marginBottom: 25,
         position: "absolute",
-        top: -10,
+        top: 0,
         left: -10,
         backgroundColor: "#5cacec",
         height: "20%",
@@ -123,7 +121,6 @@ export default StyleSheet.create({
 
     modal: {
         alignItems: "center",
-        justifyContent: "center",
         height: 460,
         width: "90%",
         display: "flex",
