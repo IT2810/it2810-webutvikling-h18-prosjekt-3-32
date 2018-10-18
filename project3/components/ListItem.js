@@ -76,6 +76,12 @@ export default class ListItem extends React.Component {
         }
     }
 
+    handleChangedDate(date){
+        this.setState({
+            date: date,
+        });
+    }
+
     //Set the modal visible, if the to-do isn't finished.
     setModalVisible(visible) {
         if(this.props.done){
@@ -163,7 +169,7 @@ export default class ListItem extends React.Component {
                                     format="YYYY-MM-DD"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
-                                    onDateChange={(date) => {this.setState({date:date})}}
+                                    onDateChange={(date) => {this.handleChangedDate(date)}}
                                 />
                             </View>
 
