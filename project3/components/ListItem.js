@@ -17,6 +17,9 @@ export default class ListItem extends React.Component {
         });
     }
 
+    //------ LIFE CYCLE  ------//
+
+
     //Since both date and name may be changed, the state is set by the props which comes from TodoList.js
     //When the name or date is changed, the state is changed and the user get immediate update!
     componentDidMount(){
@@ -32,6 +35,9 @@ export default class ListItem extends React.Component {
     componentWillUnmount(){
         AppState.removeEventListener('change', this.handleAppStateChange);
     }
+
+    //------ FUNCTIONS  ------//
+
 
     //This function checks the current state of the device (active, background, inactive)
     //If the app is closed, this.handleFinishedTodo will be triggered
@@ -114,6 +120,8 @@ export default class ListItem extends React.Component {
         this.props.updateSortedList(updateList);
         this.checkDueDate();
     };
+
+    //------ RENDER  ------//
 
     render() {
         return (

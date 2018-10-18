@@ -139,8 +139,8 @@ export default StyleSheet.create({
     modalText: {
         width: "90%",
         marginTop: "3%",
-        borderWidth: 1,
-        fontSize: 25,
+        borderWidth: 0.7,
+        fontSize: 20,
         textAlign: "center",
         backgroundColor: "#ededed",
         padding: 20,
@@ -153,7 +153,6 @@ export default StyleSheet.create({
 
     modal: {
         alignItems: "center",
-        justifyContent: "center",
         height: 360,
         width: "90%",
         display: "flex",

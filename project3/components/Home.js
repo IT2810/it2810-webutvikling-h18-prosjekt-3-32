@@ -17,6 +17,14 @@ export default class Home extends React.Component {
         };
     }
 
+    //------ LIFE CYCLE ------//
+
+    componentDidMount(){
+        this.refresh();
+    }
+
+    //------ FUNCTIONS  ------//
+
     //This function runs when the user loads the application and press the refreshbutton
     refresh(){
         let todoList = [];
@@ -127,10 +135,7 @@ export default class Home extends React.Component {
         return todosWithDate.concat(todosWithoutDate);
     };
 
-    componentDidMount(){
-        this.refresh();
-
-    }
+    //------ RENDER  ------//
 
     render() {
         if(!this.state.calendar[this.state.date]){this.state.calendar[this.state.date]=[];}

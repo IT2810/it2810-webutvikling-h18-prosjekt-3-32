@@ -37,6 +37,7 @@ export default class StepCounter extends React.Component {
         }
     }
 
+    //------ LIFE CYCLE  ------//
 
     componentDidMount() {
         // Starts the API calls and state updating.
@@ -44,7 +45,7 @@ export default class StepCounter extends React.Component {
             this._subscribe();
         }
         catch (error) {
-            console.log(error);
+            throw(error);
         }
     }
 
@@ -54,11 +55,12 @@ export default class StepCounter extends React.Component {
             this._unsubscribe();
         }
         catch (error) {
-            console.log(error);
+            throw(error);
         }
 
     }
 
+    //------ FUNCTIONS  ------//
 
     // Boiler code from React Native docs to save the goal set by user to AsyncStorage
     _storeGoal = async (goal) => {
@@ -73,7 +75,7 @@ export default class StepCounter extends React.Component {
 
         } catch (error) {
             // Error saving data
-            console.log("_storeGoal caused: " + error);
+            throw("_storeGoal caused: " + error);
         }
 
         // Code below updates the motivational message if goal is achieved
@@ -107,10 +109,11 @@ export default class StepCounter extends React.Component {
             }
         } catch (error) {
             // Error retrieving data, could be first use of app?
-            console.log("_retrieveGoal caused: " + error)
             this.setState({
                 goalSteps: 12000
-            })
+            });
+            throw("_retrieveGoal caused: " + error)
+
         }
     };
 
@@ -180,10 +183,11 @@ export default class StepCounter extends React.Component {
                 });
             },
             error => {
-                console.log(error);
                 this.setState({
                     averageStepsLastWeek: "0"
                 });
+                throw(error);
+
             }
         );
     };
@@ -194,6 +198,7 @@ export default class StepCounter extends React.Component {
         this._subscription = null;
     };
 
+    //------ RENDER  ------//
 
     render() {
         return (

@@ -5,6 +5,8 @@ import styles from "../stylesheets/HomeListItem.style.js";
 
 export default class HomeListItem extends React.Component {
 
+    //------ RENDER  ------//
+
     render() {
         return (
             <React.Fragment>
