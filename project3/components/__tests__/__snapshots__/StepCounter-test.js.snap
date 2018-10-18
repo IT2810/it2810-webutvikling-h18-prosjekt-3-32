@@ -1,29 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StepCounter.js renders correctly? 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "lightgray",
-      "flex": 1,
-      "height": "100%",
-      "justifyContent": "center",
-      "width": "100%",
-    }
-  }
->
+<View>
   <View
     style={
       Object {
-        "backgroundColor": "yellow",
-        "borderRadius": 10,
-        "marginBottom": 20,
-        "paddingBottom": 20,
-        "paddingLeft": 20,
-        "paddingRight": 20,
-        "paddingTop": 10,
-        "width": "90%",
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "borderTopWidth": 0.3,
+        "height": "25%",
+        "justifyContent": "center",
+        "width": "100%",
       }
     }
   >
@@ -60,14 +47,12 @@ exports[`StepCounter.js renders correctly? 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "yellow",
-        "borderRadius": 10,
-        "marginBottom": 20,
-        "paddingBottom": 20,
-        "paddingLeft": 20,
-        "paddingRight": 20,
-        "paddingTop": 10,
-        "width": "90%",
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "borderTopWidth": 0.3,
+        "height": "25%",
+        "justifyContent": "center",
+        "width": "100%",
       }
     }
   >
@@ -112,7 +97,10 @@ exports[`StepCounter.js renders correctly? 1`] = `
             "justifyContent": "center",
           },
           false,
-          undefined,
+          Object {
+            "marginLeft": "5%",
+            "width": "90%",
+          },
         ]
       }
       thumbTouchSize={
@@ -155,7 +143,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
         onLayout={[Function]}
         style={
           Object {
-            "backgroundColor": "#4fcfff",
+            "backgroundColor": "#ffb821",
             "borderRadius": 10,
             "height": 20,
             "opacity": 0,
@@ -205,14 +193,12 @@ exports[`StepCounter.js renders correctly? 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "yellow",
-        "borderRadius": 10,
-        "marginBottom": 20,
-        "paddingBottom": 20,
-        "paddingLeft": 20,
-        "paddingRight": 20,
-        "paddingTop": 10,
-        "width": "90%",
+        "alignItems": "center",
+        "backgroundColor": "#ededed",
+        "borderBottomWidth": 0.3,
+        "height": "50%",
+        "justifyContent": "space-around",
+        "width": "100%",
       }
     }
   >
@@ -230,31 +216,155 @@ exports[`StepCounter.js renders correctly? 1`] = `
     >
       Average daily steps last week:
     </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
-        Object {
-          "fontSize": 18,
-          "fontWeight": "bold",
-          "paddingTop": 15,
-          "textAlign": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#999",
+            "borderRadius": 60,
+            "height": 120,
+            "width": 120,
+          },
+        ]
       }
     >
-      500
-    </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+            },
+            Object {
+              "height": 120,
+              "width": 60,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomRightRadius": 0,
+                "borderTopRightRadius": 0,
+                "left": 0,
+                "position": "absolute",
+                "top": 0,
+              },
+              Object {
+                "backgroundColor": "#ffb821",
+                "borderRadius": 60,
+                "height": 120,
+                "transform": Array [
+                  Object {
+                    "translateX": 30,
+                  },
+                  Object {
+                    "rotate": "180deg",
+                  },
+                  Object {
+                    "translateX": -30,
+                  },
+                ],
+                "width": 60,
+              },
+            ]
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+            },
+            Object {
+              "height": 120,
+              "width": 60,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomRightRadius": 0,
+                "borderTopRightRadius": 0,
+                "left": 0,
+                "position": "absolute",
+                "top": 0,
+              },
+              Object {
+                "backgroundColor": "#ffb821",
+                "borderRadius": 60,
+                "height": 120,
+                "transform": Array [
+                  Object {
+                    "translateX": 30,
+                  },
+                  Object {
+                    "rotate": "360deg",
+                  },
+                  Object {
+                    "translateX": -30,
+                  },
+                ],
+                "width": 60,
+              },
+            ]
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "#fff",
+              "borderRadius": 45,
+              "height": 90,
+              "width": 90,
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 16,
+              "textAlign": "center",
+            }
+          }
+        >
+          500
+        </Text>
+      </View>
+    </View>
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
       style={
         Object {
-          "fontSize": 18,
-          "fontWeight": "bold",
-          "paddingTop": 15,
+          "fontSize": 14,
           "textAlign": "center",
+          "width": "90%",
         }
       }
     >

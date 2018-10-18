@@ -65,7 +65,7 @@ export default class StepCounter extends React.Component {
         // Sets state to ensure the view is updated
         this.setState({
             goalSteps: goal
-        })
+        });
 
         // Tries to save goal to persistent storage
         try {
@@ -88,7 +88,7 @@ export default class StepCounter extends React.Component {
                 motivationalMessage: "Just a bit of walking and you will reach your goal!"
             })
         }
-    }
+    };
 
     // Boiler code from React Native docs, fetches goal from persistent storage
     _retrieveGoal = async () => {
@@ -112,7 +112,7 @@ export default class StepCounter extends React.Component {
                 goalSteps: 12000
             })
         }
-    }
+    };
 
 
     _subscribe = () => {
@@ -121,7 +121,7 @@ export default class StepCounter extends React.Component {
 
         // Sets up connection Google Fit API or Apple Core API
         this._subscription = Pedometer.watchStepCount(result => {
-            initialSteps = this.state.stepsToday;
+            const initialSteps = this.state.stepsToday;
             this.setState({
                 currentStepCount: initialSteps + result.steps
             });
@@ -186,7 +186,7 @@ export default class StepCounter extends React.Component {
                 });
             }
         );
-    }
+    };
 
     // Disconnects the connection to the APIs
     _unsubscribe = () => {

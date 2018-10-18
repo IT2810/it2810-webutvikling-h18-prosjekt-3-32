@@ -4,9 +4,8 @@ exports[`Home.js renders correctly? 1`] = `
 <View
   style={
     Object {
-      "display": "flex",
+      "borderRadius": 4,
       "height": "100%",
-      "justifyContent": "space-between",
       "width": "100%",
     }
   }
@@ -14,323 +13,11 @@ exports[`Home.js renders correctly? 1`] = `
   <View
     style={
       Object {
-        "display": "flex",
-        "justifyContent": "flex-start",
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "backgroundColor": "white",
-          "height": "10%",
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "black",
-            "fontSize": 18,
-            "lineHeight": 50,
-            "textAlign": "center",
-          }
-        }
-      >
-        Upcoming events
-      </Text>
-    </View>
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#ededed",
-          "borderBottomWidth": 0.2,
-          "display": "flex",
-          "flexDirection": "row",
-          "height": 60,
-          "justifyContent": "space-between",
-          "opacity": 1,
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "marginLeft": "1.5%",
-            "maxWidth": "70%",
-          }
-        }
-      >
-        HMS-kurs
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "gray",
-            "fontSize": 13,
-            "marginRight": "1.5%",
-          }
-        }
-      >
-        2018-10-02
-      </Text>
-    </View>
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#ededed",
-          "borderBottomWidth": 0.2,
-          "display": "flex",
-          "flexDirection": "row",
-          "height": 60,
-          "justifyContent": "space-between",
-          "opacity": 1,
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "marginLeft": "1.5%",
-            "maxWidth": "70%",
-          }
-        }
-      >
-        Bedpress med gutta as. Det blir fette najs. Kjørrr
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "gray",
-            "fontSize": 13,
-            "marginRight": "1.5%",
-          }
-        }
-      >
-        2018-10-04
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "white",
-          "height": "10%",
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "black",
-            "fontSize": 18,
-            "lineHeight": 50,
-            "textAlign": "center",
-          }
-        }
-      >
-        To do
-      </Text>
-    </View>
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#ededed",
-          "borderBottomWidth": 0.2,
-          "display": "flex",
-          "flexDirection": "row",
-          "height": 60,
-          "justifyContent": "space-between",
-          "opacity": 1,
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "marginLeft": "1.5%",
-            "maxWidth": "70%",
-          }
-        }
-      >
-        Bake pepperkaker
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "gray",
-            "fontSize": 13,
-            "marginRight": "1.5%",
-          }
-        }
-      />
-    </View>
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#ededed",
-          "borderBottomWidth": 0.2,
-          "display": "flex",
-          "flexDirection": "row",
-          "height": 60,
-          "justifyContent": "space-between",
-          "opacity": 1,
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "marginLeft": "1.5%",
-            "maxWidth": "70%",
-          }
-        }
-      >
-        Fikse prosjekt3
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "gray",
-            "fontSize": 13,
-            "marginRight": "1.5%",
-          }
-        }
-      />
-    </View>
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#ededed",
-          "borderBottomWidth": 0.2,
-          "display": "flex",
-          "flexDirection": "row",
-          "height": 60,
-          "justifyContent": "space-between",
-          "opacity": 1,
-          "width": "100%",
-        }
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "marginLeft": "1.5%",
-            "maxWidth": "70%",
-          }
-        }
-      >
-        Flæææ
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "gray",
-            "fontSize": 13,
-            "marginRight": "1.5%",
-          }
-        }
-      />
-    </View>
-  </View>
-  <View
-    style={
-      Object {
         "alignItems": "center",
-        "backgroundColor": "yellow",
-        "height": "5%",
+        "backgroundColor": "#5cacec",
+        "height": "8%",
         "justifyContent": "center",
+        "width": "100%",
       }
     }
   >
@@ -338,9 +25,115 @@ exports[`Home.js renders correctly? 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 18,
+        }
+      }
     >
-      Number of steps last 24 hours: 100
+      Todays Events
     </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderBottomWidth": 0.5,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#5cacec",
+        "height": "8%",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 18,
+        }
+      }
+    >
+      Upcoming Todos
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderBottomWidth": 0.5,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "borderBottomWidth": 0.5,
+        "bottom": 0,
+        "padding": 10,
+        "position": "absolute",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType="button"
+      accessibilityTraits={
+        Array [
+          "button",
+        ]
+      }
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Refresh homepage
+        </Text>
+      </View>
+    </View>
   </View>
 </View>
 `;

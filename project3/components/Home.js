@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, List, AsyncStorage, ScrollView, Button} from 'react-native';
+import {Text, View, AsyncStorage, Button} from 'react-native';
 import styles from "../stylesheets/Home.style.js";
 import HomeListItemTodo from "./HomeListItemTodo";
 import HomeListItemCalendar from "./HomeListItemCalendar";
