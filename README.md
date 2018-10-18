@@ -56,6 +56,7 @@ I tillegg til å kunne se avtaler, har kalenderen følgende funksjonaliteter:
 
 #### Komponentarkitektur
 
+![Komponentarkitektur](http://i66.tinypic.com/30kaouo.png)
 
 
 #### React Native
