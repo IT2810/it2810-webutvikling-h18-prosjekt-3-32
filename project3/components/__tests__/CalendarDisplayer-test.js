@@ -1,14 +1,8 @@
 import React from "react";
-import CalendarDisplayer from "../components/CalendarDisplayer";
+import CalendarDisplayer from "../CalendarDisplayer";
 import { Alert } from "react-native";
 import renderer from "react-test-renderer";
 import ShallowRenderer from "react-test-renderer/shallow";
-
-//Snapshot testing og CalendarDisplayer
-test("CalendarDisplayer snapshot test", () => {
-    const tree = renderer.create(<CalendarDisplayer/>);
-    expect(tree).toMatchSnapshot();
-});
 
 test("Check if modal changes state", () => {
     const testCalendarDisplayer = <CalendarDisplayer/>;
@@ -219,7 +213,7 @@ test("Mock on press for Modal close button", () => {
     shallow.render(<CalendarDisplayer/>);
     const result = shallow.getRenderOutput();
     //Navigating to find onRequestClose in Modal and trigger it
-    result.props.children[2].props.children.props.children.props.children[1].props.onPress(mockOnPress());
+    result.props.children[2].props.children.props.children.props.children.props.children[1].props.onPress(mockOnPress(true));
     //Expect mockOnPress to have been called 1 time
     expect(mockOnPress).toHaveBeenCalledTimes(1);
 });
@@ -231,7 +225,7 @@ test("Mock on text change for Modal text input", () => {
     shallow.render(<CalendarDisplayer/>);
     const result = shallow.getRenderOutput();
     //Navigating to find onRequestClose in Modal and trigger it
-    result.props.children[2].props.children.props.children.props.children[2].props.onChangeText(mockOnChangeText("Test"));
+    result.props.children[2].props.children.props.children.props.children.props.children[2].props.onChangeText(mockOnChangeText("test"));
     //Expect mockOnPress to have been called 1 time
     expect(mockOnChangeText).toHaveBeenCalledTimes(1);
 });
@@ -243,7 +237,7 @@ test("Mock on date change for Modal date DatePicker", () => {
     shallow.render(<CalendarDisplayer/>);
     const result = shallow.getRenderOutput();
     //Navigating to find onRequestClose in Modal and trigger it
-    result.props.children[2].props.children.props.children.props.children[3].props.children.props.onDateChange(mockOnDateChange("2018-10-18"));
+    result.props.children[2].props.children.props.children.props.children.props.children[3].props.children.props.onDateChange(mockOnDateChange("2018-10-20"));
     //Expect mockOnPress to have been called 1 time
     expect(mockOnDateChange).toHaveBeenCalledTimes(1);
 });
@@ -255,7 +249,7 @@ test("Mock on date change for Modal start time DatePicker", () => {
     shallow.render(<CalendarDisplayer/>);
     const result = shallow.getRenderOutput();
     //Navigating to find onRequestClose in Modal and trigger it
-    result.props.children[2].props.children.props.children.props.children[4].props.children[0].props.onDateChange(mockOnDateChange("2018-10-18"));
+    result.props.children[2].props.children.props.children.props.children.props.children[4].props.children[0].props.onDateChange(mockOnDateChange(""));
     //Expect mockOnPress to have been called 1 time
     expect(mockOnDateChange).toHaveBeenCalledTimes(1);
 });
@@ -267,7 +261,7 @@ test("Mock on date change for Modal end time DatePicker", () => {
     shallow.render(<CalendarDisplayer/>);
     const result = shallow.getRenderOutput();
     //Navigating to find onRequestClose in Modal and trigger it
-    result.props.children[2].props.children.props.children.props.children[4].props.children[1].props.onDateChange(mockOnDateChange("2018-10-18"));
+    result.props.children[2].props.children.props.children.props.children.props.children[4].props.children[1].props.onDateChange(mockOnDateChange(""));
     //Expect mockOnPress to have been called 1 time
     expect(mockOnDateChange).toHaveBeenCalledTimes(1);
 });

@@ -26,7 +26,7 @@ export default class Home extends React.Component {
     //------ FUNCTIONS  ------//
 
     //This function runs when the user loads the application and press the refreshbutton
-    refresh(){
+    refresh = async () =>{
         let todoList = [];
         this.state.calendar = {};
         AsyncStorage.getAllKeys((err, keys) => {

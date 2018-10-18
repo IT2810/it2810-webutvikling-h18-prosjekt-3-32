@@ -40,3 +40,81 @@ exports[`HomeListItemCalendar.js renders correctly? 1`] = `
   </Text>
 </View>
 `;
+
+exports[`HomeListItemCalendar.js renders correctly? 2`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ededed",
+      "borderTopWidth": 0.5,
+      "height": 70,
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 16,
+        "marginBottom": 10,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 12,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`HomeListItemTodo.js renders correctly? 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ededed",
+      "borderTopWidth": 0.5,
+      "height": 70,
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 16,
+        "marginBottom": 10,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#7f7f7f",
+        "fontSize": 12,
+      }
+    }
+  />
+</View>
+`;

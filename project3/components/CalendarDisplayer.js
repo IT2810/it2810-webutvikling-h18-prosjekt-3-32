@@ -363,8 +363,6 @@ export default class CalendarDisplayer extends React.Component {
                         <View style={styles.modalView}>
                             <View style={styles.modal}>
                                 {/*Simple backbutton if the user choose to not do any changes*/}
-
-
                                 <View style={styles.newEventTitleBar}>
                                     <Text style={styles.newEventTitle}>{"Event info"}</Text>
                                 </View>
