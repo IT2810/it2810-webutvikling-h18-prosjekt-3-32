@@ -100,8 +100,8 @@ test("check if the function sortByDate works", () => {
         {key : 2, todoNr : "todo2", todoText: "test2", todoDate: "2000-12-24"}
     ];
 
-    //Runs updateTodoList which also triggers sortByDate
-    todoComponent.updateTodoList(unsortedListByDate);
+    //Runs sortByDate which also triggers sortByDate
+    const sortedList = todoComponent.sortByDate(unsortedListByDate);
 
 
     //Creates a sorted list
@@ -111,11 +111,11 @@ test("check if the function sortByDate works", () => {
     ];
 
     //Checks if the state is the sorted list
-    expect(todoComponent.state.todoList).toEqual(sortedListByDate);
+    expect(sortedList).toEqual(sortedListByDate);
 });
 
 //Test to check if the function handleFinishedTodo works
-test("check if handleFinishedTodo works", () => {
+test("check if handleFinishedTodo works", async () => {
     //Creates instance of TodoList
     const testTodoListComponent = <TodoList/>;
     const todoComponent = renderer.create(testTodoListComponent).getInstance();
@@ -130,7 +130,7 @@ test("check if handleFinishedTodo works", () => {
     }];
 
     //Triggers handleFinishedTodo with the finishedList as parameter
-    todoComponent.handleFinishedTodo(finishedList);
+    await todoComponent.handleFinishedTodo(finishedList);
 
     //Checks if the state is updated
     expect(todoComponent.state.finishedTodoList).toEqual(finishedList);
@@ -236,8 +236,8 @@ test("Functions using AsyncStorage", async () => {
     const testAsyncList = [testList[1], testList[2], testList[3]];
 
     //Triggers storeTodo in TodoList
-    await todoComponent.storeTodo(testList[1].toString(), JSON.stringify(testAsyncList));
-    const value = await storage.getItem(testList[1].toString());
+    await todoComponent.storeTodo(testList[0].toString(), JSON.stringify(testAsyncList));
+    const value = await storage.getItem(testList[0].toString());
     const parsedValue = JSON.parse(value);
 
     expect(parsedValue).toEqual(testAsyncList);
@@ -245,8 +245,8 @@ test("Functions using AsyncStorage", async () => {
     //--Testing removeTodo in TodoList (Removing item in AsyncStorage)--//
 
     //Triggers removeTodo in TodoList, which will remove the item in the mockAsyncStorage
-    await todoComponent.removeTodo(testList[1].toString());
-    const value1 = await storage.getItem(testList[1].toString());
+    await todoComponent.removeTodo(testList[0].toString());
+    const value1 = await storage.getItem(testList[0].toString());
 
     //Will be undefined since there isn't anything there.
     expect(value1).toBeUndefined();

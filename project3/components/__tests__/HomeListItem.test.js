@@ -10,3 +10,8 @@ test('HomeListItemCalendar.js renders correctly?', () => {
     const stepTree = renderer.create(<HomeListItemCalendar/>);
     expect(stepTree).toMatchSnapshot();
 })
+
+test('HomeListItemTodo.js renders correctly?', () => {
+    const stepTree = renderer.create(<HomeListItemTodo/>);
+    expect(stepTree).toMatchSnapshot();
+})
