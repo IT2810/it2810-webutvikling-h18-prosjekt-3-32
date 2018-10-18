@@ -17,6 +17,8 @@ Applikasjonen er ment å være en personlig informasjon og motivasjons manager. 
 
 #### "Home"
 
+På hjemskjermen vises en oversikt over dine tre øverste events fra kalenderen, og dine tre øverste todos. Dersom det ikke finnes noen events eller todos, vil det komme opp en boks hvor det står "No upcoming events", og/eller "No upcoming todos". Det finnes også en refresh-knapp, som vil refreshe listen på hjemskjermen. Dette kan være nyttig hvis man har lagt til en todo eller et event, og ønsker å få opp dette på hjemskjermen. 
+
 #### "To do"
 
 På to do fanen kan du holde styr på todos og viktige gjøremål. Har kan man sette opp diverse man må huske å gjøre, og eventuellt sette en frist på det. Følgende funksjonalitet finner du på denne fanen:
@@ -51,7 +53,6 @@ I tillegg til å kunne se avtaler, har kalenderen følgende funksjonaliteter:
 * Endre avtaler. Her kan man endre selve avtaleteksten, datoen eller tidspunktet for avtalen.
 * Slette avtaler
 
-
 ## Teknologi
 
 #### Komponentarkitektur
@@ -63,11 +64,15 @@ I tillegg til å kunne se avtaler, har kalenderen følgende funksjonaliteter:
 
 Som nevnt tidligere er dette prosjektet utviklet i React Native. Som det ble oppfordret til i oppgaveteksten, har vi brukt en rekke tredjepartskomponenter for å ha tilstrekkelig med funksjonalitet i applikasjonen. Vi har brukt følgende tredjepartskomponenter:
 
-* React Native Elements [https://react-native-training.github.io/react-native-elements/]
-* React Native Datepicker [https://github.com/xgfe/react-native-datepicker]
 * React Native Calendars [https://github.com/wix/react-native-calendars]
+  * 
+* React Native Datepicker [https://github.com/xgfe/react-native-datepicker]
+* React Native Elements [https://react-native-training.github.io/react-native-elements/]
 * React Native Navigation [https://reactnavigation.org/docs/en/getting-started.html]
-
+* React Native Progress Circle [https://www.npmjs.com/package/react-native-progress-circle]
+  * React Native Progress Circle blir brukt for å visualisere en progressbar på skrittelleren. Prosenten som vises er gjennomsnitt antall skritt gått daglig per uke, i forhold til målet man har satt seg. 
+* React Navigation Material Bottom Tabs [https://reactnavigation.org/docs/en/material-bottom-tab-navigator.html]
+* Moment [https://momentjs.com/]
 #### AsyncStorage
 
 Som det står i oppgaveteksten, så har vi tatt i bruk AsyncStorage. [https://facebook.github.io/react-native/docs/asyncstorage] Her lagres alt av data mellom hver gang applikasjonen kjøres, slik at neste gang brukeren går inn på applikasjonen, er det ingen data som har gått tapt. Ulik data har ulike nøkler, slik at det lett å skille mellom hva som skal hentes ut, når det hentes ut.
@@ -100,6 +105,11 @@ Vi har testet de ulike kompenentene og det som finnes av funksjonalitet.
 | updateShowList | blabla |
 | updateTodoList | blabla |
 
+* ListItem.js
+
+* CalendarDisplayer.js
+
+* 
 
 
 ## Versjonskontroll
