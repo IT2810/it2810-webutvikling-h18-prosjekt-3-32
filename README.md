@@ -95,19 +95,20 @@ Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkobl
 
 ## Testing
 
-#### Jest 
+#### Brukstest
 
-I dette prosjektet har vi brukt [Jest](https://jestjs.io/) for å teste applikasjonens funksjonalitet. Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi har testet på er følgende: 
+Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi har testet på er følgende: 
 
 * iPhone 6s
-* iPhone XS ([Xcode](https://developer.apple.com/xcode/))
+* iPhone XS ([Xcode Simulator](https://developer.apple.com/xcode/))
 * Motorola Moto G6 Plus
 * Motorola Moto G5 Plus
 
 
-## Testing
+#### Enhetstesting
 
-Vi har testet de ulike kompenentene inkludert det meste av funksjonaliteten. 
+Vi har også brukt [Jest](https://jestjs.io/) for å teste applikasjonens funksjonalitet og underliggende arkitektur.
+Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er dokumentert under. Vi har hatt fokus på å oppnå en akseptabel testcoverage, uten å bruke i overkant mye ressursser på dette i henhold til den korte tidsfristen vi har hatt.
 
 * TodoList.js
 
