@@ -3,12 +3,14 @@ import { AsyncStorage, StyleSheet, Text, View, List, TouchableOpacity, Modal, Im
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import styles from "../stylesheets/Calendar.style.js";
 import DatePicker from 'react-native-datepicker';
+import Moment from 'moment';
 
 export default class CalendarDisplayer extends React.Component {
     constructor(props) {
       super(props);
+      let date = Moment().format("YYYY-MM-DD");
       this.state = {
-        date: "",
+        date: date,
         startTime: "",
         endTime: "",
         eventDate: "",
@@ -101,7 +103,7 @@ export default class CalendarDisplayer extends React.Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                     //If the back button on the users phone is pressed, close the Modal
-                    onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                    onRequestClose={()=>{this.closeModal();}}>
                   <View style={styles.modalView}>
                     <View style={styles.modal}>
                         {/*Simple backbutton if the user choose to not do any changes*/}
@@ -120,6 +122,7 @@ export default class CalendarDisplayer extends React.Component {
                             onChangeText={(text) => this.setState({eventText : text})}
                             placeholder={"Event description"}
                             value={this.state.eventText}
+                            multiline={true}
                         />
 
                         <View style={styles.modalItem}>
@@ -142,7 +145,7 @@ export default class CalendarDisplayer extends React.Component {
                                 mode="time"
                                 placeholder="start time"
                                 is24Hour={true}
-                                format="LT"
+                                format={('HH:MM')}
                                 iconSource={require('../assets/clock.png')}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
@@ -157,7 +160,7 @@ export default class CalendarDisplayer extends React.Component {
                                 mode="time"
                                 placeholder="end time"
                                 is24Hour={true}
-                                format="LT"
+                                format={('HH:MM')}
                                 iconSource={require('../assets/clock.png')}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
@@ -285,7 +288,7 @@ export default class CalendarDisplayer extends React.Component {
           if(this.state.items[newDate].length>0){
             //Check if date has an object where name value is "No upcoming events."
             //If so, this must be deleted in order for it not to show in calendar
-            if(this.state.items[newDate][0]["name"]=="No upcoming events."){
+            if(this.state.items[newDate][0]["name"]=="No upcoming events." || this.state.items[newDate][0]["name"]=="No events to show." ){
               //Delete event that says "no upcoming event"
               delete this.state.items[newDate];
               //Create new, empty date key in object

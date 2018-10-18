@@ -105,12 +105,11 @@ export default StyleSheet.create({
     modalClose: {
         alignSelf: "flex-start",
         marginLeft: 10,
-        marginBottom: 25,
         position: "absolute",
         top: -10,
         left: -10,
         backgroundColor: "#5cacec",
-        height: "20%",
+        height: "15%",
         width: 50,
         alignItems: "center",
         justifyContent: "center",
@@ -144,11 +143,13 @@ export default StyleSheet.create({
     },
 
     textInput: {
-        width: "100%",
+        width: "90%",
+        marginTop: "3%",
         fontSize: 25,
         textAlign: "center",
         backgroundColor: "#ededed",
         padding: 20,
+        borderWidth: 1,
     },
 
     newEventTitle: {

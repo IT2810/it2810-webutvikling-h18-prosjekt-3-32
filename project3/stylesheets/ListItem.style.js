@@ -137,7 +137,9 @@ export default StyleSheet.create({
     },
 
     modalText: {
-        width: "100%",
+        width: "90%",
+        marginTop: "3%",
+        borderWidth: 1,
         fontSize: 25,
         textAlign: "center",
         backgroundColor: "#ededed",
