@@ -48,7 +48,7 @@ export default class ListItem extends React.Component {
     //The to-do is also renamed in the AsyncStorage (see line 69 in TodoList.js for more!)
     handleFinishedTodo(){
         if(this.state.done){
-            const finishedList = [this.props.todoNr, this.state.name, this.state.date, this.state.done];
+            let finishedList = [this.props.todoNr, this.state.name, this.state.date, this.state.done];
             this.props.handleFinishedTodo(finishedList);
         }
     }
