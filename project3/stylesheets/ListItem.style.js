@@ -157,7 +157,6 @@ export default StyleSheet.create({
         display: "flex",
         justifyContent: "flex-start",
         backgroundColor: "#ededed",
-        borderWidth: 0.8,
         position: "absolute",
         left: "5%",
         top: "25%",
