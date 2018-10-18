@@ -72,10 +72,35 @@ export default class Home extends React.Component {
                     todoList:sortedByDateTodos,
                 });
 
+                //Checking if the todolist is empty, and creates a listItem that says no upcoming todos
+                if(this.state.todoList.length === 0){
+                    let emptyTodoList = [];
+                    emptyTodoList.push({
+                        key: -1,
+                        todoNr: -1,
+                        todoText: "No upcoming Todos",
+                        todoDate: "",
+                        done: false,
+                    });
+                    this.setState({todoList:emptyTodoList});
+                }
+
+                //Checking if the calendarlist is empty, and creates a listItem that says no upcoming events
+                let today = Moment().format("YYYY-MM-DD");
+                if(!this.state.calendar[today]){
+                    this.state.calendar[today] = [];
+                }
+                //If today's calendarList is empty:
+                if(this.state.calendar[today].length<1){
+                    let newCalendar = {};
+                    //Add a new item to tell the user there are no events
+                    newCalendar[today] = [{name: "You have no events today.", eventNr: 0,}];
+                    this.setState({
+                        calendar: newCalendar,
+                    });
+                }
             });
         });
-
-
     }
 
     //This function sorts the current list by date
@@ -104,6 +129,7 @@ export default class Home extends React.Component {
 
     componentDidMount(){
         this.refresh();
+
     }
 
     render() {

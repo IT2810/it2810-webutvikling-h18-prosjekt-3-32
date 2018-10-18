@@ -79,7 +79,7 @@ export default class TodoList extends React.Component {
 
     //addTodo adds a new to-do, add it to todolist
     //Each element in addTodo gets a key, todoNr, a name and a date(which is empty until the users sets a due date)
-    addTodo = (id) => {
+    addTodo = async (id) => {
         this.myTextInput.current.clear();
         if(this.state.todoText !== ""){
             //Creates a list, sliced from the current todolist
@@ -103,21 +103,21 @@ export default class TodoList extends React.Component {
 
             //The new to-do is also added in the AsyncStorage, aswell as the latest todoNr.
             const AsyncList = [this.state.todoText, "", false];
-            this.storeTodo("todo"+id.toString(), JSON.stringify(AsyncList));
-            this.storeTodo("CurrentTodoNr", id.toString());
+            await this.storeTodo("todo"+id.toString(), JSON.stringify(AsyncList));
+            await this.storeTodo("CurrentTodoNr", id.toString());
         }
         else{alert("The todo needs a description!!");}
     };
 
     //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
-    handleFinishedTodo(list){
+    handleFinishedTodo = async (list) => {
         const id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
         const AsyncList = [text,date,done];
 
-        this.removeTodo(id.toString());
-        this.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
+        await this.removeTodo(id.toString());
+        await this.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
         this.setState({finishedTodoList:list});
-    }
+    };
 
     //This function is triggered when the user press the button "Show finished todos"
     //It updates the list being to shown to the user with the preferred list (todos or finished todos)
@@ -151,7 +151,7 @@ export default class TodoList extends React.Component {
     //deleteTodo deletes an to-do from the todolist.
     //The function gets an id as parameter and, creates a new temporarily list, and adds each element from the todolist except
     //the element with the given id
-    deleteTodo = (id) => {
+    deleteTodo = async (id) => {
         let deleteList = [];
         for(let i = 0; i < this.state.todoList.length; i++){
             if(this.state.todoList[i].todoNr !== id){
@@ -163,7 +163,7 @@ export default class TodoList extends React.Component {
         this.updateShowList(deleteList);
 
         //The item is also removed from the AsyncStorage
-        this.removeTodo(id.toString());
+        await this.removeTodo(id.toString());
     };
 
     //This function sorts the current list by date
