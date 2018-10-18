@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "expo": "^30.0.1",
+    "mock-async-storage": "^2.0.3",
     "moment": "file:node_modules\\moment",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",

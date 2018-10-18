@@ -112,7 +112,7 @@ export default class TodoList extends React.Component {
     //This function removes the finished to-do from the AsyncStorage, and replaces it with "done" at the start of the id.
     handleFinishedTodo(list){
         const id = list[0]; const text = list[1]; const date = list[2]; const done = list[3];
-        let AsyncList = [text,date,done];
+        const AsyncList = [text,date,done];
 
         this.removeTodo(id.toString());
         this.storeTodo("done"+id.toString(), JSON.stringify(AsyncList));
