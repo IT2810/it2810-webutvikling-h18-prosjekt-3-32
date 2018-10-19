@@ -190,3 +190,10 @@ I tillegg til dette minner vi om at tallene for kodelinjer, ikke kan brukes til 
 
 I tillegg til dette har vi hatt som rutine å kommentere alle commits med issuenummer, noe som er fulgt til punkt og prikke bortsett fra noen automatiske commits gjort i Github sitt nettlesergrensesnitt. 
 Vi har også brukt prosjekt-funksjonaliteten Github tilbyr, og innser at denne er noe bedre i Gitlab som skal brukes til neste prosjekt. 
+
+
+## Medvirkende
+
+- Jonas Jevnaker Aas
+- Svenn Roland Refsnes Grønbeck
+- Tore Stensaker Tefre
