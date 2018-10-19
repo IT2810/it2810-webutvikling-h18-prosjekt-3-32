@@ -39,6 +39,7 @@ Her er noen skjermbilder fra der todolisten er i bruk. På bilde 1 er det lagt t
 ![Todobilde1](https://imgur.com/pxJYrOQ.png)
 ![Todobilde2](https://imgur.com/0XBxpCq.png)
 ![Todobilde3](https://imgur.com/vIUouB6.png)
+![Todobilde4](https://imgur.com/x79cyoj.png)
 
 #### Skritteller
 
@@ -54,9 +55,10 @@ I kalenderen får man oversikt over sine avtaler. Man får først og fremst over
 
 ![Kalender1](https://imgur.com/Nmp8Bf2.png) 
 ![Kalender2](https://imgur.com/BnbNthu.png)
+![Kalender3](https://imgur.com/vhZ0PNe.png)
 
 **NB!** Noen iOs-versjoner opplever problemer med å scrolle i kalenderen etter at man har dratt ned linjen under datoene. Når man begynner å scrolle, vil kalenderen kollapse og forsvinne opp igjen. Vi fant derimot en quick-fix på dette: 
-Gå inn i filen project3\node_modules\react-native-calendars\src\agenda\index.js, naviger til linje 365 og endre fra:
+Gå inn i filen `project3\node_modules\react-native-calendars\src\agenda\index.js`, naviger til linje 365 og endre fra:
 
 `const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : 0) - KNOB_HEIGHT;`
 
