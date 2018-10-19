@@ -90,13 +90,13 @@ Som nevnt tidligere er dette prosjektet utviklet i React Native, noe som medfør
 
 I tråd med oppgaveteksten har vi tatt i bruk [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage) Her lagres alt av data mellom hver gang applikasjonen kjøres, slik at neste gang brukeren går inn på applikasjonen, er det ingen data som har gått tapt. Ulik data har ulike nøkler, slik at det lett å skille mellom hva som skal hentes ut, når det hentes ut. 
 
-For de som ikke er kjent med AsyncStorage fungerer det omtrent på samme måte som [Web Storage APIet fra HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API). Det vil si at APIet tilbyr metodene __setItem__ og __getItem__ for å henholdsvis lagre og hente ut data. __setItem__ er metoden som lagrer til AsyncStorage og tar parametrene key og value. Av disse er key parameteret i __getItem__ som gjør at du senere kan hente ut value. Se [dokumentasjonen](https://facebook.github.io/react-native/docs/asyncstorage) om du vil lære mer om AsyncStorage.
+For de som ikke er kjent med AsyncStorage fungerer det omtrent på samme måte som [Web Storage APIet fra HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API). Det vil si at APIet tilbyr metodene `setItem` og `getItem` for å henholdsvis lagre og hente ut data. `setItem` er metoden som lagrer til AsyncStorage og tar parametrene key og value. Av disse er key parameteret i `getItem` som gjør at du senere kan hente ut value. Se [dokumentasjonen](https://facebook.github.io/react-native/docs/asyncstorage) om du vil lære mer om AsyncStorage.
 
 #### Skritteller
 
 Skrittelleren er utviklet ved hjelp av Expo sitt [Pedometer API](https://docs.expo.io/versions/latest/sdk/pedometer) ettersom dette virket godt dokumentert. Dette APIet henter data fra iOS sitt Core API samt Android sitt Google Fit API, noe som medfører at appen krever at appen [Google Fit](https://www.google.com/fit/) er installert dersom appen skal brukes på Android.
 
-Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene _subscribe_ og _unsubscribe_. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt. Se [dokumentasjonen](https://docs.expo.io/versions/latest/sdk/pedometer) om du vil lære mer om Expo sitt Pedometer API.
+Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene `_subscribe` og `_unsubscribe`. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt. Se [dokumentasjonen](https://docs.expo.io/versions/latest/sdk/pedometer) om du vil lære mer om Expo sitt Pedometer API.
 
 
 ## Testing
