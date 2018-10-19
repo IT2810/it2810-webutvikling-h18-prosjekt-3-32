@@ -39,7 +39,7 @@ test("Add event test when event list is empty", () => {
     });
     //Expecting this after function addEvent is finished
     const eventValues = [ {
-        name: "Test",
+        name: "Test ",
         startTime: "10:00 AM",
         eventDate: "2018-10-18",
         endTime: "11:00 AM",
@@ -65,7 +65,7 @@ test("Add event test when event list has 1 item", () => {
     });
     //Expecting this after function addEvent is finished
     const eventValues = [ {
-        name: "Test",
+        name: "Test ",
         startTime: "10:00 AM",
         eventDate: "2018-10-18",
         endTime: "11:00 AM",
@@ -91,7 +91,7 @@ test("Add event test when event in question already exists", () => {
     });
     //Expecting this after function addEvent is finished
     const eventValues = [ {
-        name: "Test",
+        name: "Test ",
         startTime: "10:00 AM",
         eventDate: "2018-10-18",
         endTime: "11:00 AM",

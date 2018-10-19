@@ -83,7 +83,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
         }
       }
     >
-      0
+      10000
     </Text>
     <View
       animationType="timing"
@@ -109,7 +109,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
           "width": 40,
         }
       }
-      value={0}
+      value={10000}
     >
       <View
         onLayout={[Function]}
@@ -266,7 +266,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
                     "translateX": 30,
                   },
                   Object {
-                    "rotate": "180deg",
+                    "rotate": "0deg",
                   },
                   Object {
                     "translateX": -30,
@@ -304,7 +304,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
                 "top": 0,
               },
               Object {
-                "backgroundColor": "#ffb821",
+                "backgroundColor": "#999",
                 "borderRadius": 60,
                 "height": 120,
                 "transform": Array [
@@ -312,7 +312,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
                     "translateX": 30,
                   },
                   Object {
-                    "rotate": "360deg",
+                    "rotate": "0deg",
                   },
                   Object {
                     "translateX": -30,
@@ -352,7 +352,7 @@ exports[`StepCounter.js renders correctly? 1`] = `
             }
           }
         >
-          500
+          0
         </Text>
       </View>
     </View>

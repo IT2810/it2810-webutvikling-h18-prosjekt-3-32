@@ -78,13 +78,13 @@ test("check if the modal has been set to visible", () =>{
 });
 
 //Test to check if the function deleteTodo works
-test("check if handleFinishedTodo triggers if ...state.done is true", () => {
+test("check if deleteTodo works", () => {
     //Creates a mockDeleteTodo function
     let mockDeleteTodo = jest.fn();
     let mockOnPress = jest.fn();
 
     //Creates instance if ListItem with the mockfunction and done=true as props
-    const testListItemComponent = <ListItem deleteTodo = {mockDeleteTodo} done = {true} />;
+    const testListItemComponent = <ListItem deleteTodo = {mockDeleteTodo}/>;
     const listComponent = renderer.create(testListItemComponent).getInstance();
 
     //Triggers deleteTodo (with 1 as parameter, because the function needs a parameter)
