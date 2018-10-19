@@ -33,7 +33,9 @@ I "To do"-fanen kan du holde styr på todos og viktige gjøremål. Har kan man s
 * Når applikasjonen lukkes vil todos som er ferdig havne i en egen liste over ferdige todos. Trykker man på knappen "Show finished todos" får man opp en liste over todos man allerede har gjort.
 
 Her er noen skjermbilder fra der todolisten er i bruk. På bilde 1 er det lagt til todos med dato, på bilde 2 er øverste todo huket av for ferdig, og neste gang applikasjonen åpnes er denne havnet på listen over ferdige todos.
-
+______
+NYE SKJERMBILDER TRENGS 
+______
 ![Todobilde1](http://i65.tinypic.com/mmep6t.jpg)
 ![Todobilde2](http://i66.tinypic.com/2qisp5g.jpg)
 ![Todobilde3](http://i63.tinypic.com/1zz2la9.jpg)
@@ -96,7 +98,25 @@ For de som ikke er kjent med AsyncStorage fungerer det omtrent på samme måte s
 
 Skrittelleren er utviklet ved hjelp av Expo sitt [Pedometer API](https://docs.expo.io/versions/latest/sdk/pedometer) ettersom dette virket godt dokumentert. Dette APIet henter data fra iOS sitt Core API samt Android sitt Google Fit API, noe som medfører at appen krever at appen [Google Fit](https://www.google.com/fit/) er installert dersom appen skal brukes på Android.
 
-Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene `_subscribe` og `_unsubscribe`. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt. Se [dokumentasjonen](https://docs.expo.io/versions/latest/sdk/pedometer) om du vil lære mer om Expo sitt Pedometer API.
+Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene `_subscribe` og `_unsubscribe`. For å bruke APIet må du derfor sørge for at du kaller `_subscribe` før du kaller på metodene det tilbyr, samt at du lukker tilkoblingen til APIet ved å kalle på `_unsubscribe` før du unmounter komponenten. Du vil ellers kunne oppleve problemer med flere samtidige tilkoblinger. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt. Et eksempelkall på APIet er vist under:
+```
+// Requires that start and end are timestamps
+
+Pedometer.getStepCountAsync(start, end).then(
+            result => {
+                this.setState({
+                    stepsToday: result.steps,
+                });
+            },
+            error => {
+                this.setState({
+                    stepsToday: "Could not get stepCount: " + error
+                });
+            }
+        );
+```
+
+Se [dokumentasjonen](https://docs.expo.io/versions/latest/sdk/pedometer) om du vil lære mer om Expo sitt Pedometer API.
 
 
 ## Testing
@@ -110,7 +130,20 @@ Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi 
 * Motorola Moto G6 Plus
 * Motorola Moto G5 Plus
 
-Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalitet på samme vis på en iOS-enhet og en eller flere Android-enheter.
+Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalitet på samme vis på en iOS-enhet og en eller flere Android-enheter. Det har vært viktig at appen fungerer likt både på iOS og Android. Under testene har vi fulgt listen over funksjonalitet under, og testet med tilfeldige verdier:
+
++ Legge til to-dos
++ Slette to-dos
++ Endre to-dos
++ Sjekke at to-dos forsvinner om du krysser av for "utført" og restarter appen
+
++ Endre mål for antall skritt
++ Sjekke at det legges til skritt ved aktivitet (krever Google Fit på Android)
+
++ Legge til kalenderhendelser
++ Endre kalenderhendelser
++ Slette kalenderhendelser
+
 
 #### Enhetstesting
 
@@ -135,7 +168,7 @@ Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er
 
 | Test | Beskrivelse |
 | --- | --- |
-| ????? | ????? |
+| ??????????????????????????????????????????????????????????????????????????? | ??????????????????????????????????????????????????????????????????????????? |
 
 * StepCounter.js
 
