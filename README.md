@@ -49,12 +49,13 @@ samt et daglig gjennomsnitt basert på aktiviteten siste 7 dager. Brukeren har o
 
 #### Kalender
 
-I kalenderen får man oversikt over sine avtaler. Man får først og fremst oversikt over den kommende uken, men man kan også bla seg frem og tilbake i tid. Dette gjøres ved å trykke på eller dra ned blå linjen under datoene, som man kan se på bildene under. Bildet til høyre viser startskjermen i kalenderen, og bildet til venstre viser hvordan det ser ut når man trykker på eller drar ned den blå linjen:
+I kalenderen får man oversikt over sine avtaler. Man får først og fremst oversikt over den kommende uken, men man kan også bla seg frem og tilbake i tid. Dette gjøres ved å trykke på eller dra ned blå linjen under datoene, som man kan se på bildene under. Bildet til høyre viser startskjermen i kalenderen, og bildet til venstre viser hvordan det ser ut når man trykker på eller drar ned den blå linjen.
 
 
 ![Kalender1](https://imgur.com/Nmp8Bf2.png) 
 ![Kalender2](https://imgur.com/BnbNthu.png)
 
+Ved å trykke på en avtale, får man opp et Modal-vindu der man kan endre avtaleteksten, datoen eller tidspunktet for avtalen. Her kan man også slette avtalen om man vil. 
 Vi kunne valgt å gå for et annet design på kalenderen, men grunnen til at vi valgte denne løsningen, var at vi synes det er bedre å få opp oversikt over alle kommende avtaler med én gang, siden det som oftest vil være det man er interessert i. Agenda-komponenten fra React Native Calendars passet bra i forhold til hva vi var ute etter, og vi bestemte oss for å bruke den.
 
 I tillegg til å kunne se avtaler, har kalenderen følgende funksjonaliteter:
@@ -62,6 +63,8 @@ I tillegg til å kunne se avtaler, har kalenderen følgende funksjonaliteter:
 * Legge til avtaler
 * Endre avtaler. Her kan man endre selve avtaleteksten, datoen eller tidspunktet for avtalen.
 * Slette avtaler
+
+Som nevnt brukes det en Modal-komponent i CalendarDisplayer-komponenten, fordi det er en simpel og intuitiv måte å lage et "pop-up"-vindu på i React Native. Denne Modal-komponenten brukes når det en avtale skal legges til og når en avtale skal endres. Til å begynne med hadde dekket Modal-komponenten hele skjermen, men det ble så mye dødplass på skjermen der det ikke ble vist noe, så vi bestemte oss for å gjøre Modal-komponenten mindre og sentrere den. Det endte opp med å se mye bedre ut. 
 
 ## Teknologi
 
@@ -77,9 +80,9 @@ Prosjektet er satt opp med det vi ser på som en fornuftig komponentarkitektur m
 Som nevnt tidligere er dette prosjektet utviklet i React Native, noe som medfører at applikasjonen og all funksjonalitet er plattformuavhengig. Som det ble oppfordret til i oppgaveteksten, har vi brukt en rekke tredjepartskomponenter kompatible med både iOS og Android for å ha tilstrekkelig med funksjonalitet i applikasjonen. Vi har brukt følgende tredjepartskomponenter:
 
 * [React Native Calendars](https://github.com/wix/react-native-calendars)
-  * React Native Calendars brukers vi for å vise kalender og tilknyttede hendelser.
+  * React Native Calendars brukers vi for å vise kalender og tilknyttede hendelser. React Native Calendars har flere komponenter som går an å bruke, blant annet Calendar og Agenda. Calendar er som en tradisjonell kalender, og det var den vi brukte i begynnelsen. Etter å ha prøvd Agenda-komponenten, fant vi fort ut at den passet mye bedre i forhold til våre ønsker om funksjonalitet og design. Derfor endte vi opp med å kun bruke Agenda-komponenten fra React Native Calendars.
 * [React Native Datepicker](https://github.com/xgfe/react-native-datepicker)
-  * React Native Datepicker brukes til å vise en liten kalender når brukeren ved ulike anledninger skal velge en dato. 
+  * React Native Datepicker brukes til å vise en liten kalender når brukeren ved ulike anledninger skal velge en dato. I tillegg viser den en tidspunkt-velger for å velge tidspunkt på avtaler. Denne velgeren varierer litt i design ut fra hvilken enhet du er på og hvilken versjon av operativsystemet du har.
 * [React Native Elements](https://react-native-training.github.io/react-native-elements/)
   * React Native Elements er et UI toolkit som vi har tatt i bruk da det sparer oss en del arbeid og gir oss bedre UI-komponenter enn vi kunne lagd med begrensede tidsressurser.
 * [React Native Progress Circle](https://www.npmjs.com/package/react-native-progress-circle)
