@@ -26,7 +26,7 @@ På startskjermen vises en oversikt over dine tre øverste events fra kalenderen
 
 #### Gjøremål
 
-I "To do"-fanen kan du holde styr på todos og viktige gjøremål. Har kan man sette opp diverse man må huske å gjøre, og eventuellt sette en frist på det. Følgende funksjonalitet finner du på denne fanen:
+I "To do"-fanen kan du holde styr på todos og viktige gjøremål. Har kan man sette opp diverse man må huske å gjøre, og eventuellt sette en frist på det. Vi valgte å ha med en liste over gjøremål, ettersom vi følte at dette er naturlig på en slik applikasjon. Følgende funksjonalitet finner du på denne fanen:
 
 * Legge til todo
 * Legge til dato på en todo (listen vil oppdatere seg basert på dato). Dersom en dato er nåværende dato eller har vært vil teksten bli markert som rød, som en påminnelse om at tiden har gått ut på denne todoen. 
@@ -150,20 +150,21 @@ Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi 
 
 Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalitet på samme vis på en iOS-enhet og en eller flere Android-enheter. Det har vært viktig at appen fungerer likt både på iOS og Android. Under testene har vi fulgt listen over funksjonalitet under, og testet med tilfeldige verdier:
 
-+ Legge til to-dos
-+ Slette to-dos
-+ Endre to-dos
-+ Sjekke at to-dos forsvinner om du krysser av for "utført" og restarter appen
-+ Sjekke at to-dos legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der
 
-+ Endre mål for antall skritt
-+ Sjekke at det legges til skritt ved aktivitet (krever Google Fit på Android)
+| Test | Forventet resultat | Resultat |
+| --- | --- | --- |
+| Legge til to-dos | Todo skal bli lagt til i todolisten. | Todo ble lagt til i todolisten. |
+| Slette to-dos | Todo skal bli slettet fra todolisten. | Todo ble slettet fra todolisten. |
+| Endre to-dos | Dato og tekst skal endres på valgt todo. | Todoen ble endret mtp. hva brukeren ønsket å endre. |
+| Sjekke at to-dos forsvinner om du krysser av for "utført" og restarter appen | Todo skal bli lagt til listen over ferdige todos. | Todo ble lagt til listen over ferdige todos. |
+| Endre mål for antall skritt | Målet skal endres. | Målet ble endret etter valgt mål. |
+| Sjekke at det legges til skritt ved aktivitet (krever Google Fit på Android) | Antall skritt økes ved aktivitet. | Antall skritt ble økt ved aktivitet. |
+| Legge til kalenderhendelser | Event skal bli lagt til i kalenderen. | Event ble lagt til i kalenderen. |
+| Endre kalenderhendelser | Event skal få endret navn, dato eller tid. | Det man endret på eventet ble endret og oppdatert. |
+| Slette kalenderhendelser | Et event skal bli slettet fra kalenderen.| Eventet ble slettet. |
+| Sjekke at kalenderhendelser legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der | Event og todos skal bli lagt til eller slettet fra listen på hjemskjermen. | Events og todos ble lagt til og slettet. |
 
-+ Legge til kalenderhendelser
-+ Endre kalenderhendelser
-+ Slette kalenderhendelser
-+ Sjekke at kalenderhendelser legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der
-
+Resultatet av alle testene var utelukkende som forventet. Alle funksjonene oppførte seg som de skulle, og vi fant ingen feil eller mangler. 
 
 #### Enhetstesting
 
