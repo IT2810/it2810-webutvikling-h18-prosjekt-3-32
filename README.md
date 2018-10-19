@@ -152,23 +152,39 @@ Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalite
 Vi har også brukt [Jest](https://jestjs.io/) for å teste applikasjonens funksjonalitet og underliggende arkitektur.
 Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er dokumentert under. Vi har hatt fokus på å oppnå en akseptabel testcoverage, uten å bruke i overkant mye ressursser på dette i henhold til den korte tidsfristen vi har hatt.
 
-* TodoList.js
-
-| Test | Beskrivelse |
-| --- | --- |
-| render | Verifiserer at komponenten laster som forventet. |
-| addTodo | Verfiserer at funksjonen addTodo fungerer, at det blir lagt til en todo. State sammenlignes med en testliste for å sjekke at funksjonen faktisk la til en liste.|
-| deleteTodo | Verifiserer at funksjonen deleteTodo fungerer, at en todo blir slettet. State sammenlignes med en tom liste for å sjekke at funksjonen faktisk slettet todoen  |
-| updateSortedList | Verifiserer at funksjonen updateSortedList fungerer. Sjekker at når en todo får en todo, at denne todoen blir lagt til. |
-| sortByDate | Verifiserer at funksjonen sortByDate fungerer. Den får inn to todos som er sortert i feil rekkefølge, og sjekker at de er sortert i riktig rekkefølge etter funksjonen er kjørt. |
-| handleFinishedTodo | Verifiserer at funksjonen handleFinishedTodo fungerer. Oppretter en testliste hvor 'done:true', og sjekker at listen over finished-todos er oppdatert. |
-| handleShowFinishedTodos | Verifiserer at funksjonen handleShowFinishedTodos fungerer. Oppretter først en testliste med med en todo som er ferdig, og sjekker at listen som vises til brukeren (showList), viser denne testlisten. Sjekker så det motsatte, at en todo med som er uferdig, vises i listen (showList). |
-
-* CalendarDisplayer.js
+#### TodoList-test.js
 
 | Test | Beskrivelse |
 | --- | --- |
 | snapshot | Sjekker om siden er den samme som forrige snapshot. | 
+| addTodo | Verfiserer at funksjonen addTodo fungerer, at det blir lagt til en todo. State sammenlignes med en testliste for å sjekke at funksjonen faktisk la til en liste.|
+| deleteTodo | Verifiserer at funksjonen deleteTodo fungerer, at en todo blir slettet. State sammenlignes med en tom liste for å sjekke at funksjonen faktisk slettet todoen  |
+| updateSortedList | Verifiserer at funksjonen updateSortedList fungerer. Sjekker at når en todo får en todo, at denne todoen blir lagt til. |
+| sortByDate | Verifiserer at funksjonen sortByDate fungerer. Den får inn to todos som er sortert i feil rekkefølge, og sjekker at de er sortert i riktig rekkefølge etter funksjonen er kjørt. |
+| handleFinishedTodo | Verifiserer at funksjonen handleFinishedTodo fungerer. Oppretter en testliste hvor `done:true`, og sjekker at listen over finished-todos er oppdatert. |
+| handleShowFinishedTodos | Verifiserer at funksjonen handleShowFinishedTodos fungerer. Oppretter først en testliste med med en todo som er ferdig, og sjekker at listen som vises til brukeren (showList), viser denne testlisten. Sjekker så det motsatte, at en todo med som er uferdig, vises i listen (showList). |
+| onChangeText | Bruker mockfunksjon til å verifisere at onChangeValue på TextInput reagerer på en endring. |
+| onPress | Bruker mockfunksjon til å verifiserer at onPress på TouchableOpacity reagerer på en endring. |
+| storeTodo / removeTodo | Oppretter en mock av AsyncStorage, og bruker denne for å teste at det fungerer å legge til verdier i AsyncStorage, samt. slette dem derfra. Dette gjennom å bruke funksjonene storeTodo and removeTodo i Todolist.js. |
+
+#### ListItem-test.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| checkDueDate | Verifiserer at funksjonen checkDueDate fungerer. Henter først inn en dato som har vært, og sjekker da at den returnerer true (siden datoen har vært). Sjekker så med en dato som er i fremtiden, og verifiserer da at den returngerer false. |
+| handlePressedCheckbox | Verifiserer at funksjonen handlePressedCheckbox fungerer. Sjekker at ved å kjøre denne funksjonen, at state.done er true. Noe den naturligvis vil være om todoen er ferdig. |
+| handlePressedCheckbox | Verifiserer at funksjonen handlePressedCheckbox fungerer. Kjører denne funksjonen med en dato som parameter, og sjekker at state for dato har oppdatert seg. |
+| setModalVisible | Verifiserer at funksjonen setModalVisible fungerer. Sjekker at ved å trykke på en todo, at modalen åpner seg. Dette sjekkes ved å sjekke at staten for om modal er synlig er true. |
+| deleteTodo | Verifiserer at funksjonen deleteTodo fungerer. Oppretter to mockfunksjoner: en for deleteTodo, og en for onPress (for å sjekke at funksjonen ble kjørt). Sjekker at ved å kjøre funksjonen deleteTodo, så reagerer mockOnPress på dette. |
+| onPress | Bruker mockfunksjon til å verifiserer at onPress på TouchableOpacity reagerer på en endring. |
+| onIconPress | Bruker mockfunksjon til å verfisere at onIconPress på Checkbox reagerer på en endring. |
+| onRequestClose | Bruker mockfunksjon til å verifisere at onRequestClose på Modal reagerer på en endring. |
+| onChangeText | Bruker mockfunksjon til å verifisere at onChangeValue på TextInput reagerer på en endring. |
+
+#### CalendarDisplayer-test.js
+
+| Test | Beskrivelse |
+| --- | --- |
 | closeModal | Verifiserer at Modal-viewet lukkes som forventet. |
 | setModalVisible | Verifiserer at Moda-viewet åpnes som forventet. |
 | addEvent | Verifiserer at avtaler legges til i state som forventet. Denne funksjonen testes i tre scenarier; når det ikke er noen avtaler fra før, når det er én avtale (som egentlig ikke er en avtale, men som forteller brukeren at den ikke har noen avtaler) og når avtalen som skal bli lagt til allerede finnes.|
@@ -182,7 +198,7 @@ Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er
 | renderItem | Verifiserer at avtaler, enten de er tomme eller ei, rendres som forventet. |
 | storeEvent | Verifiserer at avtaler blir korrekt lagret i AsyncStorage. |
 
-* StepCounter.js
+#### StepCounter-test.js
 
 | Test | Beskrivelse |
 | --- | --- |
@@ -191,6 +207,31 @@ Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er
 | retrieveGoal | Verifiserer at brukerens satte mål blir lastet korrekt inn fra AsyncStorage til State. |
 | storeGoal | Verifiserer at strukturen i bakkant blir oppdatert dersom brukeren setter et nytt mål. |
 
+#### Home-test.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| snapshot | Sjekker om siden er den samme som forrige snapshot. | 
+| sortByDate | Verifiserer at funksjonen sortByDate fungerer. Den får inn to todos som er sortert i feil rekkefølge, og sjekker at de er sortert i riktig rekkefølge etter funksjonen er kjørt. |
+| AsyncStorage | Oppretter en mock av AsyncStorage, og bruker denne for å teste at det fungerer å legge til verdier i AsyncStorage, samt. slette dem derfra. |
+
+#### HomeListItem-test.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| snapshot | Sjekker om siden er den samme som forrige snapshot. | 
+
+#### AssetsTransformer-test.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| process | Verifiserer at funksjonen process fungerer som den skal. Sjekker at den returnerer korrekt verdi. |
+
+#### Coverage 
+
+Vi hadde som mål å teste majoriteten av de viktigste funksjonene i applikasjonen. Ved å gjøre dette, endte vi opp med en test-coverage på følgende:
+
+![Coverage](https://imgur.com/zw1xcDz.png)
 
 ## Versjonskontroll
 
