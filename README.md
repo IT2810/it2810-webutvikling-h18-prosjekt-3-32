@@ -141,6 +141,7 @@ Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalite
 + Slette to-dos
 + Endre to-dos
 + Sjekke at to-dos forsvinner om du krysser av for "utført" og restarter appen
++ Sjekke at to-dos legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der
 
 + Endre mål for antall skritt
 + Sjekke at det legges til skritt ved aktivitet (krever Google Fit på Android)
@@ -148,6 +149,7 @@ Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalite
 + Legge til kalenderhendelser
 + Endre kalenderhendelser
 + Slette kalenderhendelser
++ Sjekke at kalenderhendelser legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der
 
 
 #### Enhetstesting
