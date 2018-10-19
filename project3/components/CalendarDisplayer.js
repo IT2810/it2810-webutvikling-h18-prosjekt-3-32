@@ -4,6 +4,7 @@ import { Agenda } from 'react-native-calendars';
 import styles from "../stylesheets/Calendar.style.js";
 import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
+import HomeListItemCalendar from "./HomeListItemCalendar";
 
 export default class CalendarDisplayer extends React.Component {
     constructor(props) {
@@ -92,41 +93,58 @@ export default class CalendarDisplayer extends React.Component {
     }
 
     deleteEvent = async (id) => {
-        let deleteIndex = null;
-        const evtDate = this.state.eventDate;
-        //Go through each element in today's list
-        Object.keys(this.state.items[evtDate]).forEach( index =>
-                //If events eventNr is equal to current event nr, then we know what to delete.
-            {if(this.state.items[evtDate][index].eventNr === this.state.currEventNr){
-                //Saving the index
-                deleteIndex = index;
-            }}
-        );
-        //If we found something to delete
-        if(deleteIndex!=null){
-            //Delete it
-            this.state.items[evtDate].splice(deleteIndex, 1);
-        }
-        //Also deletes event from Async
-        await this.removeEvent("event"+id.toString());
-
-        //Making new empty object to add the newItems in
-        const newItems = {};
-        //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
-        Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
-
-        //Set item state to be newItems, and reset all other states
-        this.setState({
-            items: newItems,
-            currEventNr: this.state.currEventNr+1,
-            eventText: "",
-            eventDate: "",
-            startTime: "",
-            endTime: "",
-            modalVisible: false,
+        let newEvent = false;
+        this.state.items[this.state.date].map((element) => {
+            if(element.eventNr !== id){
+                newEvent = true;
+            }
+            else{
+                newEvent = false;
+            }
         });
+        if(!newEvent){
+            let deleteIndex = null;
+            const evtDate = this.state.eventDate;
 
-        this.loadItems.bind(this);
+            //Go through each element in today's list
+            Object.keys(this.state.items[evtDate]).forEach( index =>
+                    //If events eventNr is equal to current event nr, then we know what to delete.
+                {if(this.state.items[evtDate][index].eventNr === this.state.currEventNr){
+                        //Saving the index
+                        deleteIndex = index;
+                    }}
+            );
+            //If we found something to delete
+            if(deleteIndex!=null){
+                //Delete it
+                this.state.items[evtDate].splice(deleteIndex, 1);
+            }
+            //Also deletes event from Async
+            await this.removeEvent("event"+id.toString());
+
+            //Making new empty object to add the newItems in
+            const newItems = {};
+            //Get every key (every date) in this.state.items and for each key, get item items in the state-list, and add it to newItems
+            Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+
+            //Set item state to be newItems, and reset all other states
+            this.setState({
+                items: newItems,
+                currEventNr: this.state.currEventNr+1,
+                eventText: "",
+                eventDate: "",
+                startTime: "",
+                endTime: "",
+                modalVisible: false,
+            });
+
+            this.loadItems.bind(this);
+        }
+        else{
+            alert("You cannot delete an event that doesn't exist!")
+
+        }
+
     };
 
     addEvent = async (id) => {
