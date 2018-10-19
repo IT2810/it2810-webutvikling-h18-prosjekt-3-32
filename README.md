@@ -22,6 +22,8 @@ Applikasjonen er ment å være en prototype på personlig informasjon- og motiva
 
 På startskjermen vises en oversikt over dine tre øverste events fra kalenderen, og dine tre øverste todos. Dersom det ikke finnes noen events eller todos, vil det komme opp en boks hvor det står "No upcoming events", og/eller "No upcoming todos". Det finnes også en refresh-knapp, som vil refreshe listen på hjemskjermen. Dette kan være nyttig hvis man har lagt til en todo eller et event, og ønsker å få opp dette på hjemskjermen. 
 
+![Hjemskjerm](https://imgur.com/59tKaly.png)
+
 #### Gjøremål
 
 I "To do"-fanen kan du holde styr på todos og viktige gjøremål. Har kan man sette opp diverse man må huske å gjøre, og eventuellt sette en frist på det. Følgende funksjonalitet finner du på denne fanen:
@@ -33,25 +35,25 @@ I "To do"-fanen kan du holde styr på todos og viktige gjøremål. Har kan man s
 * Når applikasjonen lukkes vil todos som er ferdig havne i en egen liste over ferdige todos. Trykker man på knappen "Show finished todos" får man opp en liste over todos man allerede har gjort.
 
 Her er noen skjermbilder fra der todolisten er i bruk. På bilde 1 er det lagt til todos med dato, på bilde 2 er øverste todo huket av for ferdig, og neste gang applikasjonen åpnes er denne havnet på listen over ferdige todos.
-______
-NYE SKJERMBILDER TRENGS 
-______
-![Todobilde1](http://i65.tinypic.com/mmep6t.jpg)
-![Todobilde2](http://i66.tinypic.com/2qisp5g.jpg)
-![Todobilde3](http://i63.tinypic.com/1zz2la9.jpg)
+
+![Todobilde1](https://imgur.com/pxJYrOQ.png)
+![Todobilde2](https://imgur.com/0XBxpCq.png)
+![Todobilde3](https://imgur.com/vIUouB6.png)
 
 #### Skritteller
 
 Appen inneholder også en skritteller. Denne viser brukeren hvor mange skritt den har beveget seg i løpet av dagen, 
 samt et daglig gjennomsnitt basert på aktiviteten siste 7 dager. Brukeren har også mulighet til å selv velge hvor mange skritt som skal være det daglige målet. Dette gjøres ved hjelp av en glidebryter som i seg selv skal være svært intuitiv. Appen viser også brukerens progresjon i forhold til sitt eget mål, som vises ved hjelp av en sirkel som går fra 0 til brukerens mål. Det vises også en melding som skal motivere brukeren til å nå sine mål. 
 
+![Skritteller](https://imgur.com/wTLy8r4.png)
+
 #### Kalender
 
 I kalenderen får man oversikt over sine avtaler. Man får først og fremst oversikt over den kommende uken, men man kan også bla seg frem og tilbake i tid. Dette gjøres ved å trykke på eller dra ned blå linjen under datoene, som man kan se på bildene under. Bildet til høyre viser startskjermen i kalenderen, og bildet til venstre viser hvordan det ser ut når man trykker på eller drar ned den blå linjen:
 
 
-![Bilde 1](https://scontent-arn2-1.xx.fbcdn.net/v/t1.15752-9/44188828_249232519280528_4348971510405267456_n.png?_nc_cat=105&oh=9f66978508821adafa441700f3461b65&oe=5C463EBA) 
-![Bilde 2](https://scontent-arn2-1.xx.fbcdn.net/v/t1.15752-9/44096668_926757400858481_4816407275268734976_n.png?_nc_cat=105&oh=019fe0f44cddfbe24065bf010c4882b0&oe=5C56D07A)
+![Kalender1](https://imgur.com/Nmp8Bf2.png) 
+![Kalender2](https://imgur.com/BnbNthu.png)
 
 Vi kunne valgt å gå for et annet design på kalenderen, men grunnen til at vi valgte denne løsningen, var at vi synes det er bedre å få opp oversikt over alle kommende avtaler med én gang, siden det som oftest vil være det man er interessert i. Agenda-komponenten fra React Native Calendars passet bra i forhold til hva vi var ute etter, og vi bestemte oss for å bruke den.
 
@@ -154,19 +156,17 @@ Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er
 
 | Test | Beskrivelse |
 | --- | --- |
-| snapshot | En enkel snapshot test av siden. Sjekker om siden er den samme som forrige snapshot. |
-| addTodo | Denne testen sjekker om det blir lagt til en todo. Testen setter *todoText* i state til å være "test", og kjører funksjonen *addTodo(1)*, for å opprette en todo med todonr: *todo1*. Deretter sammenligner den *state.todoList* til å være lik som en testListe, som er ment til å være helt lik listen som opprettes i *addtodo*   |
-| handleFinishedTodo | blabla |
-| handleShowFinishedTodos | blabla |
-| updateSortedList | blabla |
-| deleteTodo | blabla |
-| sortByDate | blabla |
-| updateShowList | blabla |
-| updateTodoList | blabla |
+| render | Verifiserer at komponenten laster som forventet. |
+| addTodo | Verfiserer at funksjonen addTodo fungerer, at det blir lagt til en todo. State sammenlignes med en testliste for å sjekke at funksjonen faktisk la til en liste.|
+| deleteTodo | Verifiserer at funksjonen deleteTodo fungerer, at en todo blir slettet. State sammenlignes med en tom liste for å sjekke at funksjonen faktisk slettet todoen  |
+| updateSortedList | Verifiserer at funksjonen updateSortedList fungerer. Sjekker at når en todo får en todo, at denne todoen blir lagt til. |
+| sortByDate | Verifiserer at funksjonen sortByDate fungerer. Den får inn to todos som er sortert i feil rekkefølge, og sjekker at de er sortert i riktig rekkefølge etter funksjonen er kjørt. |
+| handleFinishedTodo | Verifiserer at funksjonen handleFinishedTodo fungerer. Oppretter en testliste hvor 'done:true', og sjekker at listen over finished-todos er oppdatert. |
+| handleShowFinishedTodos | Verifiserer at funksjonen handleShowFinishedTodos fungerer. Oppretter først en testliste med med en todo som er ferdig, og sjekker at listen som vises til brukeren (showList), viser denne testlisten. Sjekker så det motsatte, at en todo med som er uferdig, vises i listen (showList). |
 
 * CalendarDisplayer.js
 
-|  Test | Beskrivelse |
+| Test | Beskrivelse |
 | --- | --- |
 | snapshot | Sjekker om siden er den samme som forrige snapshot. | 
 | closeModal | Verifiserer at Modal-viewet lukkes som forventet. |
