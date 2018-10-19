@@ -97,7 +97,7 @@ export default class CalendarDisplayer extends React.Component {
         //Go through each element in today's list
         Object.keys(this.state.items[evtDate]).forEach( index =>
                 //If events eventNr is equal to current event nr, then we know what to delete.
-            {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
+            {if(this.state.items[evtDate][index].eventNr === this.state.currEventNr){
                 //Saving the index
                 deleteIndex = index;
             }}
@@ -127,9 +127,9 @@ export default class CalendarDisplayer extends React.Component {
         });
 
         this.loadItems.bind(this);
-    }
+    };
 
-    addEvent = (id) => {
+    addEvent = async (id) => {
         //Get current date
         const newDate = this.state.date;
         const evtDate = this.state.eventDate;
@@ -139,7 +139,7 @@ export default class CalendarDisplayer extends React.Component {
             //Go through each element in today's list
             Object.keys(this.state.items[evtDate]).forEach( index =>
                     //If events eventNr is equal to current event nr, then we know what to delete.
-                {if(this.state.items[evtDate][index].eventNr == this.state.currEventNr){
+                {if(this.state.items[evtDate][index].eventNr === this.state.currEventNr){
                     //Saving the index
                     deleteIndex = index;
                 }}
@@ -154,7 +154,7 @@ export default class CalendarDisplayer extends React.Component {
         //Now, after checking (and deleting) if we had to delete something, we can start creating a new event object
 
         //Check if all inputs fields are filled in
-        if(this.state.eventText !== "" && this.state.date !== "" && this.state.startTime !== "" && this.state.startTime !== ""){
+        if(this.state.eventText !== "" && this.state.date !== "" && this.state.startTime !== "" && this.state.endTime !== ""){
             //If there is no object for current date
             if(!this.state.items[newDate]){
                 //Then make object with current date as key
@@ -164,7 +164,7 @@ export default class CalendarDisplayer extends React.Component {
             if(this.state.items[newDate].length>0){
                 //Check if date has an object where name value is "No upcoming events."
                 //If so, this must be deleted in order for it not to show in calendar
-                if(this.state.items[newDate][0]["name"]=="No upcoming events." || this.state.items[newDate][0]["name"]=="No events to show." ){
+                if(this.state.items[newDate][0]["name"]==="No upcoming events." || this.state.items[newDate][0]["name"]==="No events to show." ){
                     //Delete event that says "no upcoming event"
                     delete this.state.items[newDate];
                     //Create new, empty date key in object
@@ -174,7 +174,7 @@ export default class CalendarDisplayer extends React.Component {
 
             //Push event Object to today's list
             this.state.items[newDate].push({
-                name: this.state.eventText,
+                name: this.state.eventText+" ",
                 startTime: this.state.startTime,
                 eventDate: newDate,
                 endTime: this.state.endTime,
@@ -195,6 +195,7 @@ export default class CalendarDisplayer extends React.Component {
                 endTime: this.state.endTime,
                 eventNr: this.state.currEventNr,
             });
+
             //Set item state to be newItems, and reset all other states
             this.setState({
                 items: newItems,
@@ -204,24 +205,23 @@ export default class CalendarDisplayer extends React.Component {
                 startTime: "",
                 endTime: "",
             });
+
             //Store event in async
-            this.storeEvent("event"+id.toString(), JSON.stringify(AsyncObject));
+            await this.storeEvent("event"+id.toString(), JSON.stringify(AsyncObject));
             //Store currEventNr in async
-            this.storeEvent("CurrentEventNr", id.toString());
+            await this.storeEvent("CurrentEventNr", id.toString());
             //Close modal
             this.setModalVisible(!this.state.modalVisible);
             if(this.state.currEventNr<this.state.prevEventNr){
                 this.setState({
                     currEventNr: this.state.prevEventNr,
-
                 });
             }
             this.loadItems.bind(this);
         }
         //If something is not filled in, alert the user
-        else{alert("No fields can be empty!")};
-
-    }
+        else{alert("No fields can be empty!")}
+    };
 
     //Store event in AsyncStorage. This is always called from addEvent
     storeEvent = async (id, data) => {
@@ -275,6 +275,37 @@ export default class CalendarDisplayer extends React.Component {
         }, 1000);
     }
 
+    showItemInfo(item){
+        this.setState({
+            eventText: item.name,
+            startTime: item.startTime,
+            endTime: item.endTime,
+            eventDate: item.eventDate,
+            date: item.eventDate,
+            prevEventNr: this.state.currEventNr,
+            currEventNr: item.eventNr,
+        }, () => this.setModalVisible(true));
+    }
+
+    rowHasChanged(r1, r2) {
+        return r1.name !== r2.name;
+    }
+
+    timeToString(time) {
+        const date = new Date(time);
+        return date.toISOString().split('T')[0];
+    }
+
+    //------ RENDER ------//
+
+    renderEmptyDate() {
+        return (
+            <TouchableOpacity style={styles.item}>
+                <Text style={styles.itemText} value={"empty"}>No events to show </Text>
+            </TouchableOpacity>
+        );
+    }
+
     renderItem(item) {
         //If item has starTime and endTime, then return this code.
         if(item.startTime && item.endTime){
@@ -294,37 +325,6 @@ export default class CalendarDisplayer extends React.Component {
             );
         }
     }
-
-    showItemInfo(item){
-        this.setState({
-            eventText: item.name,
-            startTime: item.startTime,
-            endTime: item.endTime,
-            eventDate: item.eventDate,
-            date: item.eventDate,
-            prevEventNr: this.state.currEventNr,
-            currEventNr: item.eventNr,
-        }, () => this.setModalVisible(true));
-    }
-
-    renderEmptyDate() {
-        return (
-            <TouchableOpacity style={styles.item}>
-                <Text style={styles.itemText} value={"empty"}>No events to show </Text>
-            </TouchableOpacity>
-        );
-    }
-
-    rowHasChanged(r1, r2) {
-        return r1.name !== r2.name;
-    }
-
-    timeToString(time) {
-        const date = new Date(time);
-        return date.toISOString().split('T')[0];
-    }
-
-    //------ RENDER ------//
 
     render() {
         return (
@@ -372,12 +372,11 @@ export default class CalendarDisplayer extends React.Component {
                         onRequestClose={()=>{this.closeModal();}}>
                         <View style={styles.modalView}>
                             <View style={styles.modal}>
-                                {/*Simple backbutton if the user choose to not do any changes*/}
-
-
                                 <View style={styles.newEventTitleBar}>
                                     <Text style={styles.newEventTitle}>{"Event info"}</Text>
                                 </View>
+                                {/*Simple closebutton if the user choose to not do any changes*/}
+
                                 <TouchableOpacity
                                     onPress={() =>{this.closeModal();}}
                                     style={styles.modalClose}>
@@ -388,7 +387,7 @@ export default class CalendarDisplayer extends React.Component {
                                     onChangeText={(text) => this.setState({eventText : text})}
                                     placeholder={"Event description"}
                                     value={this.state.eventText}
-                                    multiline={true}
+                                    multiline={false}
                                 />
 
                                 <View style={styles.modalItem}>
@@ -411,14 +410,12 @@ export default class CalendarDisplayer extends React.Component {
                                         mode="time"
                                         placeholder="start time"
                                         is24Hour={true}
-                                        format={('HH:MM')}
+                                        format={('HH:mm')}
                                         iconSource={require('../assets/clock.png')}
                                         confirmBtnText="Confirm"
                                         cancelBtnText="Cancel"
                                         onDateChange={(time) => {
-                                            this.setState({startTime: time});
-                                        }
-                                        }
+                                            this.setState({startTime: time})}}
                                     />
                                     {/*Time picker so the user can choose event end time.*/}
                                     <DatePicker
@@ -426,14 +423,12 @@ export default class CalendarDisplayer extends React.Component {
                                         mode="time"
                                         placeholder="end time"
                                         is24Hour={true}
-                                        format={('HH:MM')}
+                                        format={('HH:mm')}
                                         iconSource={require('../assets/clock.png')}
                                         confirmBtnText="Confirm"
                                         cancelBtnText="Cancel"
                                         onDateChange={(time) => {
-                                            this.setState({endTime: time});
-                                        }
-                                        }
+                                            this.setState({endTime: time})}}
                                     />
                                 </View>
                                 <View style={styles.buttonsView}>

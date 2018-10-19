@@ -153,11 +153,11 @@ export default class ListItem extends React.Component {
                         onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}>
                         <View style={styles.modalView}>
                           <View style={styles.modal}>
-                            {/*Simple backbutton if the user choose to not do any changes*/}
                             <View style={styles.newTodoTitleBar}>
                               <Text style={styles.newTodoTitle}>{"Todo info"}</Text>
                             </View>
-                            <TouchableOpacity
+                              {/*Simple closebutton if the user choose to not do any changes*/}
+                              <TouchableOpacity
                                 onPress={() => {this.setModalVisible(!this.state.modalVisible);}}
                                 style={styles.modalClose}>
                                 <Image style={styles.closeImg} source={require('../assets/close.png')}/>
