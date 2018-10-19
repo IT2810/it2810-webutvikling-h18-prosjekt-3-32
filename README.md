@@ -13,9 +13,10 @@ README only available in Norwegian language.
 
 ---
 
-## Bruk
 
-Applikasjonen er ment å være en prototype på personlig informasjon- og motivasjonsmanager. Appen håndterer gjøremål, avtaler og kalenderhendelser, samt at den motiverer brukeren til å opprettholde sitt daglige mål for antall skritt / aktivitet. Applikasjonen er bygd opp av ulike faner som man kan bla i mellom. Under følger mer informasjon om de ulike fanene: 
+## Innhold og funksjonalitet
+
+Applikasjonen er ment å være en prototype på personlig informasjon- og motivasjonsmanager. Appen håndterer gjøremål, avtaler og kalenderhendelser, samt at den motiverer brukeren til å opprettholde sitt daglige mål for antall skritt / aktivitet. Applikasjonen er bygd opp av ulike faner som man kan bla i mellom. I forhold til oppgaven muliggjør applikasjonen både lagring av oppgaver, todos, avtaler, motivasjoner og målinger i form av skrittelleren. Appen lagrer også tilstand selv om appen avsluttes ved bruk av AsyncStorage. Under følger mer informasjon om funksjonaliteten: 
 
 #### Startskjerm
 
@@ -67,35 +68,40 @@ Prosjektet er satt opp med det vi ser på som en fornuftig komponentarkitektur m
 ![Komponentarkitektur](http://i66.tinypic.com/30kaouo.png)
 
 
-#### React Native
+#### React Native og tredjepartskomponenter
 
-Som nevnt tidligere er dette prosjektet utviklet i React Native. Som det ble oppfordret til i oppgaveteksten, har vi brukt en rekke tredjepartskomponenter for å ha tilstrekkelig med funksjonalitet i applikasjonen. Vi har brukt følgende tredjepartskomponenter:
+Som nevnt tidligere er dette prosjektet utviklet i React Native, noe som medfører at applikasjonen og all funksjonalitet er plattformuavhengig. Som det ble oppfordret til i oppgaveteksten, har vi brukt en rekke tredjepartskomponenter kompatible med både iOS og Android for å ha tilstrekkelig med funksjonalitet i applikasjonen. Vi har brukt følgende tredjepartskomponenter:
 
 * [React Native Calendars](https://github.com/wix/react-native-calendars)
+  * React Native Calendars brukers vi for å vise kalender og tilknyttede hendelser.
 * [React Native Datepicker](https://github.com/xgfe/react-native-datepicker)
+  * React Native Datepicker brukes til å vise en liten kalender når brukeren ved ulike anledninger skal velge en dato. 
 * [React Native Elements](https://react-native-training.github.io/react-native-elements/)
-* [React Native Navigation](https://reactnavigation.org/docs/en/getting-started.html)
+  * React Native Elements er et UI toolkit som vi har tatt i bruk da det sparer oss en del arbeid og gir oss bedre UI-komponenter enn vi kunne lagd med begrensede tidsressurser.
 * [React Native Progress Circle](https://www.npmjs.com/package/react-native-progress-circle)
   * React Native Progress Circle blir brukt for å visualisere en progressbar på skrittelleren. Prosenten som vises er gjennomsnitt antall skritt gått daglig per uke, i forhold til målet man har satt seg. 
 * [React Navigation Material Bottom Tabs](https://reactnavigation.org/docs/en/material-bottom-tab-navigator.html)
+  * React Navigation Material Bottom Tabs bruker fordi denne forenkler navigasjon i appen. Vi valgte biblioteket da det gir oss en nært native følelse på iOS, samt at vi mener det er mer hensiktsmessig å ha tabvalg nederst i stedet for øverst på mobiltelefoner.
 * [Moment](https://momentjs.com/)
+  * Moment blir brukt da det forenkler en del operasjoner knyttet til dato og tid, noe som er kjekt når en arbeider med hendelser og kalendere.
+
 
 #### AsyncStorage
 
 I tråd med oppgaveteksten har vi tatt i bruk [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage) Her lagres alt av data mellom hver gang applikasjonen kjøres, slik at neste gang brukeren går inn på applikasjonen, er det ingen data som har gått tapt. Ulik data har ulike nøkler, slik at det lett å skille mellom hva som skal hentes ut, når det hentes ut. 
 
-For de som ikke er kjent med AsyncStorage fungerer det omtrent på samme måte som [Web Storage APIet fra HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API). Det vil si at APIet tilbyr metodene __setItem__ og __getItem__ for å henholdsvis lagre og hente ut data. 
+For de som ikke er kjent med AsyncStorage fungerer det omtrent på samme måte som [Web Storage APIet fra HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API). Det vil si at APIet tilbyr metodene __setItem__ og __getItem__ for å henholdsvis lagre og hente ut data. __setItem__ er metoden som lagrer til AsyncStorage og tar parametrene key og value. Av disse er key parameteret i __getItem__ som gjør at du senere kan hente ut value. Se [dokumentasjonen](https://facebook.github.io/react-native/docs/asyncstorage) om du vil lære mer om AsyncStorage.
 
 #### Skritteller
 
 Skrittelleren er utviklet ved hjelp av Expo sitt [Pedometer API](https://docs.expo.io/versions/latest/sdk/pedometer) ettersom dette virket godt dokumentert. Dette APIet henter data fra iOS sitt Core API samt Android sitt Google Fit API, noe som medfører at appen krever at appen [Google Fit](https://www.google.com/fit/) er installert dersom appen skal brukes på Android.
 
-Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene _subscribe_ og _unsubscribe_. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt.
+Det kan kanskje være av interesse å vite at Pedometer APIet håndterer tilkoblingen til de bakomliggende APIene med metodene _subscribe_ og _unsubscribe_. Videre kan APIet benyttes ved å hente ut data om aktivetet basert på et start-tidspunkt og et slutt-tidspunkt. Se [dokumentasjonen](https://docs.expo.io/versions/latest/sdk/pedometer) om du vil lære mer om Expo sitt Pedometer API.
 
 
 ## Testing
 
-#### Brukstest
+#### Brukstesting
 
 Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi har testet på er følgende: 
 
@@ -104,6 +110,7 @@ Vi har testet at appen fungerer like godt på både Android og iOS. Enhetene vi 
 * Motorola Moto G6 Plus
 * Motorola Moto G5 Plus
 
+Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalitet på samme vis på en iOS-enhet og en eller flere Android-enheter.
 
 #### Enhetstesting
 
@@ -124,9 +131,11 @@ Dette har vi gjort på det vi selv anser som en god og systematisk måte, som er
 | updateShowList | blabla |
 | updateTodoList | blabla |
 
-* ListItem.js
-
 * CalendarDisplayer.js
+
+| Test | Beskrivelse |
+| --- | --- |
+| ????? | ????? |
 
 * StepCounter.js
 
@@ -146,4 +155,5 @@ Vi har også brukt Node og npm for å holde kontroll på pakker og dependencies.
 Vi gjør oppmerksom på at vi har slettet feature- og bugbrancher etterhvert som de er merget inn til master. 
 I tillegg til dette minner vi om at tallene for kodelinjer, ikke kan brukes til å måle andel utført arbeid ettersom en del operasjoner genererer veldig mange linjer kode.
 
-I tillegg til dette har vi hatt som rutine å kommentere alle commits med issuenummer, noe som er fulgt til punkt og prikke bortsett fra noen automatiske commits gjort i Github sitt nettlesergrensesnitt. Vi har også brukt prosjekt-funksjonaliteten Github tilbyr, og innser at denne er noe bedre i Gitlab som skal brukes til neste prosjekt. 
+I tillegg til dette har vi hatt som rutine å kommentere alle commits med issuenummer, noe som er fulgt til punkt og prikke bortsett fra noen automatiske commits gjort i Github sitt nettlesergrensesnitt. 
+Vi har også brukt prosjekt-funksjonaliteten Github tilbyr, og innser at denne er noe bedre i Gitlab som skal brukes til neste prosjekt. 
