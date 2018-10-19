@@ -182,7 +182,7 @@ test("check if handleShowFinishedTodos works", () => {
 //---Testing functions in Render() (onPress, onChangeText..)---//
 
 //Test to check if onChangeValue at TextInput works
-test("test onChangeValue at textInput", () => {
+test("test onChangeText at textInput", () => {
     const mockOnChangeValue = jest.fn();
 
     //Creates a shallowRenderer to get the renderoutput of TodoList
