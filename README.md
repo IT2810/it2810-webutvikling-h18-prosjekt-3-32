@@ -55,6 +55,17 @@ I kalenderen får man oversikt over sine avtaler. Man får først og fremst over
 ![Kalender1](https://imgur.com/Nmp8Bf2.png) 
 ![Kalender2](https://imgur.com/BnbNthu.png)
 
+**NB!** Noen iOs-versjoner opplever problemer med å scrolle i kalenderen etter at man har dratt ned linjen under datoene. Når man begynner å scrolle, vil kalenderen kollapse og forsvinne opp igjen. Vi fant derimot en quick-fix på dette: 
+Gå inn i filen project3\node_modules\react-native-calendars\src\agenda\index.js, naviger til linje 365 og endre fra:
+
+`const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : 0) - KNOB_HEIGHT;`
+
+til
+
+`const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : 300) - KNOB_HEIGHT;`
+
+Dette vil løse problemet.
+
 Ved å trykke på en avtale, får man opp et Modal-vindu der man kan endre avtaleteksten, datoen eller tidspunktet for avtalen. Her kan man også slette avtalen om man vil. 
 Vi kunne valgt å gå for et annet design på kalenderen, men grunnen til at vi valgte denne løsningen, var at vi synes det er bedre å få opp oversikt over alle kommende avtaler med én gang, siden det som oftest vil være det man er interessert i. Agenda-komponenten fra React Native Calendars passet bra i forhold til hva vi var ute etter, og vi bestemte oss for å bruke den.
 
