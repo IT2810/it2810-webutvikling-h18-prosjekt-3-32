@@ -164,6 +164,8 @@ Brukstestingen vår har i stor grad foregått ved at vi har testet funksjonalite
 + Slette kalenderhendelser
 + Sjekke at kalenderhendelser legges til/ fjernes fra Home-siden når man trykker på refresh-knappen der
 
+Resultatet av alle testene var utelukkende som forventet. Alle funksjonene oppførte seg som de skulle, og vi fant ingen feil eller mangler. 
+
 
 #### Enhetstesting
 
