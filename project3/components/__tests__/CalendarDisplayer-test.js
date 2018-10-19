@@ -3,6 +3,8 @@ import CalendarDisplayer from "../CalendarDisplayer";
 import { Alert } from "react-native";
 import renderer from "react-test-renderer";
 import ShallowRenderer from "react-test-renderer/shallow";
+import MockAsyncStorage from "mock-async-storage";
+import { AsyncStorage as storage } from "react-native";
 
 test("Check if modal changes state", () => {
     const testCalendarDisplayer = <CalendarDisplayer/>;
@@ -136,7 +138,9 @@ test("Load items test when there are no events in state", () => {
     }
     calendarComponent.loadItems(day);
     //Since there are no events on today's date, I expect loadItems to create an event with name "No events to show."
-    expect(calendarComponent.state.items[day.dateString]).toEqual([{name: "No upcoming events."}]);
+    setTimeout(() => {
+        expect(calendarComponent.state.items[day.dateString]).toEqual([{name: "No events to show."}]);
+    },1000);
 });
 
 test("Load items test when there are events in state, but not today", () => {
@@ -156,7 +160,9 @@ test("Load items test when there are events in state, but not today", () => {
     }
     calendarComponent.loadItems(day);
     //Since there are no events on today's date, I expect loadItems to create an event with name "No events to show."
-    expect(calendarComponent.state.items[day.dateString]).toEqual([{name: "No events to show."}]);
+    setTimeout(() => {
+        expect(calendarComponent.state.items[day.dateString]).toEqual([{name: "No events to show."}]);
+    },1000);
 });
 
 
@@ -277,8 +283,8 @@ test("Mock onPress for events", () => {
       eventDate: "2018-10-18",
     }
     //To get instances of the component
-    component = renderer.create(<CalendarDisplayer/>).getInstance();
-    result = component.renderItem(item);
+    const component = renderer.create(<CalendarDisplayer/>).getInstance();
+    const result = component.renderItem(item);
 
     //Navigating to find onPress in the TouchableOpacity and trigger it
     result.props.onPress(mockOnPress());
@@ -290,10 +296,10 @@ test("Test that event renders properly when it has no startTime or endTime ", ()
     //Make sure item has no startTime or endTime
     const item = {
       name: "No upcoming events.",
-    }
+    };
     //To get instances of the component
-    component = renderer.create(<CalendarDisplayer/>).getInstance();
-    result = component.renderItem(item);
+    const component = renderer.create(<CalendarDisplayer/>).getInstance();
+    const result = component.renderItem(item);
     //Expect the value of the text inside TouchableOpacity to have value equal
     //to the name of the rendered item.
     expect(result.props.children.props.value).toEqual(item.name);
@@ -301,12 +307,40 @@ test("Test that event renders properly when it has no startTime or endTime ", ()
 
 test("Test render of empty date", () => {
     //To get instances of the component
-    component = renderer.create(<CalendarDisplayer/>).getInstance();
-    result = component.renderEmptyDate();
+    const component = renderer.create(<CalendarDisplayer/>).getInstance();
+    const result = component.renderEmptyDate();
     //Expect the value of the text inside TouchableOpacity to have value "empty"
     expect(result.props.children.props.value).toEqual("empty");
 });
 
 Alert.alert = jest.fn().mockImplementation(() => {
     console.log('Alert called');
+});
+
+//---Testing AsyncStorage---//
+
+test("Functions using AsyncStorage", async () => {
+    //Setting up mock Async
+    const asyncMock = () => {
+        const mockImpl = new MockAsyncStorage();
+        jest.mock("AsyncStorage", () => mockImpl);
+    };
+
+    //Creates instance of CalendarDisplayer
+    const testCalendarDisplayerComponent = <CalendarDisplayer/>;
+    const calendarComponent = renderer.create(testCalendarDisplayerComponent).getInstance();
+
+    //Creates a testobject
+    const testEvent = {name: "test", startTime: "10:00", endTime: "12:00", date: "2018-12-24", eventNr: 1};
+    const id = "event1";
+
+    //Initialize the mock for AsyncStorage
+    asyncMock();
+
+    await calendarComponent.storeEvent(id, JSON.stringify(testEvent));
+    const value = await storage.getItem(id);
+    const parsedValue = JSON.parse(value);
+
+    expect(parsedValue).toEqual(testEvent);
+
 });

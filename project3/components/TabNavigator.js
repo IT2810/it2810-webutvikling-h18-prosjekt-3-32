@@ -6,6 +6,7 @@ import StepCounter from "./StepCounter";
 import CalendarDisplayer from "./CalendarDisplayer";
 import TodoList from "./TodoList";
 
+//Shows different tabs
 export default createMaterialBottomTabNavigator ({
     Home: {
       screen: Home,

@@ -29,9 +29,9 @@ export default class StepCounter extends React.Component {
             // Steps since opening the app
             currentStepCount: 0,
             // State below should be updated from AsyncStorage
-            goalSteps: 0,
+            goalSteps: 10000,
             // Will be updated from API
-            averageStepsLastWeek: 500,
+            averageStepsLastWeek: 0,
             // Will be updated based on whether goal is reached or not
             motivationalMessage: "Just a little more walking and you should reach your goal!",
         }
@@ -104,13 +104,13 @@ export default class StepCounter extends React.Component {
             }
             else {
                 this.setState({
-                    goalsteps: 12000
+                    goalsteps: 10000
                 })
             }
         } catch (error) {
             // Error retrieving data, could be first use of app?
             this.setState({
-                goalSteps: 12000
+                goalSteps: 10000
             });
             throw("_retrieveGoal caused: " + error)
 
